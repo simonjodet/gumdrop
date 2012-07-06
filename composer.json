@@ -5,6 +5,7 @@
     "type":"library",
     "license":"MIT",
     "require":{
-        "dflydev/markdown":"dev-master"
+        "dflydev/markdown":"dev-master",
+        "mageekguy/atoum":"dev-master"
     }
 }
