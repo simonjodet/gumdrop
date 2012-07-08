@@ -7,4 +7,8 @@ use \mageekguy\atoum;
 
 class TestCase extends atoum\test
 {
+    protected function getUniqueId()
+    {
+        return rand(0, 1000000);
+    }
 }
