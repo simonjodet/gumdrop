@@ -14,6 +14,8 @@ require_once __DIR__ . '/../Gumdrop/Application.php';
 
 use \mageekguy\atoum;
 
+define('TMP_FOLDER', '/tmp/');
+
 class TestCase extends atoum\test
 {
     public function beforeTestMethod($method)

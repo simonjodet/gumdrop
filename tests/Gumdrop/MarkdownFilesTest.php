@@ -28,7 +28,7 @@ class MarkdownFiles extends \tests\units\TestCase
             __DIR__ . '/markdownFiles/testFile.md',
             __DIR__ . '/markdownFiles/testFile2.md'
         );
-        $destination = '/tmp/' . $this->getUniqueId();
+        $destination = TMP_FOLDER . $this->getUniqueId();
         mkdir($destination);
 
         $MarkdownFiles = new \Gumdrop\MarkdownFiles($app);

@@ -6,7 +6,12 @@ require_once __DIR__ . '/../../Gumdrop/FileHandler.php';
 
 class FileHandler extends \tests\units\TestCase
 {
-    private $testLocation = '/tmp/Gumdrop_FileOperations';
+    private $testLocation;
+
+    public function beforeTestMethod($method)
+    {
+        $this->testLocation = TMP_FOLDER . 'Gumdrop_FileOperations';
+    }
 
     public function createTestLocation($id)
     {
