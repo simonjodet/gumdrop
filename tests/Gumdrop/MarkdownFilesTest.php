@@ -3,13 +3,15 @@ namespace Gumdrop\tests\units;
 
 require_once __DIR__ . '/../TestCase.php';
 require_once __DIR__ . '/../../Gumdrop/MarkdownFiles.php';
+require_once __DIR__ . '/../../vendor/dflydev/markdown/src/dflydev/markdown/IMarkdownParser.php';
+require_once __DIR__ . '/../../vendor/dflydev/markdown/src/dflydev/markdown/MarkdownParser.php';
 
 class MarkdownFiles extends \tests\units\TestCase
 {
     public function testConvertToHtmlUsesMarkdownParser()
     {
         $app = new \Gumdrop\Application();
-        $MarkdownParserMock = \Mockery::mock('MarkdownParserMock');
+        $MarkdownParserMock = \Mockery::mock('\dflydev\markdown\MarkdownParser');
         $MarkdownParserMock
             ->shouldReceive('transformMarkdown')
             ->once()
@@ -21,7 +23,7 @@ class MarkdownFiles extends \tests\units\TestCase
             ->once()
             ->with(file_get_contents(__DIR__ . '/markdownFiles/testFile2.md'))
             ->andReturn('html_content2');
-        $app->MarkdownParser = $MarkdownParserMock;
+        $app->setMarkdownParser($MarkdownParserMock);
 
 
         $files = array(

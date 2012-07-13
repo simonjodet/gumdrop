@@ -17,7 +17,7 @@ class MarkdownFiles
         foreach ($files as $file)
         {
             $destination_file = $destination . '/' . pathinfo($file, PATHINFO_FILENAME) . '.htm';
-            file_put_contents($destination_file, $this->app->MarkdownParser->transformMarkdown(file_get_contents($file)));
+            file_put_contents($destination_file, $this->app->getMarkdownParser()->transformMarkdown(file_get_contents($file)));
         }
     }
 }
