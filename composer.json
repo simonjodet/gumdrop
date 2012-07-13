@@ -8,5 +8,10 @@
         "dflydev/markdown":"dev-master",
         "mockery/mockery":"0.7.2",
         "mageekguy/atoum":"dev-master"
+    },
+    "autoload":{
+        "psr-0":{
+            "Gumdrop":"."
+        }
     }
 }
