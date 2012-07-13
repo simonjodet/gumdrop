@@ -2,9 +2,11 @@
 
 namespace Gumdrop;
 
-class MarkdownFiles
+class MarkdownFilesHandler
 {
-    /* @var \Gumdrop\Application */
+    /**
+     * @var \Gumdrop\Application
+     */
     private $app;
 
     public function __construct(\Gumdrop\Application $app)
