@@ -5,6 +5,14 @@
     "type":"library",
     "license":"MIT",
     "require":{
-        "dflydev/markdown":"dev-master"
+        "dflydev/markdown":"dev-master",
+        "twig/twig":"1.x",
+        "mockery/mockery":"0.7.2",
+        "mageekguy/atoum":"dev-master"
+    },
+    "autoload":{
+        "psr-0":{
+            "Gumdrop":"."
+        }
     }
 }
