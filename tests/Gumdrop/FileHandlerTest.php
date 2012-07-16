@@ -21,6 +21,7 @@ class FileHandler extends \tests\units\TestCase
     public function deleteTestLocation($id)
     {
         rmdir($this->testLocation . '/' . $id);
+        rmdir($this->testLocation);
     }
 
     public function testListMarkdownFilesReturnsFilesWithMarkdownExtensions()
@@ -41,9 +42,9 @@ class FileHandler extends \tests\units\TestCase
         unlink($this->testLocation . '/' . $id . '/file1.md');
         unlink($this->testLocation . '/' . $id . '/file2.markdown');
         unlink($this->testLocation . '/' . $id . '/file3.txt');
-        rmdir($this->testLocation . '/' . $id);
 
         $this->array($list)->isEqualTo($expected);
+        $this->deleteTestLocation($id);
     }
 
     public function testListMarkdwonFilesListsFilesRecursively()
@@ -65,7 +66,7 @@ class FileHandler extends \tests\units\TestCase
         unlink($this->testLocation . '/' . $id . '/file2.markdown');
         unlink($this->testLocation . '/' . $id . '/file3.txt');
         rmdir($this->testLocation . '/' . $id . '/folder');
-        rmdir($this->testLocation . '/' . $id);
+        $this->deleteTestLocation($id);
 
         $this->array($list)->isEqualTo($expected);
     }

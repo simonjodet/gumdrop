@@ -41,5 +41,6 @@ class MarkdownFilesHandler extends \tests\units\TestCase
 
         unlink($destination . '/testFile.htm');
         unlink($destination . '/testFile2.htm');
+        rmdir($destination);
     }
 }
