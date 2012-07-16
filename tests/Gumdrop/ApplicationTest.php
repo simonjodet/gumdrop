@@ -4,7 +4,7 @@ namespace Gumdrop\tests\units;
 require_once __DIR__ . '/../TestCase.php';
 require_once __DIR__ . '/../../Gumdrop/Application.php';
 require_once __DIR__ . '/../../Gumdrop/FileHandler.php';
-require_once __DIR__ . '/../../Gumdrop/MarkdownFilesHandler.php';
+require_once __DIR__ . '/../../Gumdrop/Engine.php';
 
 class Application extends \tests\units\TestCase
 {
@@ -20,15 +20,33 @@ class Application extends \tests\units\TestCase
             ->with('source_path')
             ->andReturn(array('md_file_1.md'));
 
-        $MarkdownFilesHandler = \Mockery::mock('\Gumdrop\MarkdownFilesHandler');
-        $MarkdownFilesHandler
-            ->shouldReceive('convertToHtml')
+        $FileHandlerMock
+            ->shouldReceive('getMarkdownFiles')
             ->once()->ordered('generate')
-            ->with(array('md_file_1.md'), 'destination_path');
+            ->with(array('md_file_1.md'), 'source_path')
+            ->andReturn(array('md_file_1.md' => 'md content 1'));
+
+        $Engine = \Mockery::mock('\Gumdrop\Engine');
+        $Engine
+            ->shouldReceive('convertMarkdownToHtml')
+            ->once()->ordered('generate')
+            ->with(array('md_file_1.md' => 'md content 1'))
+            ->andReturn(array('md_file_1.md' => 'html content 1'));
+
+        $Engine
+            ->shouldReceive('applyTwigLayout')
+            ->once()->ordered('generate')
+            ->with(array('md_file_1.md' => 'html content 1'))
+            ->andReturn(array('md_file_1.md' => 'twig content 1'));
+
+        $Engine
+            ->shouldReceive('writeHtmFiles')
+            ->once()->ordered('generate')
+            ->with(array('md_file_1.md' => 'twig content 1'), 'destination_path');
 
         $Application = new \Gumdrop\Application();
         $Application->setFileHandler($FileHandlerMock);
-        $Application->setMarkdownFilesHandler($MarkdownFilesHandler);
+        $Application->setEngine($Engine);
         $Application->generate('source_path', 'destination_path');
     }
 }

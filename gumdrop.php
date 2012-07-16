@@ -16,7 +16,20 @@ if ($destination == '/' || $destination === false)
 require_once __DIR__ . '/vendor/autoload.php';
 $Application = new \Gumdrop\Application();
 $Application->setMarkdownParser(new \dflydev\markdown\MarkdownParser());
+
+$Application->setTwigLoaderFileSystem(new Twig_Loader_Filesystem($source . '/_layout/'));
+$Application->setTwigEnvironment(
+    new Twig_Environment(
+        $Application->getTwigLoaderFileSystem(),
+        array(
+            'autoescape' => false,
+            'strict_variables' => false
+        )
+    )
+);
+
 $Application->setFileHandler(new \Gumdrop\FileHandler());
-$Application->setMarkdownFilesHandler(new \Gumdrop\MarkdownFilesHandler($Application));
+$Application->setEngine(new \Gumdrop\Engine($Application));
+
 $Application->generate($source, $destination);
-echo $source . PHP_EOL . $destination . PHP_EOL;
+echo 'Gumdrop converted your MarkDown files converted to ' . $destination . PHP_EOL;
