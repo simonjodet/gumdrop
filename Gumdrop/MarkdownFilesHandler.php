@@ -2,6 +2,9 @@
 
 namespace Gumdrop;
 
+/**
+ * Class handling Markdown files including conversion to HTML
+ */
 class MarkdownFilesHandler
 {
     /**
@@ -9,12 +12,29 @@ class MarkdownFilesHandler
      */
     private $app;
 
+    /**
+     * @param \Gumdrop\Application $app
+     */
     public function __construct(\Gumdrop\Application $app)
     {
         $this->app = $app;
     }
 
-    public function convertToHtml($files, $destination)
+    /**
+     * Convert Markdown content to HTML
+     * @param $pages
+     * @return array
+     */
+    public function convertMarkdownToHtml($pages)
+    {
+        foreach ($pages as $location => $page)
+        {
+            $pages[$location] = $this->app->getMarkdownParser()->transformMarkdown($page);
+        }
+        return $pages;
+    }
+
+    public function writeHtmlFiles($files, $destination)
     {
         foreach ($files as $file)
         {
