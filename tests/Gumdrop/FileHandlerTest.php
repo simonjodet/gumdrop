@@ -20,8 +20,8 @@ class FileHandler extends \tests\units\TestCase
 
     public function deleteTestLocation($id)
     {
-        rmdir($this->testLocation . '/' . $id);
-        rmdir($this->testLocation);
+        exec('rm -rf ' . $this->testLocation . '/' . $id);
+        exec('rm -rf ' . $this->testLocation);
     }
 
     public function testListMarkdownFilesReturnsFilesWithMarkdownExtensions()
