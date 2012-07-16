@@ -19,4 +19,4 @@ $Application->setMarkdownParser(new \dflydev\markdown\MarkdownParser());
 $Application->setFileHandler(new \Gumdrop\FileHandler());
 $Application->setMarkdownFilesHandler(new \Gumdrop\MarkdownFilesHandler($Application));
 $Application->generate($source, $destination);
-echo $source . PHP_EOL . $destination . PHP_EOL;
+echo 'Gumdrop converted your MarkDown files converted to ' . $destination . PHP_EOL;
