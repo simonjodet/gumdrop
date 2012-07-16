@@ -2,8 +2,15 @@
 
 namespace Gumdrop;
 
+/**
+ * Contains all file system operations
+ */
 class FileHandler
 {
+    /**
+     * @param $location
+     * @return array
+     */
     public function listMarkdownFiles($location)
     {
         $files = array();
@@ -21,5 +28,20 @@ class FileHandler
             $file = realpath($file);
         });
         return $files;
+    }
+
+    /**
+     * @param $files
+     * @return array
+     */
+    public function getMarkdownFiles($files, $location)
+    {
+        $contents = array();
+        foreach ($files as $file)
+        {
+            $relative_path = ltrim(str_replace(realpath($location), '', $file), '/');
+            $contents[$relative_path] = file_get_contents($file);
+        }
+        return $contents;
     }
 }

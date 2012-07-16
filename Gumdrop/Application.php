@@ -18,9 +18,35 @@ class Application
     private $FileHandler;
 
     /**
-     * @var \Gumdrop\MarkdownFilesHandler
+     * @var \Gumdrop\Engine
      */
-    private $MarkdownFilesHandler;
+    private $Engine;
+
+    /**
+     * @var \Twig_Loader_Filesystem
+     */
+    private $TwigLoaderFileSystem;
+
+    /**
+     * @var \Twig_Environment
+     */
+    private $Twig_Environment;
+
+
+    /**
+     * Generates the site
+     * @param string $source
+     * @param string $destination
+     */
+    public function generate($source, $destination)
+    {
+        $pages = $this->FileHandler->listMarkdownFiles($source);
+        $pages = $this->FileHandler->getMarkdownFiles($pages, $source);
+        $pages = $this->Engine->convertMarkdownToHtml($pages);
+        $pages = $this->Engine->applyTwigLayout($pages);
+        $this->Engine->writeHtmFiles($pages, $destination);
+    }
+
 
     /**
      * @param \dflydev\markdown\MarkdownParser $MarkdownParser
@@ -55,29 +81,51 @@ class Application
     }
 
     /**
-     * @param \Gumdrop\MarkdownFilesHandler $MarkdownFilesHandler
+     * @param \Gumdrop\Engine $Engine
      */
-    public function setMarkdownFilesHandler($MarkdownFilesHandler)
+    public function setEngine($Engine)
     {
-        $this->MarkdownFilesHandler = $MarkdownFilesHandler;
+        $this->Engine = $Engine;
     }
 
     /**
-     * @return \Gumdrop\MarkdownFilesHandler
+     * @return \Gumdrop\Engine
      */
-    public function getMarkdownFilesHandler()
+    public function getEngine()
     {
-        return $this->MarkdownFilesHandler;
+        return $this->Engine;
     }
 
     /**
-     * @param string $source
-     * @param string $destination
+     * @param \Twig_Loader_Filesystem $TwigLoaderFileSystem
      */
-    public function generate($source, $destination)
+    public function setTwigLoaderFileSystem($TwigLoaderFileSystem)
     {
-        $files = $this->FileHandler->listMarkdownFiles($source);
-        $this->MarkdownFilesHandler->convertToHtml($files, $destination);
+        $this->TwigLoaderFileSystem = $TwigLoaderFileSystem;
+    }
+
+    /**
+     * @return \Twig_Loader_Filesystem
+     */
+    public function getTwigLoaderFileSystem()
+    {
+        return $this->TwigLoaderFileSystem;
+    }
+
+    /**
+     * @param \Twig_Environment $Twig_Environment
+     */
+    public function setTwigEnvironment($Twig_Environment)
+    {
+        $this->Twig_Environment = $Twig_Environment;
+    }
+
+    /**
+     * @return \Twig_Environment
+     */
+    public function getTwigEnvironment()
+    {
+        return $this->Twig_Environment;
     }
 
 }
