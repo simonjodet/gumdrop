@@ -13,6 +13,50 @@ class PageCollection extends \tests\units\TestCase
         $this->phpClass('\Gumdrop\PageCollection')->hasInterface('ArrayAccess');
     }
 
+    public function testConstructorAcceptAnArrayOfPages()
+    {
+        $Collection = $this->createAThreePageCollection();
+
+        $Pages = array(
+            $Collection['Page1'],
+            $Collection['Page2'],
+            $Collection['Page3']
+        );
+
+        $PageCollection = new \Gumdrop\PageCollection($Pages);
+
+        $this->object($PageCollection->offsetGet(0))->isEqualTo($Pages[0]);
+        $this->object($PageCollection->offsetGet(1))->isEqualTo($Pages[1]);
+        $this->object($PageCollection->offsetGet(2))->isEqualTo($Pages[2]);
+    }
+
+    public function testConstructorAcceptsOnlyArraysOfPages()
+    {
+        $this->assert
+            ->exception(function()
+        {
+            $Collection = $this->createAThreePageCollection();
+            $Pages = array(
+                'not a page',
+                $Collection['Page2'],
+                $Collection['Page3']
+            );
+
+            new \Gumdrop\PageCollection($Pages);
+        })
+            ->isInstanceOf('\Exception')
+            ->hasMessage('Expecting an instance of \Gumdrop\Exception');
+    }
+
+    public function testAddBehavesAsExpected()
+    {
+        $PageCollection = new \Gumdrop\PageCollection();
+        $Page = new \Gumdrop\Page();
+        $PageCollection->add($Page);
+
+        $this->object($PageCollection->offsetGet(0))->isEqualTo($Page);
+    }
+
     public function testOffsetSetAndOffsetGetWorksAsExpected()
     {
         $PageCollection = new \Gumdrop\PageCollection();

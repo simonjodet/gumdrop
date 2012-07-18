@@ -19,6 +19,28 @@ class PageCollection implements \Iterator, \Countable, \ArrayAccess
     private $position = 0;
 
     /**
+     * @param array $Pages
+     */
+    public function __construct($Pages = array())
+    {
+        if (count($Pages) > 0)
+        {
+            foreach ($Pages as $Page)
+            {
+                $this->offsetSet(null, $Page);
+            }
+        }
+    }
+
+    /**
+     * @param \Gumdrop\Page $Page
+     */
+    public function add(\Gumdrop\Page $Page)
+    {
+        $this->offsetSet(null, $Page);
+    }
+
+    /**
      * @return \Gumdrop\Page
      */
     public function current()
