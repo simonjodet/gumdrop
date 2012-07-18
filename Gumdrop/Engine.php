@@ -2,6 +2,8 @@
 
 namespace Gumdrop;
 
+require_once __DIR__ . '/PageCollection.php';
+
 /**
  * Class handling Markdown files including conversion to HTML
  */
@@ -22,51 +24,58 @@ class Engine
 
     /**
      * Convert Markdown content to HTML pages
+     *
      * @param $pages
-     * @return array
+     *
+     * @return \Gumdrop\PageCollection
      */
-    public function convertMarkdownToHtml($pages)
+    public function convertMarkdownToHtml(\Gumdrop\PageCollection $PageCollection)
     {
-        foreach ($pages as $location => $page)
+        foreach ($PageCollection as $key => $Page)
         {
-            $pages[$location] = $this->app->getMarkdownParser()->transformMarkdown($page);
+            $PageCollection[$key]->setHtmlContent($this->app->getMarkdownParser()->transformMarkdown($Page->getMarkdownContent()));
         }
-        return $pages;
+
+        return $PageCollection;
     }
 
     /**
      * Apply a twig layout to the HTML pages
-     * @param $pages
-     * @return array
+     *
+     * @param \Gumdrop\PageCollection $PageCollection
+     *
+     * @return \Gumdrop\PageCollection
      */
-    public function applyTwigLayout($pages)
+    public function applyTwigLayout(\Gumdrop\PageCollection $PageCollection)
     {
-        foreach ($pages as $location => $page)
+        foreach ($PageCollection as $key => $Page)
         {
-            $pages[$location] = $this->app->getTwigEnvironment()->render(
+            $PageCollection[$key]->setHtmlContent($this->app->getTwigEnvironment()->render(
                 'page.twig',
-                array('content' => $page)
-            );
+                array('content' => $Page->getHtmlContent())
+            ));
         }
-        return $pages;
+
+        return $PageCollection;
     }
 
     /**
      * Write HTML files to their destination
-     * @param $pages
-     * @param $destination
+     *
+     * @param \Gumdrop\PageCollection $PageCollection
+     * @param string                  $destination
      */
-    public function writeHtmFiles($pages, $destination)
+    public function writeHtmFiles(\Gumdrop\PageCollection $PageCollection, $destination)
     {
-        foreach ($pages as $location => $page)
+        foreach ($PageCollection as $Page)
         {
-            $pathinfo = pathinfo($location);
+            $pathinfo = pathinfo($Page->getLocation());
             if (!file_exists($destination . '/' . $pathinfo['dirname']))
             {
                 mkdir($destination . '/' . $pathinfo['dirname'], 0777, true);
             }
             $destination_file = $destination . '/' . $pathinfo['dirname'] . '/' . $pathinfo['filename'] . '.htm';
-            file_put_contents($destination_file, $page);
+            file_put_contents($destination_file, $Page->getHtmlContent());
         }
     }
 }

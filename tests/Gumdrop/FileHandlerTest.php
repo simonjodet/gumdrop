@@ -3,6 +3,7 @@ namespace Gumdrop\tests\units;
 
 require_once __DIR__ . '/../TestCase.php';
 require_once __DIR__ . '/../../Gumdrop/FileHandler.php';
+require_once __DIR__ . '/../../Gumdrop/PageCollection.php';
 
 class FileHandler extends \tests\units\TestCase
 {
@@ -55,21 +56,26 @@ class FileHandler extends \tests\units\TestCase
         file_put_contents($this->testLocation . '/' . $id . '/file2.markdown', 'md content 2');
 
         $FileHandler = new \Gumdrop\FileHandler();
-        $list = $FileHandler->getMarkdownFiles(array(
+        $Pages = $FileHandler->getMarkdownFiles(array(
             realpath($this->testLocation . '/' . $id . '/folder/file1.md'),
             realpath($this->testLocation . '/' . $id . '/file2.markdown')
         ), $this->testLocation . '/' . $id . '/');
 
-        $expected = array(
-            'folder/file1.md' => 'md content 1',
-            'file2.markdown' => 'md content 2'
-        );
+        $expected = new \Gumdrop\PageCollection();
+        $Page1 = new \Gumdrop\Page();
+        $Page1->setLocation('folder/file1.md');
+        $Page1->setMarkdownContent('md content 1');
+        $expected->offsetSet(null, $Page1);
+        $Page2 = new \Gumdrop\Page();
+        $Page2->setLocation('file2.markdown');
+        $Page2->setMarkdownContent('md content 2');
+        $expected->offsetSet(null, $Page2);
 
         unlink($this->testLocation . '/' . $id . '/folder/file1.md');
         unlink($this->testLocation . '/' . $id . '/file2.markdown');
         rmdir($this->testLocation . '/' . $id . '/folder');
         $this->deleteTestLocation($id);
 
-        $this->array($list)->isEqualTo($expected);
+        $this->object($Pages)->isEqualTo($expected);
     }
 }

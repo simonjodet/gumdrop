@@ -35,16 +35,17 @@ class Application
 
     /**
      * Generates the site
+     *
      * @param string $source
      * @param string $destination
      */
     public function generate($source, $destination)
     {
-        $pages = $this->FileHandler->listMarkdownFiles($source);
-        $pages = $this->FileHandler->getMarkdownFiles($pages, $source);
-        $pages = $this->Engine->convertMarkdownToHtml($pages);
-        $pages = $this->Engine->applyTwigLayout($pages);
-        $this->Engine->writeHtmFiles($pages, $destination);
+        $PageCollection = $this->FileHandler->listMarkdownFiles($source);
+        $PageCollection = $this->FileHandler->getMarkdownFiles($PageCollection, $source);
+        $PageCollection = $this->Engine->convertMarkdownToHtml($PageCollection);
+        $PageCollection = $this->Engine->applyTwigLayout($PageCollection);
+        $this->Engine->writeHtmFiles($PageCollection, $destination);
     }
 
 

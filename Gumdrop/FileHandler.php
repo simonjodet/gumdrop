@@ -2,6 +2,8 @@
 
 namespace Gumdrop;
 
+require_once __DIR__ . '/PageCollection.php';
+
 /**
  * Contains all file system operations
  */
@@ -9,6 +11,7 @@ class FileHandler
 {
     /**
      * @param $location
+     *
      * @return array
      */
     public function listMarkdownFiles($location)
@@ -32,16 +35,19 @@ class FileHandler
 
     /**
      * @param $files
-     * @return array
+     *
+     * @return \Gumdrop\PageCollection
      */
     public function getMarkdownFiles($files, $location)
     {
-        $contents = array();
+        $PageCollection = new \Gumdrop\PageCollection();
         foreach ($files as $file)
         {
-            $relative_path = ltrim(str_replace(realpath($location), '', $file), '/');
-            $contents[$relative_path] = file_get_contents($file);
+            $Page = new \Gumdrop\Page();
+            $Page->setLocation(ltrim(str_replace(realpath($location), '', $file), '/'));
+            $Page->setMarkdownContent(file_get_contents($file));
+            $PageCollection->offsetSet(null, $Page);
         }
-        return $contents;
+        return $PageCollection;
     }
 }
