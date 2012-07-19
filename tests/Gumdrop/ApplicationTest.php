@@ -13,36 +13,62 @@ class Application extends \tests\units\TestCase
      */
     public function testGenerateListFilesThenConvertThem()
     {
+        $Page = new \Gumdrop\Page();
+        $PageCollection = new \Gumdrop\PageCollection(array($Page));
+
         $FileHandlerMock = \Mockery::mock('\Gumdrop\FileHandler');
         $FileHandlerMock
             ->shouldReceive('listMarkdownFiles')
             ->once()->ordered('generate')
             ->with('source_path')
-            ->andReturn(array('md_file_1.md'));
+            ->andReturn($PageCollection);
 
         $FileHandlerMock
             ->shouldReceive('getMarkdownFiles')
             ->once()->ordered('generate')
-            ->with(array('md_file_1.md'), 'source_path')
-            ->andReturn(array('md_file_1.md' => 'md content 1'));
+            ->with($PageCollection, 'source_path')
+            ->andReturnUsing(
+            function() use($PageCollection)
+            {
+                $PageCollection[0]->setMarkdownContent('md content');
+                return $PageCollection;
+            });
+
+        $PageCollection[0]->setMarkdownContent('md content');
+
 
         $Engine = \Mockery::mock('\Gumdrop\Engine');
         $Engine
             ->shouldReceive('convertMarkdownToHtml')
             ->once()->ordered('generate')
-            ->with(array('md_file_1.md' => 'md content 1'))
-            ->andReturn(array('md_file_1.md' => 'html content 1'));
+            ->with($PageCollection)
+            ->andReturnUsing(
+            function() use($PageCollection)
+            {
+                $PageCollection[0]->setHtmlContent('html content');
+                return $PageCollection;
+            });
+
+        $PageCollection[0]->setHtmlContent('html content');
+
 
         $Engine
             ->shouldReceive('applyTwigLayout')
             ->once()->ordered('generate')
-            ->with(array('md_file_1.md' => 'html content 1'))
-            ->andReturn(array('md_file_1.md' => 'twig content 1'));
+            ->with($PageCollection)
+            ->andReturnUsing(
+            function() use($PageCollection)
+            {
+                $PageCollection[0]->setHtmlContent('twig content');
+                return $PageCollection;
+            });
+
+        $PageCollection[0]->setHtmlContent('twig content');
 
         $Engine
             ->shouldReceive('writeHtmFiles')
             ->once()->ordered('generate')
-            ->with(array('md_file_1.md' => 'twig content 1'), 'destination_path');
+            ->with($PageCollection, 'destination_path');
 
         $Application = new \Gumdrop\Application();
         $Application->setFileHandler($FileHandlerMock);
