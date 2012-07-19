@@ -32,10 +32,10 @@ class PageCollection extends \tests\units\TestCase
 
     public function testConstructorAcceptsOnlyArraysOfPages()
     {
+        $Collection = $this->createAThreePageCollection();
         $this->assert
-            ->exception(function()
+            ->exception(function() use($Collection)
         {
-            $Collection = $this->createAThreePageCollection();
             $Pages = array(
                 'not a page',
                 $Collection['Page2'],
@@ -45,7 +45,7 @@ class PageCollection extends \tests\units\TestCase
             new \Gumdrop\PageCollection($Pages);
         })
             ->isInstanceOf('\Exception')
-            ->hasMessage('Expecting an instance of \Gumdrop\Exception');
+            ->hasMessage('Expecting an instance of \Gumdrop\Page');
     }
 
     public function testAddBehavesAsExpected()
@@ -81,7 +81,7 @@ class PageCollection extends \tests\units\TestCase
             $PageCollection->offsetSet(0, 'not a Page instance');
         })
             ->isInstanceOf('\Exception')
-            ->hasMessage('Expecting an instance of \Gumdrop\Exception');
+            ->hasMessage('Expecting an instance of \Gumdrop\Page');
     }
 
     public function testOffsetSetAppendsTheValueIfOffsetIsNull()
