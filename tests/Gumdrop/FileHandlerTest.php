@@ -32,7 +32,7 @@ class FileHandler extends \tests\units\TestCase
         touch($this->testLocation . '/' . $id . '/file2.markdown');
         touch($this->testLocation . '/' . $id . '/file3.txt');
 
-        $FileHandler = new \Gumdrop\FileHandler($this->testLocation . '/' . $id . '/');
+        $FileHandler = new \Gumdrop\FileHandler($this->getApp(), $this->testLocation . '/' . $id . '/');
         $list = $FileHandler->listMarkdownFiles();
         $expected = array(
             realpath($this->testLocation . '/' . $id . '/folder/file1.md'),
@@ -55,7 +55,7 @@ class FileHandler extends \tests\units\TestCase
         file_put_contents($this->testLocation . '/' . $id . '/folder/file1.md', 'md content 1');
         file_put_contents($this->testLocation . '/' . $id . '/file2.markdown', 'md content 2');
 
-        $FileHandler = new \Gumdrop\FileHandler($this->testLocation . '/' . $id . '/');
+        $FileHandler = new \Gumdrop\FileHandler($this->getApp(), $this->testLocation . '/' . $id . '/');
         $Pages = $FileHandler->getMarkdownFiles(array(
             realpath($this->testLocation . '/' . $id . '/folder/file1.md'),
             realpath($this->testLocation . '/' . $id . '/file2.markdown')
@@ -83,7 +83,7 @@ class FileHandler extends \tests\units\TestCase
     {
         $location = __DIR__ . '/FileHandler/with_page_twig';
 
-        $FileHandler = new \Gumdrop\FileHandler($location);
+        $FileHandler = new \Gumdrop\FileHandler($this->getApp(), $location);
         $this->boolean($FileHandler->findPageTwigFile())->isTrue();
     }
 
@@ -91,7 +91,7 @@ class FileHandler extends \tests\units\TestCase
     {
         $location = __DIR__ . '/FileHandler/without_page_twig';
 
-        $FileHandler = new \Gumdrop\FileHandler($location);
+        $FileHandler = new \Gumdrop\FileHandler($this->getApp(), $location);
         $this->boolean($FileHandler->findPageTwigFile())->isFalse();
     }
 }

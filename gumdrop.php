@@ -28,7 +28,7 @@ $Application->setTwigEnvironment(
     )
 );
 
-$Application->setFileHandler(new \Gumdrop\FileHandler($source));
+$Application->setFileHandler(new \Gumdrop\FileHandler($Application, $source));
 $Application->setEngine(new \Gumdrop\Engine($Application));
 
 $Application->generate($destination);

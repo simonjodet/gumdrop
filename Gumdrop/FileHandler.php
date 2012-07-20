@@ -16,10 +16,17 @@ class FileHandler
     private $location;
 
     /**
+     * @var \Gumdrop\Application
+     */
+    private $app;
+
+    /**
+     * @param \Gumdrop\Application $app
      * @param string $location
      */
-    public function __construct($location = '')
+    public function __construct(\Gumdrop\Application $app, $location = '')
     {
+        $this->app = $app;
         $this->location = $location;
     }
 

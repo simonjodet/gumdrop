@@ -31,4 +31,13 @@ class TestCase extends atoum\test
     {
         return rand(0, 1000000);
     }
+
+    /**
+     * @return \Gumdrop\Application
+     */
+    protected function getApp()
+    {
+        return new \Gumdrop\Application();
+    }
+
 }
