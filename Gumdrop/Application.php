@@ -39,10 +39,10 @@ class Application
      * @param string $source
      * @param string $destination
      */
-    public function generate($source, $destination)
+    public function generate($destination)
     {
-        $PageCollection = $this->FileHandler->listMarkdownFiles($source);
-        $PageCollection = $this->FileHandler->getMarkdownFiles($PageCollection, $source);
+        $PageCollection = $this->FileHandler->listMarkdownFiles();
+        $PageCollection = $this->FileHandler->getMarkdownFiles($PageCollection);
         $PageCollection = $this->Engine->convertMarkdownToHtml($PageCollection);
         $PageCollection = $this->Engine->applyTwigLayout($PageCollection);
         $this->Engine->writeHtmFiles($PageCollection, $destination);

@@ -24,7 +24,7 @@ class FileHandler extends \tests\units\TestCase
         exec('rm -rf ' . $this->testLocation . '/' . $id);
     }
 
-    public function testListMarkdwonFilesListsFilesRecursively()
+    public function testListMarkdownFilesListsFilesRecursively()
     {
         $id = '/' . $this->getUniqueId();
         mkdir($this->testLocation . '/' . $id . '/folder', 0777, true);
@@ -32,8 +32,8 @@ class FileHandler extends \tests\units\TestCase
         touch($this->testLocation . '/' . $id . '/file2.markdown');
         touch($this->testLocation . '/' . $id . '/file3.txt');
 
-        $FileHandler = new \Gumdrop\FileHandler();
-        $list = $FileHandler->listMarkdownFiles($this->testLocation . '/' . $id . '/');
+        $FileHandler = new \Gumdrop\FileHandler($this->testLocation . '/' . $id . '/');
+        $list = $FileHandler->listMarkdownFiles();
         $expected = array(
             realpath($this->testLocation . '/' . $id . '/folder/file1.md'),
             realpath($this->testLocation . '/' . $id . '/file2.markdown')
@@ -55,11 +55,11 @@ class FileHandler extends \tests\units\TestCase
         file_put_contents($this->testLocation . '/' . $id . '/folder/file1.md', 'md content 1');
         file_put_contents($this->testLocation . '/' . $id . '/file2.markdown', 'md content 2');
 
-        $FileHandler = new \Gumdrop\FileHandler();
+        $FileHandler = new \Gumdrop\FileHandler($this->testLocation . '/' . $id . '/');
         $Pages = $FileHandler->getMarkdownFiles(array(
             realpath($this->testLocation . '/' . $id . '/folder/file1.md'),
             realpath($this->testLocation . '/' . $id . '/file2.markdown')
-        ), $this->testLocation . '/' . $id . '/');
+        ));
 
         $expected = new \Gumdrop\PageCollection();
         $Page1 = new \Gumdrop\Page();
@@ -83,15 +83,15 @@ class FileHandler extends \tests\units\TestCase
     {
         $location = __DIR__ . '/FileHandler/with_page_twig';
 
-        $FileHandler = new \Gumdrop\FileHandler();
-        $this->boolean($FileHandler->findPageTwigFile($location))->isTrue();
+        $FileHandler = new \Gumdrop\FileHandler($location);
+        $this->boolean($FileHandler->findPageTwigFile())->isTrue();
     }
 
     public function testFindPageTwigFileReturnsFalseIfThisTwigFileDoesNotExist()
     {
         $location = __DIR__ . '/FileHandler/without_page_twig';
 
-        $FileHandler = new \Gumdrop\FileHandler();
-        $this->boolean($FileHandler->findPageTwigFile($location))->isFalse();
+        $FileHandler = new \Gumdrop\FileHandler($location);
+        $this->boolean($FileHandler->findPageTwigFile())->isFalse();
     }
 }

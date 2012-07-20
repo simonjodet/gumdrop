@@ -10,12 +10,32 @@ require_once __DIR__ . '/PageCollection.php';
 class FileHandler
 {
     /**
+     * Location of the files to handle
+     * @var string
+     */
+    private $location;
+
+    /**
+     * @param string $location
+     */
+    public function __construct($location = '')
+    {
+        $this->location = $location;
+    }
+
+    /**
+     * Builds a list of Markdown files recursively
+     *
      * @param $location
      *
      * @return array
      */
-    public function listMarkdownFiles($location)
+    public function listMarkdownFiles($location = '')
     {
+        if ($location == '')
+        {
+            $location = $this->location;
+        }
         $files = array();
         $directories = glob($location . '/*', GLOB_ONLYDIR);
         if (is_array($directories) && count($directories) > 0)
@@ -34,17 +54,19 @@ class FileHandler
     }
 
     /**
+     * Builds a PageCollection out of a list of Markdown files
+     *
      * @param $files
      *
      * @return \Gumdrop\PageCollection
      */
-    public function getMarkdownFiles($files, $location)
+    public function getMarkdownFiles($files)
     {
         $PageCollection = new \Gumdrop\PageCollection();
         foreach ($files as $file)
         {
             $Page = new \Gumdrop\Page();
-            $Page->setLocation(ltrim(str_replace(realpath($location), '', $file), '/'));
+            $Page->setLocation(ltrim(str_replace(realpath($this->location), '', $file), '/'));
             $Page->setMarkdownContent(file_get_contents($file));
             $PageCollection->offsetSet(null, $Page);
         }
@@ -52,12 +74,14 @@ class FileHandler
     }
 
     /**
+     * Checks if the page.twig file exists at the given location
+     *
      * @param string $location
      *
      * @return bool
      */
-    public function findPageTwigFile($location)
+    public function findPageTwigFile()
     {
-        return file_exists($location . '/_layout/page.twig');
+        return file_exists($this->location . '/_layout/page.twig');
     }
 }

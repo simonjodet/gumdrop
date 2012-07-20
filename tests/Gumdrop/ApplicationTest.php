@@ -19,14 +19,13 @@ class Application extends \tests\units\TestCase
         $FileHandlerMock = \Mockery::mock('\Gumdrop\FileHandler');
         $FileHandlerMock
             ->shouldReceive('listMarkdownFiles')
-            ->once()->ordered('generate')
-            ->with('source_path')
+            ->ordered('generate')
             ->andReturn($PageCollection);
 
         $FileHandlerMock
             ->shouldReceive('getMarkdownFiles')
-            ->once()->ordered('generate')
-            ->with($PageCollection, 'source_path')
+            ->ordered('generate')
+            ->with($PageCollection)
             ->andReturnUsing(
             function() use($PageCollection)
             {
@@ -73,6 +72,6 @@ class Application extends \tests\units\TestCase
         $Application = new \Gumdrop\Application();
         $Application->setFileHandler($FileHandlerMock);
         $Application->setEngine($Engine);
-        $Application->generate('source_path', 'destination_path');
+        $Application->generate('destination_path');
     }
 }

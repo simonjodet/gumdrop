@@ -28,8 +28,8 @@ $Application->setTwigEnvironment(
     )
 );
 
-$Application->setFileHandler(new \Gumdrop\FileHandler());
+$Application->setFileHandler(new \Gumdrop\FileHandler($source));
 $Application->setEngine(new \Gumdrop\Engine($Application));
 
-$Application->generate($source, $destination);
+$Application->generate($destination);
 echo 'Gumdrop converted your MarkDown files converted to ' . $destination . PHP_EOL;
