@@ -65,6 +65,17 @@ class Engine extends \tests\units\TestCase
             ->once()
             ->andReturn('twig content 2');
 
+        $app->setTwigEnvironment($Twig_Environment);
+
+        $FileHandler = \Mockery::mock('\Gumdrop\FileHandler');
+        $FileHandler
+            ->shouldReceive('findPageTwigFile')
+            ->once()
+            ->withNoArgs()
+            ->andReturn(true);
+
+        $app->setFileHandler($FileHandler);
+
         $Page1 = new \Gumdrop\Page();
         $Page1->setHtmlContent('html content 1');
         $Page2 = new \Gumdrop\Page();
@@ -74,12 +85,40 @@ class Engine extends \tests\units\TestCase
             $Page2
         ));
 
-        $app->setTwigEnvironment($Twig_Environment);
         $MarkdownFiles = new \Gumdrop\Engine($app);
         $convertedPageCollection = $MarkdownFiles->applyTwigLayout($PageCollection);
 
         $this->string($convertedPageCollection[0]->getHtmlContent())->isEqualTo('twig content 1');
         $this->string($convertedPageCollection[1]->getHtmlContent())->isEqualTo('twig content 2');
+    }
+
+    public function testApplyTwigLayoutDoesNotApplyTheLayoutToPagesIfItDoesNotExist()
+    {
+        $app = new \Gumdrop\Application();
+
+        $FileHandler = \Mockery::mock('\Gumdrop\FileHandler');
+        $FileHandler
+            ->shouldReceive('findPageTwigFile')
+            ->once()
+            ->withNoArgs()
+            ->andReturn(false);
+
+        $app->setFileHandler($FileHandler);
+
+        $Page1 = new \Gumdrop\Page();
+        $Page1->setHtmlContent('html content 1');
+        $Page2 = new \Gumdrop\Page();
+        $Page2->setHtmlContent('html content 2');
+        $PageCollection = new \Gumdrop\PageCollection(array(
+            $Page1,
+            $Page2
+        ));
+
+        $MarkdownFiles = new \Gumdrop\Engine($app);
+        $convertedPageCollection = $MarkdownFiles->applyTwigLayout($PageCollection);
+
+        $this->string($convertedPageCollection[0]->getHtmlContent())->isEqualTo('html content 1');
+        $this->string($convertedPageCollection[1]->getHtmlContent())->isEqualTo('html content 2');
     }
 
     public function testWriteHtmlFilesWritePagesToHtmFiles()
