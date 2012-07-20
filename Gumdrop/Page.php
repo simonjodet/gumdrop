@@ -35,6 +35,20 @@ class Page
         $this->app = $app;
     }
 
+    public function convertMarkdownToHtml()
+    {
+        $this->setHtmlContent($this->app->getMarkdownParser()->transformMarkdown($this->getMarkdownContent()));
+    }
+
+    /**
+     * TODO: test if header exists - header is delimited by "***"
+     * TODO: test if it contains valid JSON
+     */
+    public function convertConfigurationHeader()
+    {
+        ;
+    }
+
     /**
      * @param string $htmlContent
      */

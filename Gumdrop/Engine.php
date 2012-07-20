@@ -33,7 +33,7 @@ class Engine
     {
         foreach ($PageCollection as $key => $Page)
         {
-            $PageCollection[$key]->setHtmlContent($this->app->getMarkdownParser()->transformMarkdown($Page->getMarkdownContent()));
+            $PageCollection[$key]->convertMarkdownToHtml();
         }
 
         return $PageCollection;

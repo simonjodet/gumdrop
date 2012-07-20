@@ -8,37 +8,27 @@ require_once __DIR__ . '/../../vendor/dflydev/markdown/src/dflydev/markdown/Mark
 
 class Engine extends \tests\units\TestCase
 {
+    /**
+     * @isNotVoid
+     */
     public function testConvertMarkdownToHtmlUsesTheMarkdownParser()
     {
-        $app = new \Gumdrop\Application();
-        $MarkdownParserMock = \Mockery::mock('\dflydev\markdown\MarkdownParser');
-        $MarkdownParserMock
-            ->shouldReceive('transformMarkdown')
-            ->once()
-            ->with('md content 1')
-            ->andReturn('html content 1');
-
-        $MarkdownParserMock
-            ->shouldReceive('transformMarkdown')
-            ->once()
-            ->with('md content 2')
-            ->andReturn('html content 2');
-        $app->setMarkdownParser($MarkdownParserMock);
-
-        $Page1 = new \Gumdrop\Page($this->getApp());
-        $Page1->setMarkdownContent('md content 1');
-        $Page2 = new \Gumdrop\Page($this->getApp());
-        $Page2->setMarkdownContent('md content 2');
+        $Page1 = \Mockery::mock('\Gumdrop\Page');
+        $Page1
+            ->shouldReceive('convertMarkdownToHtml')
+            ->once();
+        $Page2 = \Mockery::mock('\Gumdrop\Page');
+        $Page2
+            ->shouldReceive('convertMarkdownToHtml')
+            ->once();
         $PageCollection = new \Gumdrop\PageCollection(array(
             $Page1,
             $Page2
         ));
 
-        $MarkdownFiles = new \Gumdrop\Engine($app);
+        $MarkdownFiles = new \Gumdrop\Engine($this->getApp());
         $convertedPageCollection = $MarkdownFiles->convertMarkdownToHtml($PageCollection);
 
-        $this->string($convertedPageCollection[0]->getHtmlContent())->isEqualTo('html content 1');
-        $this->string($convertedPageCollection[1]->getHtmlContent())->isEqualTo('html content 2');
     }
 
     public function testApplyTwigLayoutAppliesTheLayoutToPages()
