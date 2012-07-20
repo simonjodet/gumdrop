@@ -78,4 +78,20 @@ class FileHandler extends \tests\units\TestCase
 
         $this->object($Pages)->isEqualTo($expected);
     }
+
+    public function testFindPageTwigFileReturnsTrueIfThisTwigFileExists()
+    {
+        $location = __DIR__ . '/FileHandler/with_page_twig';
+
+        $FileHandler = new \Gumdrop\FileHandler();
+        $this->boolean($FileHandler->findPageTwigFile($location))->isTrue();
+    }
+
+    public function testFindPageTwigFileReturnsFalseIfThisTwigFileDoesNotExist()
+    {
+        $location = __DIR__ . '/FileHandler/without_page_twig';
+
+        $FileHandler = new \Gumdrop\FileHandler();
+        $this->boolean($FileHandler->findPageTwigFile($location))->isFalse();
+    }
 }

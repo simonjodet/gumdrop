@@ -50,4 +50,14 @@ class FileHandler
         }
         return $PageCollection;
     }
+
+    /**
+     * @param string $location
+     *
+     * @return bool
+     */
+    public function findPageTwigFile($location)
+    {
+        return file_exists($location . '/_layout/page.twig');
+    }
 }
