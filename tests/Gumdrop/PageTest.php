@@ -74,4 +74,25 @@ class Page extends \tests\units\TestCase
 
         $this->string($Page->getHtmlContent())->isEqualTo('html content 1');
     }
+
+    public function testWriteHtmlFilesWritePagesToHtmFiles()
+    {
+        $app = new \Gumdrop\Application();
+
+        $Page = new \Gumdrop\Page($app);
+        $Page->setLocation('folder/file_1_path.md');
+        $Page->setHtmlContent('twig content 1');
+
+        $destination = TMP_FOLDER . $this->getUniqueId();
+        mkdir($destination);
+
+        $Page->writeHtmFiles($destination);
+
+        $this->string(file_get_contents($destination . '/folder/file_1_path.htm'))->isEqualTo('twig content 1');
+
+        unlink($destination . '/folder/file_1_path.htm');
+        rmdir($destination . '/folder');
+        rmdir($destination);
+    }
+
 }

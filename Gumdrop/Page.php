@@ -51,6 +51,17 @@ class Page
         }
     }
 
+    public function writeHtmFiles($destination)
+    {
+        $pathinfo = pathinfo($this->getLocation());
+        if (!file_exists($destination . '/' . $pathinfo['dirname']))
+        {
+            mkdir($destination . '/' . $pathinfo['dirname'], 0777, true);
+        }
+        $destination_file = $destination . '/' . $pathinfo['dirname'] . '/' . $pathinfo['filename'] . '.htm';
+        file_put_contents($destination_file, $this->getHtmlContent());
+    }
+
     /**
      * TODO: test if header exists - header is delimited by "***"
      * TODO: test if it contains valid JSON

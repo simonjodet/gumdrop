@@ -64,15 +64,9 @@ class Engine
      */
     public function writeHtmFiles(\Gumdrop\PageCollection $PageCollection, $destination)
     {
-        foreach ($PageCollection as $Page)
+        foreach ($PageCollection as $key => $Page)
         {
-            $pathinfo = pathinfo($Page->getLocation());
-            if (!file_exists($destination . '/' . $pathinfo['dirname']))
-            {
-                mkdir($destination . '/' . $pathinfo['dirname'], 0777, true);
-            }
-            $destination_file = $destination . '/' . $pathinfo['dirname'] . '/' . $pathinfo['filename'] . '.htm';
-            file_put_contents($destination_file, $Page->getHtmlContent());
+            $PageCollection[$key]->writeHtmFiles($destination);
         }
     }
 }
