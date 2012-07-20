@@ -13,7 +13,7 @@ class Application extends \tests\units\TestCase
      */
     public function testGenerateListFilesThenConvertThem()
     {
-        $Page = new \Gumdrop\Page();
+        $Page = new \Gumdrop\Page($this->getApp());
         $PageCollection = new \Gumdrop\PageCollection(array($Page));
 
         $FileHandlerMock = \Mockery::mock('\Gumdrop\FileHandler');

@@ -55,18 +55,20 @@ class FileHandler extends \tests\units\TestCase
         file_put_contents($this->testLocation . '/' . $id . '/folder/file1.md', 'md content 1');
         file_put_contents($this->testLocation . '/' . $id . '/file2.markdown', 'md content 2');
 
-        $FileHandler = new \Gumdrop\FileHandler($this->getApp(), $this->testLocation . '/' . $id . '/');
+        $app = $this->getApp();
+
+        $FileHandler = new \Gumdrop\FileHandler($app, $this->testLocation . '/' . $id . '/');
         $Pages = $FileHandler->getMarkdownFiles(array(
             realpath($this->testLocation . '/' . $id . '/folder/file1.md'),
             realpath($this->testLocation . '/' . $id . '/file2.markdown')
         ));
 
         $expected = new \Gumdrop\PageCollection();
-        $Page1 = new \Gumdrop\Page();
+        $Page1 = new \Gumdrop\Page($app);
         $Page1->setLocation('folder/file1.md');
         $Page1->setMarkdownContent('md content 1');
         $expected->offsetSet(null, $Page1);
-        $Page2 = new \Gumdrop\Page();
+        $Page2 = new \Gumdrop\Page($app);
         $Page2->setLocation('file2.markdown');
         $Page2->setMarkdownContent('md content 2');
         $expected->offsetSet(null, $Page2);

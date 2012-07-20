@@ -51,7 +51,7 @@ class PageCollection extends \tests\units\TestCase
     public function testAddBehavesAsExpected()
     {
         $PageCollection = new \Gumdrop\PageCollection();
-        $Page = new \Gumdrop\Page();
+        $Page = new \Gumdrop\Page($this->getApp());
         $PageCollection->add($Page);
 
         $this->object($PageCollection->offsetGet(0))->isEqualTo($Page);
@@ -60,7 +60,7 @@ class PageCollection extends \tests\units\TestCase
     public function testOffsetSetAndOffsetGetWorksAsExpected()
     {
         $PageCollection = new \Gumdrop\PageCollection();
-        $Page = new \Gumdrop\Page();
+        $Page = new \Gumdrop\Page($this->getApp());
         $PageCollection->offsetSet(0, $Page);
 
         $this->object($PageCollection->offsetGet(0))->isEqualTo($Page);
@@ -87,7 +87,7 @@ class PageCollection extends \tests\units\TestCase
     public function testOffsetSetAppendsTheValueIfOffsetIsNull()
     {
         $PageCollection = new \Gumdrop\PageCollection();
-        $Page = new \Gumdrop\Page();
+        $Page = new \Gumdrop\Page($this->getApp());
         $PageCollection->offsetSet(0, $Page);
         $Page->setLocation('location');
         $PageCollection->offsetSet(null, $Page);
@@ -98,7 +98,7 @@ class PageCollection extends \tests\units\TestCase
     public function testOffsetExistsBehavesAsExpected()
     {
         $PageCollection = new \Gumdrop\PageCollection();
-        $Page = new \Gumdrop\Page();
+        $Page = new \Gumdrop\Page($this->getApp());
         $PageCollection->offsetSet(2, $Page);
         $this->object($PageCollection->offsetGet(2))->isEqualTo($Page);
         $this->boolean($PageCollection->offsetExists(2))->isIdenticalTo(true);
@@ -108,7 +108,7 @@ class PageCollection extends \tests\units\TestCase
     public function testOffsetUnsetBehavesAsExpected()
     {
         $PageCollection = new \Gumdrop\PageCollection();
-        $Page = new \Gumdrop\Page();
+        $Page = new \Gumdrop\Page($this->getApp());
         $PageCollection->offsetSet(2, $Page);
         $this->boolean($PageCollection->offsetExists(2))->isIdenticalTo(true);
         $PageCollection->offsetUnset(2);
@@ -119,7 +119,7 @@ class PageCollection extends \tests\units\TestCase
     {
         $PageCollection = new \Gumdrop\PageCollection();
         $this->integer($PageCollection->count())->isEqualTo(0);
-        $Page = new \Gumdrop\Page();
+        $Page = new \Gumdrop\Page($this->getApp());
         $PageCollection->offsetSet(2, $Page);
         $this->integer($PageCollection->count())->isEqualTo(1);
         $PageCollection->offsetSet(3, $Page);
@@ -185,13 +185,13 @@ class PageCollection extends \tests\units\TestCase
     private function createAThreePageCollection()
     {
         $PageCollection = new \Gumdrop\PageCollection();
-        $Page1 = new \Gumdrop\Page();
+        $Page1 = new \Gumdrop\Page($this->getApp());
         $Page1->setLocation('page1');
         $PageCollection->offsetSet(null, $Page1);
-        $Page2 = new \Gumdrop\Page();
+        $Page2 = new \Gumdrop\Page($this->getApp());
         $Page2->setLocation('page2');
         $PageCollection->offsetSet(null, $Page2);
-        $Page3 = new \Gumdrop\Page();
+        $Page3 = new \Gumdrop\Page($this->getApp());
         $Page3->setLocation('page3');
         $PageCollection->offsetSet(null, $Page3);
 

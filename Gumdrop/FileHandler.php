@@ -72,7 +72,7 @@ class FileHandler
         $PageCollection = new \Gumdrop\PageCollection();
         foreach ($files as $file)
         {
-            $Page = new \Gumdrop\Page();
+            $Page = new \Gumdrop\Page($this->app);
             $Page->setLocation(ltrim(str_replace(realpath($this->location), '', $file), '/'));
             $Page->setMarkdownContent(file_get_contents($file));
             $PageCollection->offsetSet(null, $Page);

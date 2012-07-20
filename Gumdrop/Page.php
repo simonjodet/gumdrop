@@ -22,6 +22,18 @@ class Page
      */
     private $htmlContent;
 
+    /**
+     * @var \Gumdrop\Application
+     */
+    private $app;
+
+    /**
+     * @param \Gumdrop\Application $app
+     */
+    public function __construct(\Gumdrop\Application $app)
+    {
+        $this->app = $app;
+    }
 
     /**
      * @param string $htmlContent

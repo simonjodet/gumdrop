@@ -25,9 +25,9 @@ class Engine extends \tests\units\TestCase
             ->andReturn('html content 2');
         $app->setMarkdownParser($MarkdownParserMock);
 
-        $Page1 = new \Gumdrop\Page();
+        $Page1 = new \Gumdrop\Page($this->getApp());
         $Page1->setMarkdownContent('md content 1');
-        $Page2 = new \Gumdrop\Page();
+        $Page2 = new \Gumdrop\Page($this->getApp());
         $Page2->setMarkdownContent('md content 2');
         $PageCollection = new \Gumdrop\PageCollection(array(
             $Page1,
@@ -76,9 +76,9 @@ class Engine extends \tests\units\TestCase
 
         $app->setFileHandler($FileHandler);
 
-        $Page1 = new \Gumdrop\Page();
+        $Page1 = new \Gumdrop\Page($this->getApp());
         $Page1->setHtmlContent('html content 1');
-        $Page2 = new \Gumdrop\Page();
+        $Page2 = new \Gumdrop\Page($this->getApp());
         $Page2->setHtmlContent('html content 2');
         $PageCollection = new \Gumdrop\PageCollection(array(
             $Page1,
@@ -105,9 +105,9 @@ class Engine extends \tests\units\TestCase
 
         $app->setFileHandler($FileHandler);
 
-        $Page1 = new \Gumdrop\Page();
+        $Page1 = new \Gumdrop\Page($this->getApp());
         $Page1->setHtmlContent('html content 1');
-        $Page2 = new \Gumdrop\Page();
+        $Page2 = new \Gumdrop\Page($this->getApp());
         $Page2->setHtmlContent('html content 2');
         $PageCollection = new \Gumdrop\PageCollection(array(
             $Page1,
@@ -125,10 +125,10 @@ class Engine extends \tests\units\TestCase
     {
         $app = new \Gumdrop\Application();
 
-        $Page1 = new \Gumdrop\Page();
+        $Page1 = new \Gumdrop\Page($this->getApp());
         $Page1->setLocation('folder/file_1_path.md');
         $Page1->setHtmlContent('twig content 1');
-        $Page2 = new \Gumdrop\Page();
+        $Page2 = new \Gumdrop\Page($this->getApp());
         $Page2->setLocation('file_2_path.md');
         $Page2->setHtmlContent('twig content 2');
         $PageCollection = new \Gumdrop\PageCollection(array(
