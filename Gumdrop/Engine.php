@@ -48,15 +48,9 @@ class Engine
      */
     public function applyTwigLayout(\Gumdrop\PageCollection $PageCollection)
     {
-        if ($this->app->getFileHandler()->findPageTwigFile())
+        foreach ($PageCollection as $key => $Page)
         {
-            foreach ($PageCollection as $key => $Page)
-            {
-                $PageCollection[$key]->setHtmlContent($this->app->getTwigEnvironment()->render(
-                    'page.twig',
-                    array('content' => $Page->getHtmlContent())
-                ));
-            }
+            $PageCollection[$key]->applyTwigLayout();
         }
 
         return $PageCollection;

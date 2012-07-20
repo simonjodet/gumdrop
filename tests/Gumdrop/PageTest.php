@@ -26,4 +26,52 @@ class Page extends \tests\units\TestCase
 
         $this->string($Page->getHtmlContent())->isEqualTo('html content 1');
     }
+
+    public function testApplyTwigLayoutAppliesTheLayoutToPages()
+    {
+        $app = new \Gumdrop\Application();
+        $Twig_Environment = \Mockery::mock('\Twig_Environment');
+        $Twig_Environment
+            ->shouldReceive('render')
+            ->with(
+            'page.twig',
+            array(
+                'content' => 'html content 1'
+            ))
+            ->andReturn('twig content 1');
+
+        $app->setTwigEnvironment($Twig_Environment);
+
+        $FileHandler = \Mockery::mock('\Gumdrop\FileHandler');
+        $FileHandler
+            ->shouldReceive('findPageTwigFile')
+            ->andReturn(true);
+
+        $app->setFileHandler($FileHandler);
+
+        $Page = new \Gumdrop\Page($app);
+        $Page->setHtmlContent('html content 1');
+
+        $Page->applyTwigLayout();
+
+        $this->string($Page->getHtmlContent())->isEqualTo('twig content 1');
+    }
+
+    public function testApplyTwigLayoutDoesNotApplyTheLayoutToPagesIfItDoesNotExist()
+    {
+        $app = new \Gumdrop\Application();
+        $FileHandler = \Mockery::mock('\Gumdrop\FileHandler');
+        $FileHandler
+            ->shouldReceive('findPageTwigFile')
+            ->andReturn(false);
+
+        $app->setFileHandler($FileHandler);
+
+        $Page = new \Gumdrop\Page($app);
+        $Page->setHtmlContent('html content 1');
+
+        $Page->applyTwigLayout();
+
+        $this->string($Page->getHtmlContent())->isEqualTo('html content 1');
+    }
 }

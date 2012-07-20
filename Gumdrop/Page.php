@@ -40,11 +40,23 @@ class Page
         $this->setHtmlContent($this->app->getMarkdownParser()->transformMarkdown($this->getMarkdownContent()));
     }
 
+    public function applyTwigLayout()
+    {
+        if ($this->app->getFileHandler()->findPageTwigFile())
+        {
+            $this->setHtmlContent($this->app->getTwigEnvironment()->render(
+                'page.twig',
+                array('content' => $this->getHtmlContent())
+            ));
+        }
+    }
+
     /**
      * TODO: test if header exists - header is delimited by "***"
      * TODO: test if it contains valid JSON
      */
-    public function convertConfigurationHeader()
+    public
+    function convertConfigurationHeader()
     {
         ;
     }
@@ -52,7 +64,8 @@ class Page
     /**
      * @param string $htmlContent
      */
-    public function setHtmlContent($htmlContent)
+    public
+    function setHtmlContent($htmlContent)
     {
         $this->htmlContent = $htmlContent;
     }
@@ -60,7 +73,8 @@ class Page
     /**
      * @return string
      */
-    public function getHtmlContent()
+    public
+    function getHtmlContent()
     {
         return $this->htmlContent;
     }
@@ -68,7 +82,8 @@ class Page
     /**
      * @param string $location
      */
-    public function setLocation($location)
+    public
+    function setLocation($location)
     {
         $this->location = $location;
     }
@@ -76,7 +91,8 @@ class Page
     /**
      * @return string
      */
-    public function getLocation()
+    public
+    function getLocation()
     {
         return $this->location;
     }
@@ -84,7 +100,8 @@ class Page
     /**
      * @param $markdownContent
      */
-    public function setMarkdownContent($markdownContent)
+    public
+    function setMarkdownContent($markdownContent)
     {
         $this->markdownContent = $markdownContent;
     }
@@ -92,7 +109,8 @@ class Page
     /**
      * @return string
      */
-    public function getMarkdownContent()
+    public
+    function getMarkdownContent()
     {
         return $this->markdownContent;
     }

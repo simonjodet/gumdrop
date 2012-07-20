@@ -11,7 +11,7 @@ class Engine extends \tests\units\TestCase
     /**
      * @isNotVoid
      */
-    public function testConvertMarkdownToHtmlUsesTheMarkdownParser()
+    public function testConvertMarkdownToHtmlCallsThePageMethod()
     {
         $Page1 = \Mockery::mock('\Gumdrop\Page');
         $Page1
@@ -27,88 +27,27 @@ class Engine extends \tests\units\TestCase
         ));
 
         $MarkdownFiles = new \Gumdrop\Engine($this->getApp());
-        $convertedPageCollection = $MarkdownFiles->convertMarkdownToHtml($PageCollection);
-
+        $MarkdownFiles->convertMarkdownToHtml($PageCollection);
     }
 
-    public function testApplyTwigLayoutAppliesTheLayoutToPages()
+    public function testApplyTwigLayoutCallsThePageMethod()
     {
-        $app = new \Gumdrop\Application();
-        $Twig_Environment = \Mockery::mock('\Twig_Environment');
-        $Twig_Environment
-            ->shouldReceive('render')
-            ->with(
-            'page.twig',
-            array(
-                'content' => 'html content 1'
-            ))
-            ->once()
-            ->andReturn('twig content 1');
-
-        $Twig_Environment
-            ->shouldReceive('render')
-            ->with(
-            'page.twig',
-            array(
-                'content' => 'html content 2'
-            ))
-            ->once()
-            ->andReturn('twig content 2');
-
-        $app->setTwigEnvironment($Twig_Environment);
-
-        $FileHandler = \Mockery::mock('\Gumdrop\FileHandler');
-        $FileHandler
-            ->shouldReceive('findPageTwigFile')
-            ->once()
-            ->withNoArgs()
-            ->andReturn(true);
-
-        $app->setFileHandler($FileHandler);
-
-        $Page1 = new \Gumdrop\Page($this->getApp());
-        $Page1->setHtmlContent('html content 1');
-        $Page2 = new \Gumdrop\Page($this->getApp());
-        $Page2->setHtmlContent('html content 2');
+        $Page1 = \Mockery::mock('\Gumdrop\Page');
+        $Page1
+            ->shouldReceive('applyTwigLayout')
+            ->once();
+        $Page2 = \Mockery::mock('\Gumdrop\Page');
+        $Page2
+            ->shouldReceive('applyTwigLayout')
+            ->once();
         $PageCollection = new \Gumdrop\PageCollection(array(
             $Page1,
             $Page2
         ));
 
-        $MarkdownFiles = new \Gumdrop\Engine($app);
-        $convertedPageCollection = $MarkdownFiles->applyTwigLayout($PageCollection);
+        $MarkdownFiles = new \Gumdrop\Engine($this->getApp());
+        $MarkdownFiles->applyTwigLayout($PageCollection);
 
-        $this->string($convertedPageCollection[0]->getHtmlContent())->isEqualTo('twig content 1');
-        $this->string($convertedPageCollection[1]->getHtmlContent())->isEqualTo('twig content 2');
-    }
-
-    public function testApplyTwigLayoutDoesNotApplyTheLayoutToPagesIfItDoesNotExist()
-    {
-        $app = new \Gumdrop\Application();
-
-        $FileHandler = \Mockery::mock('\Gumdrop\FileHandler');
-        $FileHandler
-            ->shouldReceive('findPageTwigFile')
-            ->once()
-            ->withNoArgs()
-            ->andReturn(false);
-
-        $app->setFileHandler($FileHandler);
-
-        $Page1 = new \Gumdrop\Page($this->getApp());
-        $Page1->setHtmlContent('html content 1');
-        $Page2 = new \Gumdrop\Page($this->getApp());
-        $Page2->setHtmlContent('html content 2');
-        $PageCollection = new \Gumdrop\PageCollection(array(
-            $Page1,
-            $Page2
-        ));
-
-        $MarkdownFiles = new \Gumdrop\Engine($app);
-        $convertedPageCollection = $MarkdownFiles->applyTwigLayout($PageCollection);
-
-        $this->string($convertedPageCollection[0]->getHtmlContent())->isEqualTo('html content 1');
-        $this->string($convertedPageCollection[1]->getHtmlContent())->isEqualTo('html content 2');
     }
 
     public function testWriteHtmlFilesWritePagesToHtmFiles()
