@@ -1,16 +1,13 @@
 <?php
-namespace Gumdrop\tests\units;
+namespace Gumdrop\Tests;
 
 require_once __DIR__ . '/../TestCase.php';
 require_once __DIR__ . '/../../Gumdrop/Application.php';
 require_once __DIR__ . '/../../Gumdrop/FileHandler.php';
 require_once __DIR__ . '/../../Gumdrop/Engine.php';
 
-class Application extends \tests\units\TestCase
+class Application extends \Gumdrop\Tests\TestCase
 {
-    /**
-     * @isNotVoid
-     */
     public function testGenerateListFilesThenConvertThem()
     {
         $Page = new \Gumdrop\Page($this->getApp());

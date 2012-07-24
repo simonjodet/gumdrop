@@ -1,12 +1,12 @@
 <?php
-namespace Gumdrop\tests\units;
+namespace Gumdrop\Tests;
 
 require_once __DIR__ . '/../TestCase.php';
 require_once __DIR__ . '/../../Gumdrop/Page.php';
 require_once __DIR__ . '/../../vendor/dflydev/markdown/src/dflydev/markdown/IMarkdownParser.php';
 require_once __DIR__ . '/../../vendor/dflydev/markdown/src/dflydev/markdown/MarkdownParser.php';
 
-class Page extends \tests\units\TestCase
+class Page extends \Gumdrop\Tests\TestCase
 {
     public function testConvertMarkdownToHtmlUsesTheMarkdownParser()
     {
@@ -24,7 +24,7 @@ class Page extends \tests\units\TestCase
 
         $Page->convertMarkdownToHtml();
 
-        $this->string($Page->getHtmlContent())->isEqualTo('html content 1');
+        $this->assertEquals($Page->getHtmlContent(), 'html content 1');
     }
 
     public function testApplyTwigLayoutAppliesTheLayoutToPages()
@@ -54,7 +54,7 @@ class Page extends \tests\units\TestCase
 
         $Page->applyTwigLayout();
 
-        $this->string($Page->getHtmlContent())->isEqualTo('twig content 1');
+        $this->assertEquals($Page->getHtmlContent(), 'twig content 1');
     }
 
     public function testApplyTwigLayoutDoesNotApplyTheLayoutToPagesIfItDoesNotExist()
@@ -72,7 +72,7 @@ class Page extends \tests\units\TestCase
 
         $Page->applyTwigLayout();
 
-        $this->string($Page->getHtmlContent())->isEqualTo('html content 1');
+        $this->assertEquals($Page->getHtmlContent(), 'html content 1');
     }
 
     public function testWriteHtmlFilesWritePagesToHtmFiles()
@@ -88,7 +88,7 @@ class Page extends \tests\units\TestCase
 
         $Page->writeHtmFiles($destination);
 
-        $this->string(file_get_contents($destination . '/folder/file_1_path.htm'))->isEqualTo('twig content 1');
+        $this->assertStringEqualsFile($destination . '/folder/file_1_path.htm', 'twig content 1');
 
         unlink($destination . '/folder/file_1_path.htm');
         rmdir($destination . '/folder');
