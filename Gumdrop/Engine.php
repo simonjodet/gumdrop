@@ -23,49 +23,17 @@ class Engine
     }
 
     /**
-     * Convert Markdown content to HTML pages
+     * Runs the PageCollection through all the steps of the process
      *
-     * @param $pages
-     *
-     * @return \Gumdrop\PageCollection
+     * @param PageCollection $PageCollection
+     * @param $destination
      */
-    public function convertMarkdownToHtml(\Gumdrop\PageCollection $PageCollection)
+    public function run(\Gumdrop\PageCollection $PageCollection, $destination)
     {
         foreach ($PageCollection as $key => $Page)
         {
             $PageCollection[$key]->convertMarkdownToHtml();
-        }
-
-        return $PageCollection;
-    }
-
-    /**
-     * Apply a twig layout to the HTML pages
-     *
-     * @param \Gumdrop\PageCollection $PageCollection
-     *
-     * @return \Gumdrop\PageCollection
-     */
-    public function applyTwigLayout(\Gumdrop\PageCollection $PageCollection)
-    {
-        foreach ($PageCollection as $key => $Page)
-        {
             $PageCollection[$key]->applyTwigLayout();
-        }
-
-        return $PageCollection;
-    }
-
-    /**
-     * Write HTML files to their destination
-     *
-     * @param \Gumdrop\PageCollection $PageCollection
-     * @param string                  $destination
-     */
-    public function writeHtmFiles(\Gumdrop\PageCollection $PageCollection, $destination)
-    {
-        foreach ($PageCollection as $key => $Page)
-        {
             $PageCollection[$key]->writeHtmFiles($destination);
         }
     }
