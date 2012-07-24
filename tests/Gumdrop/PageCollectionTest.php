@@ -63,10 +63,10 @@ class PageCollection extends \Gumdrop\Tests\TestCase
         $this->assertEquals($Page, $PageCollection->offsetGet(0));
     }
 
-    public function xtestOffsetGetReturnsNullWhenOffsetDoesNotExist()
+    public function testOffsetGetReturnsNullWhenOffsetDoesNotExist()
     {
         $PageCollection = new \Gumdrop\PageCollection();
-        $this->variable($PageCollection->offsetGet(42))->isIdenticalTo(null);
+        $this->assertNull($PageCollection->offsetGet(42));
     }
 
     public function testOffsetSetExpectsAPageObjectAsValue()

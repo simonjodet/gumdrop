@@ -51,6 +51,7 @@ class Application
 
     /**
      * @param \dflydev\markdown\MarkdownParser $MarkdownParser
+     * @codeCoverageIgnore
      */
     public function setMarkdownParser(\dflydev\markdown\MarkdownParser $MarkdownParser)
     {
@@ -59,6 +60,7 @@ class Application
 
     /**
      * @return \dflydev\markdown\MarkdownParser
+     * @codeCoverageIgnore
      */
     public function getMarkdownParser()
     {
@@ -67,6 +69,7 @@ class Application
 
     /**
      * @param \Gumdrop\FileHandler $FileHandler
+     * @codeCoverageIgnore
      */
     public function setFileHandler($FileHandler)
     {
@@ -75,6 +78,7 @@ class Application
 
     /**
      * @return \Gumdrop\FileHandler
+     * @codeCoverageIgnore
      */
     public function getFileHandler()
     {
@@ -83,6 +87,7 @@ class Application
 
     /**
      * @param \Gumdrop\Engine $Engine
+     * @codeCoverageIgnore
      */
     public function setEngine($Engine)
     {
@@ -91,6 +96,7 @@ class Application
 
     /**
      * @return \Gumdrop\Engine
+     * @codeCoverageIgnore
      */
     public function getEngine()
     {
@@ -99,6 +105,7 @@ class Application
 
     /**
      * @param \Twig_Loader_Filesystem $TwigLoaderFileSystem
+     * @codeCoverageIgnore
      */
     public function setTwigLoaderFileSystem($TwigLoaderFileSystem)
     {
@@ -107,6 +114,7 @@ class Application
 
     /**
      * @return \Twig_Loader_Filesystem
+     * @codeCoverageIgnore
      */
     public function getTwigLoaderFileSystem()
     {
@@ -115,6 +123,7 @@ class Application
 
     /**
      * @param \Twig_Environment $Twig_Environment
+     * @codeCoverageIgnore
      */
     public function setTwigEnvironment($Twig_Environment)
     {
@@ -123,6 +132,7 @@ class Application
 
     /**
      * @return \Twig_Environment
+     * @codeCoverageIgnore
      */
     public function getTwigEnvironment()
     {

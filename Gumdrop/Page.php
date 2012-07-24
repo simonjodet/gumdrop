@@ -66,11 +66,10 @@ class Page
      * TODO: test if header exists - header is delimited by "***"
      * TODO: test if it contains valid JSON
      */
-    public
-    function convertConfigurationHeader()
-    {
-        ;
-    }
+//    public function convertConfigurationHeader()
+//    {
+//        ;
+//    }
 
     /**
      * @param string $htmlContent
