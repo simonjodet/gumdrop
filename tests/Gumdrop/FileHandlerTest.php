@@ -1,16 +1,17 @@
 <?php
-namespace Gumdrop\tests\units;
+namespace Gumdrop\Tests;
 
 require_once __DIR__ . '/../TestCase.php';
 require_once __DIR__ . '/../../Gumdrop/FileHandler.php';
 require_once __DIR__ . '/../../Gumdrop/PageCollection.php';
 
-class FileHandler extends \tests\units\TestCase
+class FileHandler extends \Gumdrop\Tests\TestCase
 {
     private $testLocation;
 
-    public function beforeTestMethod($method)
+    public function setUp()
     {
+        parent::setUp();
         $this->testLocation = TMP_FOLDER . 'Gumdrop_FileOperations';
     }
 
@@ -45,7 +46,7 @@ class FileHandler extends \tests\units\TestCase
         rmdir($this->testLocation . '/' . $id . '/folder');
         $this->deleteTestLocation($id);
 
-        $this->array($list)->isEqualTo($expected);
+        $this->assertEquals($list, $expected);
     }
 
     public function testGetMarkdownFilesReturnsFilesContent()
@@ -78,7 +79,7 @@ class FileHandler extends \tests\units\TestCase
         rmdir($this->testLocation . '/' . $id . '/folder');
         $this->deleteTestLocation($id);
 
-        $this->object($Pages)->isEqualTo($expected);
+        $this->assertEquals($Pages, $expected);
     }
 
     public function testFindPageTwigFileReturnsTrueIfThisTwigFileExists()
@@ -86,7 +87,7 @@ class FileHandler extends \tests\units\TestCase
         $location = __DIR__ . '/FileHandler/with_page_twig';
 
         $FileHandler = new \Gumdrop\FileHandler($this->getApp(), $location);
-        $this->boolean($FileHandler->findPageTwigFile())->isTrue();
+        $this->assertTrue($FileHandler->findPageTwigFile());
     }
 
     public function testFindPageTwigFileReturnsFalseIfThisTwigFileDoesNotExist()
@@ -94,6 +95,6 @@ class FileHandler extends \tests\units\TestCase
         $location = __DIR__ . '/FileHandler/without_page_twig';
 
         $FileHandler = new \Gumdrop\FileHandler($this->getApp(), $location);
-        $this->boolean($FileHandler->findPageTwigFile())->isFalse();
+        $this->assertFalse($FileHandler->findPageTwigFile());
     }
 }

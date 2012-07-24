@@ -114,7 +114,7 @@ class PageCollection implements \Iterator, \Countable, \ArrayAccess
     {
         if (!$Page instanceof \Gumdrop\Page)
         {
-            throw new \Exception('Expecting an instance of \Gumdrop\Page');
+            throw new Exception('Expecting an instance of \Gumdrop\Page');
         }
 
         if (is_null($offset))
