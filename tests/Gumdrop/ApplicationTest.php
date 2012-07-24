@@ -8,7 +8,7 @@ require_once __DIR__ . '/../../Gumdrop/Engine.php';
 
 class Application extends \Gumdrop\Tests\TestCase
 {
-    public function testGenerateListFilesThenConvertThem()
+    public function testGenerateListsFilesThenConvertThem()
     {
         $Page = new \Gumdrop\Page($this->getApp());
         $PageCollection = new \Gumdrop\PageCollection(array($Page));
