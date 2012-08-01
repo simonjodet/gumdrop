@@ -35,11 +35,17 @@ class Page
         $this->app = $app;
     }
 
+    /**
+     * Converts the Markdown code to HTML
+     */
     public function convertMarkdownToHtml()
     {
         $this->setHtmlContent($this->app->getMarkdownParser()->transformMarkdown($this->getMarkdownContent()));
     }
 
+    /**
+     * Runs the twig engine on the HTML content
+     */
     public function applyTwigLayout()
     {
         if ($this->app->getFileHandler()->findPageTwigFile())
@@ -51,6 +57,10 @@ class Page
         }
     }
 
+    /**
+     * Writes the final HTML content to file
+     * @param $destination
+     */
     public function writeHtmFiles($destination)
     {
         $pathinfo = pathinfo($this->getLocation());
