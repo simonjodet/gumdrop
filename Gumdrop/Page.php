@@ -28,6 +28,11 @@ class Page
     private $app;
 
     /**
+     * @var \Gumdrop\PageConfiguration
+     */
+    private $configuration;
+
+    /**
      * @param \Gumdrop\Application $app
      */
     public function __construct(\Gumdrop\Application $app)
@@ -59,7 +64,8 @@ class Page
 
     /**
      * Writes the final HTML content to file
-     * @param $destination
+     *
+     * @param string $destination
      */
     public function writeHtmFiles($destination)
     {
@@ -89,7 +95,7 @@ class Page
     }
 
     /**
-     * @param string $location
+     * @param string string $location
      */
     public function setLocation($location)
     {
@@ -105,7 +111,7 @@ class Page
     }
 
     /**
-     * @param $markdownContent
+     * @param string $markdownContent
      */
     public function setMarkdownContent($markdownContent)
     {
@@ -118,5 +124,22 @@ class Page
     public function getMarkdownContent()
     {
         return $this->markdownContent;
+    }
+
+    /**
+     * @param \Gumdrop\PageConfiguration $configuration
+     */
+    public function setConfiguration(\Gumdrop\PageConfiguration $configuration)
+    {
+        $configuration->extractHeader($this->getMarkdownContent());
+        $this->configuration = $configuration;
+    }
+
+    /**
+     * @return \Gumdrop\PageConfiguration
+     */
+    public function getConfiguration()
+    {
+        return $this->configuration;
     }
 }

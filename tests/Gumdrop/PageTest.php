@@ -3,11 +3,27 @@ namespace Gumdrop\Tests;
 
 require_once __DIR__ . '/../TestCase.php';
 require_once __DIR__ . '/../../Gumdrop/Page.php';
+require_once __DIR__ . '/../../Gumdrop/PageConfiguration.php';
 require_once __DIR__ . '/../../vendor/dflydev/markdown/src/dflydev/markdown/IMarkdownParser.php';
 require_once __DIR__ . '/../../vendor/dflydev/markdown/src/dflydev/markdown/MarkdownParser.php';
 
 class Page extends \Gumdrop\Tests\TestCase
 {
+    public function testSetConfigurationCallsConfigurationExtractHeaderMethod()
+    {
+        $app = new \Gumdrop\Application();
+
+        $PageConfigurationMock = \Mockery::mock('\Gumdrop\PageConfiguration');
+        $PageConfigurationMock
+            ->shouldReceive('extractHeader')
+            ->with('Markdown content')
+            ->once();
+
+        $Page = new \Gumdrop\Page($app);
+        $Page->setMarkdownContent('Markdown content');
+        $Page->setConfiguration($PageConfigurationMock);
+    }
+
     public function testConvertMarkdownToHtmlUsesTheMarkdownParser()
     {
         $app = new \Gumdrop\Application();
