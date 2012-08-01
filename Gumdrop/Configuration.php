@@ -11,24 +11,19 @@ class Configuration
     /**
      * @var object
      */
-    private $configuration;
+    protected $configuration;
 
     /**
-     * @param string $location
+     * @param string $key
+     * @param mixed $value
      */
-    public function __construct($location)
+    public function __set($key, $value)
     {
-        $location = $location . '/conf.json';
-        if (!file_exists($location))
+        if(!is_object($this->configuration))
         {
-            throw new Exception('Could not find the configuration file at ' . $location);
+            $this->configuration = new \StdClass();
         }
-
-        $this->configuration = json_decode(file_get_contents($location));
-        if (json_last_error() != JSON_ERROR_NONE)
-        {
-            throw new Exception('Invalid configuration in ' . $location);
-        }
+        $this->configuration->$key = $value;
     }
 
     /**
