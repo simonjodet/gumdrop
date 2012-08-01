@@ -2,7 +2,6 @@
 
 namespace Gumdrop;
 
-require_once __DIR__ . '/PageCollection.php';
 
 /**
  * Class handling Markdown files including conversion to HTML
@@ -32,6 +31,7 @@ class Engine
     {
         foreach ($PageCollection as $key => $Page)
         {
+            $PageCollection[$key]->setConfiguration(new \Gumdrop\PageConfiguration());
             $PageCollection[$key]->convertMarkdownToHtml();
             $PageCollection[$key]->applyTwigLayout();
             $PageCollection[$key]->writeHtmFiles($destination);
