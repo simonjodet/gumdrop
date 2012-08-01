@@ -2,8 +2,6 @@
 
 namespace Gumdrop;
 
-require_once __DIR__ . '/Page.php';
-
 /**
  * \Gumdrop\Page collection
  */

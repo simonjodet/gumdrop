@@ -2,8 +2,6 @@
 
 namespace Gumdrop;
 
-require_once __DIR__ . '/PageCollection.php';
-
 /**
  * Contains all file system operations
  */
