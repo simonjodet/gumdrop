@@ -8,14 +8,14 @@ namespace Gumdrop;
 class PageConfiguration extends \Gumdrop\Configuration
 {
     /**
-     * Constructor: extracts configuration header from Markdown content
+     * Extracts configuration header from Markdown content
      *
      * @param string $content
      * @throws \Gumdrop\Exception
      */
-    public function __construct($content)
+    public function extractHeader($content)
     {
-        $count = preg_match('#\*\*\*\n(.*)\n\*\*\*\n#smU', $content, $matches);
+        $count = preg_match('#^\*\*\*\n(.*)\n\*\*\*\n(.*)$#smU', $content, $matches);
         if ($count == 1)
         {
             $this->configuration = json_decode($matches[1]);
@@ -23,6 +23,8 @@ class PageConfiguration extends \Gumdrop\Configuration
             {
                 throw new Exception('Invalid configuration');
             }
+            return $matches[2];
         }
+        return $content;
     }
 }

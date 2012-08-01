@@ -6,31 +6,50 @@ require_once __DIR__ . '/../../Gumdrop/PageConfiguration.php';
 
 class PageConfiguration extends \Gumdrop\Tests\TestCase
 {
-    public function testConstructorCanExtractConfigurationHeaderFromMarkdownContent()
+    public function testExtractHeaderCanExtractConfigurationHeaderFromMarkdownContent()
     {
-        $PageConfiguration = new \Gumdrop\PageConfiguration($this->getValidPageContent());
+        $PageConfiguration = new \Gumdrop\PageConfiguration();
+        $PageConfiguration->extractHeader($this->getValidPageContent());
 
         $this->assertEquals('value1', $PageConfiguration->conf1);
     }
 
-    public function testConstructorThrowsAnExceptionIfCouldNotReadConfiguration()
+    public function testExtractHeaderReturnsMarkdownContentWithoutHeader()
+    {
+        $PageConfiguration = new \Gumdrop\PageConfiguration();
+        $markdownContent = $PageConfiguration->extractHeader($this->getValidPageContent());
+
+        $this->assertEquals($this->getStrippedPageContent(), $markdownContent);
+    }
+
+    public function testExtractHeaderThrowsAnExceptionIfCouldNotReadConfiguration()
     {
         $this->setExpectedException(
             'Gumdrop\Exception', 'Invalid configuration'
         );
-        new \Gumdrop\PageConfiguration($this->getInvalidPageContent());
+        $PageConfiguration = new \Gumdrop\PageConfiguration();
+        $PageConfiguration->extractHeader($this->getInvalidPageContent());
     }
 
-    public function testConstructorSilentlyIgnoresNonExistingConfiguration()
+    public function testExtractHeaderSilentlyIgnoresNonExistingConfiguration()
     {
-        $PageConfiguration = new \Gumdrop\PageConfiguration($this->getNonExistingPageContent());
+        $PageConfiguration = new \Gumdrop\PageConfiguration();
+        $PageConfiguration->extractHeader($this->getNonExistingPageContent());
         $this->assertNull($PageConfiguration->conf1);
     }
 
-    public function testConstructorIgnoresSuperfluousConfigurationHeaders()
+    public function testExtractHeaderReturnsContentWhenNoHeaderIsPresent()
     {
-        $PageConfiguration = new \Gumdrop\PageConfiguration($this->getDuplicatedPageContent());
+        $PageConfiguration = new \Gumdrop\PageConfiguration();
+        $markdownContent = $PageConfiguration->extractHeader($this->getNonExistingPageContent());
 
+        $this->assertEquals($this->getNonExistingPageContent(), $markdownContent);
+    }
+
+    public function testExtractHeaderIgnoresSuperfluousConfigurationHeaders()
+    {
+        $PageConfiguration = new \Gumdrop\PageConfiguration();
+        $PageConfiguration->extractHeader($this->getDuplicatedPageContent());
         $this->assertEquals('value1', $PageConfiguration->conf1);
     }
 
@@ -43,6 +62,13 @@ class PageConfiguration extends \Gumdrop\Tests\TestCase
     "conf1":"value1"
 }
 ***
+Some page content
+CONTENT;
+    }
+
+    private function getStrippedPageContent()
+    {
+        return <<<CONTENT
 Some page content
 CONTENT;
     }
