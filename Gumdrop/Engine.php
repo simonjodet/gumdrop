@@ -33,6 +33,9 @@ class Engine
         {
             $PageCollection[$key]->setConfiguration(new \Gumdrop\PageConfiguration());
             $PageCollection[$key]->convertMarkdownToHtml();
+        }
+        foreach ($PageCollection as $key => $Page)
+        {
             $PageCollection[$key]->applyTwigLayout();
             $PageCollection[$key]->writeHtmFiles($destination);
         }

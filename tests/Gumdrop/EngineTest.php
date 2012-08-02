@@ -14,41 +14,49 @@ class Engine extends \Gumdrop\Tests\TestCase
     public function testRunBehavesAsExpected()
     {
         $Page1 = \Mockery::mock('\Gumdrop\Page');
+        $Page2 = \Mockery::mock('\Gumdrop\Page');
         $Page1
             ->shouldReceive('setConfiguration')
             ->with(\Mockery::type('\Gumdrop\PageConfiguration'))
-            ->ordered('page1')
+            ->globally()
+            ->ordered()
             ->once();
         $Page1
             ->shouldReceive('convertMarkdownToHtml')
-            ->ordered('page1')
+            ->globally()
+            ->ordered()
+            ->once();
+        $Page2
+            ->shouldReceive('setConfiguration')
+            ->with(\Mockery::type('\Gumdrop\PageConfiguration'))
+            ->globally()
+            ->ordered()
+            ->once();
+        $Page2
+            ->shouldReceive('convertMarkdownToHtml')
+            ->globally()
+            ->ordered()
             ->once();
         $Page1
             ->shouldReceive('applyTwigLayout')
-            ->ordered('page1')
+            ->globally()
+            ->ordered()
             ->once();
         $Page1
             ->shouldReceive('writeHtmFiles')
             ->with('destination')
-            ->ordered('page1')
-            ->once();
-        $Page2 = \Mockery::mock('\Gumdrop\Page');
-        $Page2
-            ->shouldReceive('setConfiguration')
-            ->with(\Mockery::type('\Gumdrop\PageConfiguration'))
-            ->ordered('page2')
-            ->once();
-        $Page2
-            ->shouldReceive('convertMarkdownToHtml')
-            ->ordered('page2')
+            ->globally()
+            ->ordered()
             ->once();
         $Page2
             ->shouldReceive('applyTwigLayout')
-            ->ordered('page2')
+            ->globally()
+            ->ordered()
             ->once();
         $Page2
             ->shouldReceive('writeHtmFiles')
-            ->ordered('page2')
+            ->globally()
+            ->ordered()
             ->with('destination')
             ->once();
         $PageCollection = new \Gumdrop\PageCollection(array(
