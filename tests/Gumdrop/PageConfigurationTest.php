@@ -63,6 +63,7 @@ class PageConfiguration extends \Gumdrop\Tests\TestCase
 }
 ***
 Some page content
+Some other content
 CONTENT;
     }
 
@@ -70,6 +71,7 @@ CONTENT;
     {
         return <<<CONTENT
 Some page content
+Some other content
 CONTENT;
     }
 

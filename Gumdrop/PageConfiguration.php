@@ -15,7 +15,7 @@ class PageConfiguration extends \Gumdrop\Configuration
      */
     public function extractHeader($content)
     {
-        $count = preg_match('#^\*\*\*\n(.*)\n\*\*\*\n(.*)$#smU', $content, $matches);
+        $count = preg_match('#^\*\*\*\n(.*)\n\*\*\*\n(.*)$#sUD', $content, $matches);
         if ($count == 1)
         {
             $this->configuration = json_decode($matches[1]);
