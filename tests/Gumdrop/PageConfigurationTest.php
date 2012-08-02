@@ -11,7 +11,7 @@ class PageConfiguration extends \Gumdrop\Tests\TestCase
         $PageConfiguration = new \Gumdrop\PageConfiguration();
         $PageConfiguration->extractHeader($this->getValidPageContent());
 
-        $this->assertEquals('value1', $PageConfiguration->conf1);
+        $this->assertEquals('value1', $PageConfiguration['conf1']);
     }
 
     public function testExtractHeaderReturnsMarkdownContentWithoutHeader()
@@ -35,7 +35,7 @@ class PageConfiguration extends \Gumdrop\Tests\TestCase
     {
         $PageConfiguration = new \Gumdrop\PageConfiguration();
         $PageConfiguration->extractHeader($this->getNonExistingPageContent());
-        $this->assertNull($PageConfiguration->conf1);
+        $this->assertNull($PageConfiguration['conf1']);
     }
 
     public function testExtractHeaderReturnsContentWhenNoHeaderIsPresent()
@@ -50,7 +50,7 @@ class PageConfiguration extends \Gumdrop\Tests\TestCase
     {
         $PageConfiguration = new \Gumdrop\PageConfiguration();
         $PageConfiguration->extractHeader($this->getDuplicatedPageContent());
-        $this->assertEquals('value1', $PageConfiguration->conf1);
+        $this->assertEquals('value1', $PageConfiguration['conf1']);
     }
 
 

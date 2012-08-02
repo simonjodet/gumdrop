@@ -32,6 +32,6 @@ class GlobalConfiguration extends \Gumdrop\Tests\TestCase
     {
         $location = __DIR__ . '/Configuration/valid_conf/';
         $Configuration = new \Gumdrop\GlobalConfiguration($location);
-        $this->assertEquals($Configuration->conf1, 'value1');
+        $this->assertEquals($Configuration['conf1'], 'value1');
     }
 }

@@ -59,7 +59,7 @@ class Page extends \Gumdrop\Tests\TestCase
             'page.twig',
             array(
                 'content' => 'html content 1',
-                'conf' => $PageConfiguration->export()
+                'conf' => $PageConfiguration
             ))
             ->andReturn('twig content 1');
 
@@ -104,7 +104,7 @@ class Page extends \Gumdrop\Tests\TestCase
         $app = new \Gumdrop\Application();
 
         $PageConfiguration = new \Gumdrop\PageConfiguration();
-        $PageConfiguration->layout = 'twig_layout.twig';
+        $PageConfiguration['layout'] = 'twig_layout.twig';
 
         $Twig_Environment = \Mockery::mock('\Twig_Environment');
         $Twig_Environment
@@ -113,7 +113,7 @@ class Page extends \Gumdrop\Tests\TestCase
             'twig_layout.twig',
             array(
                 'content' => 'html content 1',
-                'conf' => $PageConfiguration->export()
+                'conf' => $PageConfiguration
             ))
             ->andReturn('twig content 1');
 

@@ -59,9 +59,9 @@ class Page
     public function applyTwigLayout()
     {
         $twig_layout = null;
-        if (is_object($this->getConfiguration()) && !is_null($this->getConfiguration()->layout))
+        if (isset($this->configuration['layout']) && !is_null($this->configuration['layout']))
         {
-            $twig_layout = $this->getConfiguration()->layout;
+            $twig_layout = $this->configuration['layout'];
         }
         elseif ($this->app->getFileHandler()->findPageTwigFile())
         {
@@ -73,7 +73,7 @@ class Page
                 $twig_layout,
                 array(
                     'content' => $this->getHtmlContent(),
-                    'conf' => $this->getConfiguration()->export()
+                    'conf' => $this->getConfiguration()
                 )
             ));
         }
