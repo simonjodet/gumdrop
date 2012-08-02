@@ -73,7 +73,7 @@ class Page
                 $twig_layout,
                 array(
                     'content' => $this->getHtmlContent(),
-                    'conf' => $this->getConfiguration()
+                    'conf' => $this->getConfiguration()->export()
                 )
             ));
         }

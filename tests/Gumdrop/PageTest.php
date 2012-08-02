@@ -59,7 +59,7 @@ class Page extends \Gumdrop\Tests\TestCase
             'page.twig',
             array(
                 'content' => 'html content 1',
-                'conf' => $PageConfiguration
+                'conf' => $PageConfiguration->export()
             ))
             ->andReturn('twig content 1');
 
@@ -113,7 +113,7 @@ class Page extends \Gumdrop\Tests\TestCase
             'twig_layout.twig',
             array(
                 'content' => 'html content 1',
-                'conf' => $PageConfiguration
+                'conf' => $PageConfiguration->export()
             ))
             ->andReturn('twig content 1');
 
