@@ -23,14 +23,19 @@ class Page
     private $htmlContent;
 
     /**
-     * @var \Gumdrop\Application
-     */
-    private $app;
-
-    /**
      * @var \Gumdrop\PageConfiguration
      */
     private $configuration;
+
+    /**
+     * @var \Gumdrop\PageCollection
+     */
+    private $collection;
+
+    /**
+     * @var \Gumdrop\Application
+     */
+    private $app;
 
     /**
      * @param \Gumdrop\Application $app
@@ -150,5 +155,21 @@ class Page
     public function getConfiguration()
     {
         return $this->configuration;
+    }
+
+    /**
+     * @param \Gumdrop\PageCollection $collection
+     */
+    public function setCollection(\Gumdrop\PageCollection $collection)
+    {
+        $this->collection = $collection;
+    }
+
+    /**
+     * @return \Gumdrop\PageCollection
+     */
+    public function getCollection()
+    {
+        return $this->collection;
     }
 }

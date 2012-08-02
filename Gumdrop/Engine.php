@@ -33,6 +33,7 @@ class Engine
         {
             $PageCollection[$key]->setConfiguration(new \Gumdrop\PageConfiguration());
             $PageCollection[$key]->convertMarkdownToHtml();
+            $PageCollection[$key]->setCollection($PageCollection);
         }
         foreach ($PageCollection as $key => $Page)
         {
