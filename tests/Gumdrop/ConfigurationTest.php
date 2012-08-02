@@ -27,4 +27,20 @@ class Configuration extends \Gumdrop\Tests\TestCase
 
         $this->assertNull($Configuration->conf4);
     }
+
+    public function testExportReturnsTheConfigurationAsAnArray()
+    {
+        $Configuration = new \Gumdrop\Configuration();
+        $Configuration->conf1 = 'value1';
+        $Configuration->conf2 = new \StdClass();
+        $Configuration->conf2->conf3 = 'value3';
+
+        $this->assertEquals(
+            array(
+                'conf1' => 'value1',
+                'conf2' => array('conf3' => 'value3')
+            ),
+            $Configuration->export()
+        );
+    }
 }

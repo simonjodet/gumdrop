@@ -19,7 +19,7 @@ class Configuration
      */
     public function __set($key, $value)
     {
-        if(!is_object($this->configuration))
+        if (!is_object($this->configuration))
         {
             $this->configuration = new \StdClass();
         }
@@ -38,5 +38,10 @@ class Configuration
             return null;
         }
         return $this->configuration->$key;
+    }
+
+    public function export()
+    {
+        return json_decode(json_encode($this->configuration), true);
     }
 }
