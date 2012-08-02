@@ -71,7 +71,10 @@ class Page
         {
             $this->setHtmlContent($this->app->getTwigEnvironment()->render(
                 $twig_layout,
-                array('content' => $this->getHtmlContent())
+                array(
+                    'content' => $this->getHtmlContent(),
+                    'conf' => $this->getConfiguration()
+                )
             ));
         }
     }

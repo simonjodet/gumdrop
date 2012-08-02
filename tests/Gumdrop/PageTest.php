@@ -46,13 +46,17 @@ class Page extends \Gumdrop\Tests\TestCase
     public function testApplyTwigLayoutAppliesTheLayoutToPages()
     {
         $app = new \Gumdrop\Application();
+
+        $PageConfiguration = new \Gumdrop\PageConfiguration();
+
         $Twig_Environment = \Mockery::mock('\Twig_Environment');
         $Twig_Environment
             ->shouldReceive('render')
             ->with(
             'page.twig',
             array(
-                'content' => 'html content 1'
+                'content' => 'html content 1',
+                'conf' => $PageConfiguration
             ))
             ->andReturn('twig content 1');
 
@@ -66,6 +70,7 @@ class Page extends \Gumdrop\Tests\TestCase
         $app->setFileHandler($FileHandler);
 
         $Page = new \Gumdrop\Page($app);
+        $Page->setConfiguration($PageConfiguration);
         $Page->setHtmlContent('html content 1');
 
         $Page->applyTwigLayout();
@@ -95,13 +100,17 @@ class Page extends \Gumdrop\Tests\TestCase
     {
         $app = new \Gumdrop\Application();
 
+        $PageConfiguration = new \Gumdrop\PageConfiguration();
+        $PageConfiguration->layout = 'twig_layout.twig';
+
         $Twig_Environment = \Mockery::mock('\Twig_Environment');
         $Twig_Environment
             ->shouldReceive('render')
             ->with(
             'twig_layout.twig',
             array(
-                'content' => 'html content 1'
+                'content' => 'html content 1',
+                'conf' => $PageConfiguration
             ))
             ->andReturn('twig content 1');
 
@@ -109,11 +118,8 @@ class Page extends \Gumdrop\Tests\TestCase
 
         $Page = new \Gumdrop\Page($app);
 
-        $PageConfiguration = new \Gumdrop\PageConfiguration();
-        $PageConfiguration->layout = 'twig_layout.twig';
-
-        $Page->setHtmlContent('html content 1');
         $Page->setConfiguration($PageConfiguration);
+        $Page->setHtmlContent('html content 1');
 
         $Page->applyTwigLayout();
     }
