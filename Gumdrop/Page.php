@@ -148,7 +148,7 @@ class Page
      */
     public function setConfiguration(\Gumdrop\PageConfiguration $configuration)
     {
-        $configuration->extractHeader($this->getMarkdownContent());
+        $this->setMarkdownContent($configuration->extractHeader($this->getMarkdownContent()));
         $this->configuration = $configuration;
     }
 

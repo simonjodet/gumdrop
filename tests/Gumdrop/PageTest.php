@@ -17,11 +17,14 @@ class Page extends \Gumdrop\Tests\TestCase
         $PageConfigurationMock
             ->shouldReceive('extractHeader')
             ->with('Markdown content')
-            ->once();
+            ->once()
+            ->andReturn('Configuration-stripped Markdown content');
 
         $Page = new \Gumdrop\Page($app);
         $Page->setMarkdownContent('Markdown content');
         $Page->setConfiguration($PageConfigurationMock);
+
+        $this->assertEquals('Configuration-stripped Markdown content', $Page->getMarkdownContent());
     }
 
     public function testConvertMarkdownToHtmlUsesTheMarkdownParser()
