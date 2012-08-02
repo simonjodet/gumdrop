@@ -103,7 +103,7 @@ class PageCollection implements \Iterator, \Countable, \ArrayAccess
     }
 
     /**
-     * @param int|null      $offset
+     * @param int|null $offset
      * @param \Gumdrop\Page $Page
      *
      * @throws \Exception

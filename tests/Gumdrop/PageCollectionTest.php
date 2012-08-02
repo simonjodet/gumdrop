@@ -139,7 +139,7 @@ class PageCollection extends \Gumdrop\Tests\TestCase
 
         $Collection['PageCollection']->next();
 
-        $this->assertEquals($Collection['PageCollection']->current(),$Collection['Page2']);
+        $this->assertEquals($Collection['PageCollection']->current(), $Collection['Page2']);
     }
 
     public function testKeyReturnsTheCurrentPosition()
