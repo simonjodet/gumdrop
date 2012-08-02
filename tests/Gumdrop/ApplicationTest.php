@@ -35,35 +35,8 @@ class Application extends \Gumdrop\Tests\TestCase
 
         $Engine = \Mockery::mock('\Gumdrop\Engine');
         $Engine
-            ->shouldReceive('convertMarkdownToHtml')
-            ->once()->ordered('generate')
-            ->with($PageCollection)
-            ->andReturnUsing(
-            function() use($PageCollection)
-            {
-                $PageCollection[0]->setHtmlContent('html content');
-                return $PageCollection;
-            });
-
-        $PageCollection[0]->setHtmlContent('html content');
-
-
-        $Engine
-            ->shouldReceive('applyTwigLayout')
-            ->once()->ordered('generate')
-            ->with($PageCollection)
-            ->andReturnUsing(
-            function() use($PageCollection)
-            {
-                $PageCollection[0]->setHtmlContent('twig content');
-                return $PageCollection;
-            });
-
-        $PageCollection[0]->setHtmlContent('twig content');
-
-        $Engine
-            ->shouldReceive('writeHtmFiles')
-            ->once()->ordered('generate')
+            ->shouldReceive('run')
+            ->once()
             ->with($PageCollection, 'destination_path');
 
         $Application = new \Gumdrop\Application();

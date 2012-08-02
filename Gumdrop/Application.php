@@ -43,14 +43,13 @@ class Application
     {
         $PageCollection = $this->FileHandler->listMarkdownFiles();
         $PageCollection = $this->FileHandler->getMarkdownFiles($PageCollection);
-        $PageCollection = $this->Engine->convertMarkdownToHtml($PageCollection);
-        $PageCollection = $this->Engine->applyTwigLayout($PageCollection);
-        $this->Engine->writeHtmFiles($PageCollection, $destination);
+        $this->Engine->run($PageCollection, $destination);
     }
 
 
     /**
      * @param \dflydev\markdown\MarkdownParser $MarkdownParser
+     *
      * @codeCoverageIgnore
      */
     public function setMarkdownParser(\dflydev\markdown\MarkdownParser $MarkdownParser)
@@ -69,6 +68,7 @@ class Application
 
     /**
      * @param \Gumdrop\FileHandler $FileHandler
+     *
      * @codeCoverageIgnore
      */
     public function setFileHandler($FileHandler)
@@ -87,6 +87,7 @@ class Application
 
     /**
      * @param \Gumdrop\Engine $Engine
+     *
      * @codeCoverageIgnore
      */
     public function setEngine($Engine)
@@ -105,6 +106,7 @@ class Application
 
     /**
      * @param \Twig_Loader_Filesystem $TwigLoaderFileSystem
+     *
      * @codeCoverageIgnore
      */
     public function setTwigLoaderFileSystem($TwigLoaderFileSystem)
@@ -123,6 +125,7 @@ class Application
 
     /**
      * @param \Twig_Environment $Twig_Environment
+     *
      * @codeCoverageIgnore
      */
     public function setTwigEnvironment($Twig_Environment)
