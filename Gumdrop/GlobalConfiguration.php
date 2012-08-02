@@ -9,6 +9,7 @@ class GlobalConfiguration extends \Gumdrop\Configuration
 {
     /**
      * @param string $location
+     * @throws \Gumdrop\Exception
      */
     public function __construct($location)
     {

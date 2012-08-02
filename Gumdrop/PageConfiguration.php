@@ -12,6 +12,7 @@ class PageConfiguration extends \Gumdrop\Configuration
      *
      * @param string $content
      *
+     * @return string Markdown content stripped of the configuration header
      * @throws \Gumdrop\Exception
      */
     public function extractHeader($content)

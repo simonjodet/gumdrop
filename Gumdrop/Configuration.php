@@ -2,12 +2,24 @@
 
 namespace Gumdrop;
 
+/**
+ * Configuration container
+ */
 class Configuration implements \Iterator, \Countable, \ArrayAccess
 {
+    /**
+     * @var array Configuration data
+     */
     protected $configuration = array();
+    /**
+     * @var int Offset
+     */
     private $position = 0;
 
 
+    /**
+     * @param array $configuration
+     */
     function __construct($configuration = array())
     {
         $this->configuration = $configuration;

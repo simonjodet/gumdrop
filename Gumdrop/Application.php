@@ -36,7 +36,6 @@ class Application
     /**
      * Generates the site
      *
-     * @param string $source
      * @param string $destination
      */
     public function generate($destination)
