@@ -53,10 +53,19 @@ class Page
      */
     public function applyTwigLayout()
     {
-        if ($this->app->getFileHandler()->findPageTwigFile())
+        $twig_layout = null;
+        if (is_object($this->getConfiguration()) && !is_null($this->getConfiguration()->layout))
+        {
+            $twig_layout = $this->getConfiguration()->layout;
+        }
+        elseif ($this->app->getFileHandler()->findPageTwigFile())
+        {
+            $twig_layout = 'page.twig';
+        }
+        if (!is_null($twig_layout))
         {
             $this->setHtmlContent($this->app->getTwigEnvironment()->render(
-                'page.twig',
+                $twig_layout,
                 array('content' => $this->getHtmlContent())
             ));
         }

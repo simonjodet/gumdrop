@@ -91,6 +91,33 @@ class Page extends \Gumdrop\Tests\TestCase
         $this->assertEquals($Page->getHtmlContent(), 'html content 1');
     }
 
+    public function testApplyTwigLayoutPreferablyUsesLayoutSetInPageConfiguration()
+    {
+        $app = new \Gumdrop\Application();
+
+        $Twig_Environment = \Mockery::mock('\Twig_Environment');
+        $Twig_Environment
+            ->shouldReceive('render')
+            ->with(
+            'twig_layout.twig',
+            array(
+                'content' => 'html content 1'
+            ))
+            ->andReturn('twig content 1');
+
+        $app->setTwigEnvironment($Twig_Environment);
+
+        $Page = new \Gumdrop\Page($app);
+
+        $PageConfiguration = new \Gumdrop\PageConfiguration();
+        $PageConfiguration->layout = 'twig_layout.twig';
+
+        $Page->setHtmlContent('html content 1');
+        $Page->setConfiguration($PageConfiguration);
+
+        $Page->applyTwigLayout();
+    }
+
     public function testWriteHtmlFilesWritePagesToHtmFiles()
     {
         $app = new \Gumdrop\Application();
