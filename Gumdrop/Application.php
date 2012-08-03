@@ -23,15 +23,9 @@ class Application
     private $Engine;
 
     /**
-     * @var \Twig_Loader_Filesystem
+     * @var string Location of the markdown source files
      */
-    private $TwigLoaderFileSystem;
-
-    /**
-     * @var \Twig_Environment
-     */
-    private $Twig_Environment;
-
+    private $sourceLocation = '';
 
     /**
      * Generates the site
@@ -104,41 +98,21 @@ class Application
     }
 
     /**
-     * @param \Twig_Loader_Filesystem $TwigLoaderFileSystem
+     * Set location of the markdown source files
      *
-     * @codeCoverageIgnore
+     * @param string $sourceLocation
      */
-    public function setTwigLoaderFileSystem($TwigLoaderFileSystem)
+    public function setSourceLocation($sourceLocation)
     {
-        $this->TwigLoaderFileSystem = $TwigLoaderFileSystem;
+        $this->sourceLocation = $sourceLocation;
     }
 
     /**
-     * @return \Twig_Loader_Filesystem
-     * @codeCoverageIgnore
+     * Get location of the markdown source files
+     * @return string
      */
-    public function getTwigLoaderFileSystem()
+    public function getSourceLocation()
     {
-        return $this->TwigLoaderFileSystem;
+        return $this->sourceLocation;
     }
-
-    /**
-     * @param \Twig_Environment $Twig_Environment
-     *
-     * @codeCoverageIgnore
-     */
-    public function setTwigEnvironment($Twig_Environment)
-    {
-        $this->Twig_Environment = $Twig_Environment;
-    }
-
-    /**
-     * @return \Twig_Environment
-     * @codeCoverageIgnore
-     */
-    public function getTwigEnvironment()
-    {
-        return $this->Twig_Environment;
-    }
-
 }

@@ -33,7 +33,9 @@ class FileHandler extends \Gumdrop\Tests\TestCase
         touch($this->testLocation . '/' . $id . '/file2.markdown');
         touch($this->testLocation . '/' . $id . '/file3.txt');
 
-        $FileHandler = new \Gumdrop\FileHandler($this->getApp(), $this->testLocation . '/' . $id . '/');
+        $app = $this->getApp();
+        $app->setSourceLocation($this->testLocation . '/' . $id . '/');
+        $FileHandler = new \Gumdrop\FileHandler($app);
         $list = $FileHandler->listMarkdownFiles();
         $expected = array(
             realpath($this->testLocation . '/' . $id . '/folder/file1.md'),
@@ -57,8 +59,9 @@ class FileHandler extends \Gumdrop\Tests\TestCase
         file_put_contents($this->testLocation . '/' . $id . '/file2.markdown', 'md content 2');
 
         $app = $this->getApp();
+        $app->setSourceLocation($this->testLocation . '/' . $id . '/');
 
-        $FileHandler = new \Gumdrop\FileHandler($app, $this->testLocation . '/' . $id . '/');
+        $FileHandler = new \Gumdrop\FileHandler($app);
         $Pages = $FileHandler->getMarkdownFiles(array(
             realpath($this->testLocation . '/' . $id . '/folder/file1.md'),
             realpath($this->testLocation . '/' . $id . '/file2.markdown')
@@ -86,7 +89,10 @@ class FileHandler extends \Gumdrop\Tests\TestCase
     {
         $location = __DIR__ . '/FileHandler/with_page_twig';
 
-        $FileHandler = new \Gumdrop\FileHandler($this->getApp(), $location);
+        $app = $this->getApp();
+        $app->setSourceLocation($location);
+
+        $FileHandler = new \Gumdrop\FileHandler($app);
         $this->assertTrue($FileHandler->findPageTwigFile());
     }
 
@@ -94,7 +100,10 @@ class FileHandler extends \Gumdrop\Tests\TestCase
     {
         $location = __DIR__ . '/FileHandler/without_page_twig';
 
-        $FileHandler = new \Gumdrop\FileHandler($this->getApp(), $location);
+        $app = $this->getApp();
+        $app->setSourceLocation($location);
+
+        $FileHandler = new \Gumdrop\FileHandler($app);
         $this->assertFalse($FileHandler->findPageTwigFile());
     }
 }

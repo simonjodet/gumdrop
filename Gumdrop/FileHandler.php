@@ -8,12 +8,6 @@ namespace Gumdrop;
 class FileHandler
 {
     /**
-     * Location of the files to handle
-     * @var string
-     */
-    private $location;
-
-    /**
      * @var \Gumdrop\Application
      */
     private $app;
@@ -22,10 +16,9 @@ class FileHandler
      * @param \Gumdrop\Application $app
      * @param string $location
      */
-    public function __construct(\Gumdrop\Application $app, $location = '')
+    public function __construct(\Gumdrop\Application $app)
     {
         $this->app = $app;
-        $this->location = $location;
     }
 
     /**
@@ -39,7 +32,7 @@ class FileHandler
     {
         if ($location == '')
         {
-            $location = $this->location;
+            $location = $this->app->getSourceLocation();
         }
         $files = array();
         $directories = glob($location . '/*', GLOB_ONLYDIR);
@@ -71,7 +64,7 @@ class FileHandler
         foreach ($files as $file)
         {
             $Page = new \Gumdrop\Page($this->app);
-            $Page->setLocation(ltrim(str_replace(realpath($this->location), '', $file), '/'));
+            $Page->setLocation(ltrim(str_replace(realpath($this->app->getSourceLocation()), '', $file), '/'));
             $Page->setMarkdownContent(file_get_contents($file));
             $PageCollection->offsetSet(null, $Page);
         }
@@ -87,6 +80,6 @@ class FileHandler
      */
     public function findPageTwigFile()
     {
-        return file_exists($this->location . '/_layout/page.twig');
+        return file_exists($this->app->getSourceLocation() . '/_layout/page.twig');
     }
 }
