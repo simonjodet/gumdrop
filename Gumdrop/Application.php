@@ -28,15 +28,20 @@ class Application
     private $sourceLocation = '';
 
     /**
+     * @var string Location of the generated site
+     */
+    private $destinationLocation = '';
+
+    /**
      * Generates the site
      *
      * @param string $destination
      */
-    public function generate($destination)
+    public function generate()
     {
         $PageCollection = $this->FileHandler->listMarkdownFiles();
         $PageCollection = $this->FileHandler->getMarkdownFiles($PageCollection);
-        $this->Engine->run($PageCollection, $destination);
+        $this->Engine->run($PageCollection);
     }
 
 
@@ -114,5 +119,24 @@ class Application
     public function getSourceLocation()
     {
         return $this->sourceLocation;
+    }
+
+    /**
+     * Set the location of the generated site
+     *
+     * @param string $destinationLocation
+     */
+    public function setDestinationLocation($destinationLocation)
+    {
+        $this->destinationLocation = $destinationLocation;
+    }
+
+    /**
+     * Get the location of the generated site
+     * @return string
+     */
+    public function getDestinationLocation()
+    {
+        return $this->destinationLocation;
     }
 }

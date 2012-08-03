@@ -27,7 +27,7 @@ class Engine
      * @param PageCollection $PageCollection
      * @param $destination
      */
-    public function run(\Gumdrop\PageCollection $PageCollection, $destination)
+    public function run(\Gumdrop\PageCollection $PageCollection)
     {
         foreach ($PageCollection as $key => $Page)
         {
@@ -38,7 +38,7 @@ class Engine
         foreach ($PageCollection as $key => $Page)
         {
             $PageCollection[$key]->applyTwigLayout();
-            $PageCollection[$key]->writeHtmFiles($destination);
+            $PageCollection[$key]->writeHtmFiles($this->app->getDestinationLocation());
         }
     }
 }

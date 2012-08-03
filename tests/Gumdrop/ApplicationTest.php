@@ -37,11 +37,12 @@ class Application extends \Gumdrop\Tests\TestCase
         $Engine
             ->shouldReceive('run')
             ->once()
-            ->with($PageCollection, 'destination_path');
+            ->with($PageCollection);
 
         $Application = new \Gumdrop\Application();
         $Application->setFileHandler($FileHandlerMock);
         $Application->setEngine($Engine);
-        $Application->generate('destination_path');
+        $Application->setDestinationLocation('destination_path');
+        $Application->generate();
     }
 }

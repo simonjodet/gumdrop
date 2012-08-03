@@ -76,7 +76,10 @@ class Engine extends \Gumdrop\Tests\TestCase
             $Page2
         ));
 
-        $Engine = new \Gumdrop\Engine($this->getApp());
-        $Engine->run($PageCollection, 'destination');
+        $app = $this->getApp();
+        $app->setDestinationLocation('destination');
+
+        $Engine = new \Gumdrop\Engine($app);
+        $Engine->run($PageCollection);
     }
 }
