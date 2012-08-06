@@ -42,7 +42,7 @@ class Twig
     public function getPageEnvironment()
     {
         return new \Twig_Environment(
-            new \Twig_Loader_Filesystem($this->app->getSourceLocation() . '/'),
+            new \Twig_Loader_String(),
             array(
                 'autoescape' => false,
                 'strict_variables' => false
