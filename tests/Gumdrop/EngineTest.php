@@ -69,6 +69,11 @@ class Engine extends \Gumdrop\Tests\TestCase
             ->ordered()
             ->once();
         $Page1
+            ->shouldReceive('renderPageTwigEnvironment')
+            ->globally()
+            ->ordered()
+            ->once();
+        $Page1
             ->shouldReceive('renderLayoutTwigEnvironment')
             ->globally()
             ->ordered()
@@ -88,6 +93,11 @@ class Engine extends \Gumdrop\Tests\TestCase
         $Page2
             ->shouldReceive('setPageTwigEnvironment')
             ->with($PageTwigEnvironmentMock)
+            ->globally()
+            ->ordered()
+            ->once();
+        $Page2
+            ->shouldReceive('renderPageTwigEnvironment')
             ->globally()
             ->ordered()
             ->once();
