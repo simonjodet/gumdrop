@@ -1,3 +1,5 @@
 composer.lock
 gumdrop.iml
 vendor/
+doc/phpdoc/
+!doc/phpdoc/empty
