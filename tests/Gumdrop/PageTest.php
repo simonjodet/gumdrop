@@ -130,6 +130,7 @@ class Page extends \Gumdrop\Tests\TestCase
     {
         $app = new \Gumdrop\Application();
 
+        $PageCollection = new \Gumdrop\PageCollection($app);
         $PageConfiguration = new \Gumdrop\PageConfiguration();
 
         $PageTwigEnvironment = \Mockery::mock('\Twig_Environment[render]');
@@ -138,7 +139,8 @@ class Page extends \Gumdrop\Tests\TestCase
             ->with(
             'initial html content',
             array(
-                'conf' => $PageConfiguration
+                'conf' => $PageConfiguration,
+                'pages'=> $PageCollection
             ))
             ->andReturn('new html content');
 
@@ -146,6 +148,7 @@ class Page extends \Gumdrop\Tests\TestCase
         $Page->setConfiguration($PageConfiguration);
         $Page->setHtmlContent('initial html content');
         $Page->setPageTwigEnvironment($PageTwigEnvironment);
+        $Page->setCollection($PageCollection);
 
         $Page->renderPageTwigEnvironment();
 
