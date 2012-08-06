@@ -126,6 +126,32 @@ class Page extends \Gumdrop\Tests\TestCase
         $Page->renderLayoutTwigEnvironment();
     }
 
+    public function testRenderPageTwigEnvironmentSetsItsResultsToPageHtmlContent()
+    {
+        $app = new \Gumdrop\Application();
+
+        $PageConfiguration = new \Gumdrop\PageConfiguration();
+
+        $PageTwigEnvironment = \Mockery::mock('\Twig_Environment[render]');
+        $PageTwigEnvironment
+            ->shouldReceive('render')
+            ->with(
+            'initial html content',
+            array(
+                'conf' => $PageConfiguration
+            ))
+            ->andReturn('new html content');
+
+        $Page = new \Gumdrop\Page($app);
+        $Page->setConfiguration($PageConfiguration);
+        $Page->setHtmlContent('initial html content');
+        $Page->setPageTwigEnvironment($PageTwigEnvironment);
+
+        $Page->renderPageTwigEnvironment();
+
+        $this->assertEquals($Page->getHtmlContent(), 'new html content');
+    }
+
     public function testWriteHtmlFilesWritePagesToHtmFiles()
     {
         $app = new \Gumdrop\Application();

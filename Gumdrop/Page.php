@@ -90,6 +90,19 @@ class Page
     }
 
     /**
+     * Renders the page Twig environment of the page
+     */
+    public function renderPageTwigEnvironment()
+    {
+        $this->setHtmlContent($this->getPageTwigEnvironment()->render(
+            $this->getHtmlContent(),
+            array(
+                'conf' => $this->getConfiguration()
+            )
+        ));
+    }
+
+    /**
      * Writes the final HTML content to file
      *
      * @param string $destination
