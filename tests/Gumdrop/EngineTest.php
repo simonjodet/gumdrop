@@ -6,6 +6,8 @@ require_once __DIR__ . '/../../Gumdrop/Engine.php';
 require_once __DIR__ . '/../../Gumdrop/Configuration.php';
 require_once __DIR__ . '/../../Gumdrop/PageConfiguration.php';
 require_once __DIR__ . '/../../Gumdrop/PageCollection.php';
+require_once __DIR__ . '/../../Gumdrop/Twig.php';
+require_once __DIR__ . '/../../vendor/twig/twig/lib/Twig/Autoloader.php';
 require_once __DIR__ . '/../../vendor/dflydev/markdown/src/dflydev/markdown/IMarkdownParser.php';
 require_once __DIR__ . '/../../vendor/dflydev/markdown/src/dflydev/markdown/MarkdownParser.php';
 
@@ -13,8 +15,12 @@ class Engine extends \Gumdrop\Tests\TestCase
 {
     public function testRunBehavesAsExpected()
     {
+        \Twig_Autoloader::register();
+        $LayoutTwigEnvironmentMock = \Mockery::mock('\Twig_Environment');
+
         $Page1 = \Mockery::mock('\Gumdrop\Page');
         $Page2 = \Mockery::mock('\Gumdrop\Page');
+
         $Page1
             ->shouldReceive('setConfiguration')
             ->with(\Mockery::type('\Gumdrop\PageConfiguration'))
@@ -50,6 +56,12 @@ class Engine extends \Gumdrop\Tests\TestCase
             ->once()
             ->andReturn('collection2');
         $Page1
+            ->shouldReceive('setLayoutTwigEnvironment')
+            ->with($LayoutTwigEnvironmentMock)
+            ->globally()
+            ->ordered()
+            ->once();
+        $Page1
             ->shouldReceive('applyTwigLayout')
             ->globally()
             ->ordered()
@@ -57,6 +69,12 @@ class Engine extends \Gumdrop\Tests\TestCase
         $Page1
             ->shouldReceive('writeHtmFiles')
             ->with('destination')
+            ->globally()
+            ->ordered()
+            ->once();
+        $Page2
+            ->shouldReceive('setLayoutTwigEnvironment')
+            ->with($LayoutTwigEnvironmentMock)
             ->globally()
             ->ordered()
             ->once();
@@ -78,6 +96,14 @@ class Engine extends \Gumdrop\Tests\TestCase
 
         $app = $this->getApp();
         $app->setDestinationLocation('destination');
+
+        $TwigMock = \Mockery::mock('\Gumdrop\Twig');
+        $TwigMock
+            ->shouldReceive('getLayoutEnvironment')
+            ->andReturn($LayoutTwigEnvironmentMock)
+            ->once();
+
+        $app->setTwig($TwigMock);
 
         $Engine = new \Gumdrop\Engine($app);
         $Engine->run($PageCollection);

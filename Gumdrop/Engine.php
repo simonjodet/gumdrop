@@ -29,6 +29,7 @@ class Engine
      */
     public function run(\Gumdrop\PageCollection $PageCollection)
     {
+        $LayoutTwigEnvironment = $this->app->getTwig()->getLayoutEnvironment();
         foreach ($PageCollection as $key => $Page)
         {
             $PageCollection[$key]->setConfiguration(new \Gumdrop\PageConfiguration());
@@ -37,6 +38,7 @@ class Engine
         }
         foreach ($PageCollection as $key => $Page)
         {
+            $PageCollection[$key]->setLayoutTwigEnvironment($LayoutTwigEnvironment);
             $PageCollection[$key]->applyTwigLayout();
             $PageCollection[$key]->writeHtmFiles($this->app->getDestinationLocation());
         }

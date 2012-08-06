@@ -10,27 +10,21 @@ if ($source == '/' || $source === false)
 if ($destination == '/' || $destination === false)
 {
     echo 'Given destination path is not valid!' . PHP_EOL;
-    exit(1);
+    exit(2);
 }
 
 require_once __DIR__ . '/vendor/autoload.php';
-$Application = new \Gumdrop\Application();
-$Application->setMarkdownParser(new \dflydev\markdown\MarkdownParser());
 
-//$Application->setTwigLoaderFileSystem(new Twig_Loader_Filesystem($source . '/_layout/'));
-//$Application->setTwigEnvironment(
-//    new Twig_Environment(
-//        $Application->getTwigLoaderFileSystem(),
-//        array(
-//            'autoescape' => false,
-//            'strict_variables' => false
-//        )
-//    )
-//);
+$Application = new \Gumdrop\Application();
+
 $Application->setSourceLocation($source);
 $Application->setDestinationLocation($destination);
+
+$Application->setMarkdownParser(new \dflydev\markdown\MarkdownParser());
+$Application->setTwig(new \Gumdrop\Twig($Application));
 $Application->setFileHandler(new \Gumdrop\FileHandler($Application));
 $Application->setEngine(new \Gumdrop\Engine($Application));
 
 $Application->generate();
 echo 'Gumdrop converted your MarkDown files converted to ' . $destination . PHP_EOL;
+exit(0);

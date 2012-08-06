@@ -23,6 +23,12 @@ class Application
     private $Engine;
 
     /**
+     * Twig environment generator
+     * @var \Gumdrop\Twig
+     */
+    private $Twig;
+
+    /**
      * @var string Location of the markdown source files
      */
     private $sourceLocation = '';
@@ -138,5 +144,23 @@ class Application
     public function getDestinationLocation()
     {
         return $this->destinationLocation;
+    }
+
+    /**
+     * Set the Twig environment generator
+     * @param \Gumdrop\Twig $Twig
+     */
+    public function setTwig($Twig)
+    {
+        $this->Twig = $Twig;
+    }
+
+    /**
+     * Get the Twig environment generator
+     * @return \Gumdrop\Twig
+     */
+    public function getTwig()
+    {
+        return $this->Twig;
     }
 }
