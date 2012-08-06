@@ -41,7 +41,7 @@ class Engine
         {
             $PageCollection[$key]->setLayoutTwigEnvironment($LayoutTwigEnvironment);
             $PageCollection[$key]->setPageTwigEnvironment($PageTwigEnvironment);
-            $PageCollection[$key]->applyTwigLayout();
+            $PageCollection[$key]->renderLayoutTwigEnvironment();
             $PageCollection[$key]->writeHtmFiles($this->app->getDestinationLocation());
         }
     }

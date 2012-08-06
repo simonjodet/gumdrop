@@ -64,9 +64,9 @@ class Page
     }
 
     /**
-     * Runs the twig engine on the HTML content
+     * Renders the layout Twig environment of the page
      */
-    public function applyTwigLayout()
+    public function renderLayoutTwigEnvironment()
     {
         $twig_layout = null;
         if (isset($this->configuration['layout']) && !is_null($this->configuration['layout']))

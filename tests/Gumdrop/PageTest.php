@@ -47,7 +47,7 @@ class Page extends \Gumdrop\Tests\TestCase
         $this->assertEquals($Page->getHtmlContent(), 'html content 1');
     }
 
-    public function testApplyTwigLayoutAppliesTheLayoutToPages()
+    public function testRenderLayoutTwigEnvironmentAppliesTheLayoutToPages()
     {
         $app = new \Gumdrop\Application();
 
@@ -76,12 +76,12 @@ class Page extends \Gumdrop\Tests\TestCase
         $Page->setHtmlContent('html content 1');
         $Page->setLayoutTwigEnvironment($LayoutTwigEnvironment);
 
-        $Page->applyTwigLayout();
+        $Page->renderLayoutTwigEnvironment();
 
         $this->assertEquals($Page->getHtmlContent(), 'twig content 1');
     }
 
-    public function testApplyTwigLayoutDoesNotApplyTheLayoutToPagesIfItDoesNotExist()
+    public function testRenderLayoutTwigEnvironmentDoesNotApplyTheLayoutToPagesIfItDoesNotExist()
     {
         $app = new \Gumdrop\Application();
         $FileHandler = \Mockery::mock('\Gumdrop\FileHandler');
@@ -94,12 +94,12 @@ class Page extends \Gumdrop\Tests\TestCase
         $Page = new \Gumdrop\Page($app);
         $Page->setHtmlContent('html content 1');
 
-        $Page->applyTwigLayout();
+        $Page->renderLayoutTwigEnvironment();
 
         $this->assertEquals($Page->getHtmlContent(), 'html content 1');
     }
 
-    public function testApplyTwigLayoutPreferablyUsesLayoutSetInPageConfiguration()
+    public function testRenderLayoutTwigEnvironmentPreferablyUsesLayoutSetInPageConfiguration()
     {
         $app = new \Gumdrop\Application();
 
@@ -123,7 +123,7 @@ class Page extends \Gumdrop\Tests\TestCase
         $Page->setHtmlContent('html content 1');
         $Page->setLayoutTwigEnvironment($LayoutTwigEnvironment);
 
-        $Page->applyTwigLayout();
+        $Page->renderLayoutTwigEnvironment();
     }
 
     public function testWriteHtmlFilesWritePagesToHtmFiles()

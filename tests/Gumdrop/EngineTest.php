@@ -69,7 +69,7 @@ class Engine extends \Gumdrop\Tests\TestCase
             ->ordered()
             ->once();
         $Page1
-            ->shouldReceive('applyTwigLayout')
+            ->shouldReceive('renderLayoutTwigEnvironment')
             ->globally()
             ->ordered()
             ->once();
@@ -92,7 +92,7 @@ class Engine extends \Gumdrop\Tests\TestCase
             ->ordered()
             ->once();
         $Page2
-            ->shouldReceive('applyTwigLayout')
+            ->shouldReceive('renderLayoutTwigEnvironment')
             ->globally()
             ->ordered()
             ->once();
