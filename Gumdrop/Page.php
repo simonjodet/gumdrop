@@ -38,6 +38,11 @@ class Page
     private $layoutTwigEnvironment;
 
     /**
+     * @var \Twig_Environment
+     */
+    private $pageTwigEnvironment;
+
+    /**
      * @var \Gumdrop\Application
      */
     private $app;
@@ -195,5 +200,21 @@ class Page
     public function getLayoutTwigEnvironment()
     {
         return $this->layoutTwigEnvironment;
+    }
+
+    /**
+     * @param \Twig_Environment $pageTwigEnvironment
+     */
+    public function setPageTwigEnvironment($pageTwigEnvironment)
+    {
+        $this->pageTwigEnvironment = $pageTwigEnvironment;
+    }
+
+    /**
+     * @return \Twig_Environment
+     */
+    public function getPageTwigEnvironment()
+    {
+        return $this->pageTwigEnvironment;
     }
 }

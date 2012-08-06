@@ -17,6 +17,7 @@ class Engine extends \Gumdrop\Tests\TestCase
     {
         \Twig_Autoloader::register();
         $LayoutTwigEnvironmentMock = \Mockery::mock('\Twig_Environment');
+        $PageTwigEnvironmentMock = \Mockery::mock('\Twig_Environment');
 
         $Page1 = \Mockery::mock('\Gumdrop\Page');
         $Page2 = \Mockery::mock('\Gumdrop\Page');
@@ -62,6 +63,12 @@ class Engine extends \Gumdrop\Tests\TestCase
             ->ordered()
             ->once();
         $Page1
+            ->shouldReceive('setPageTwigEnvironment')
+            ->with($PageTwigEnvironmentMock)
+            ->globally()
+            ->ordered()
+            ->once();
+        $Page1
             ->shouldReceive('applyTwigLayout')
             ->globally()
             ->ordered()
@@ -75,6 +82,12 @@ class Engine extends \Gumdrop\Tests\TestCase
         $Page2
             ->shouldReceive('setLayoutTwigEnvironment')
             ->with($LayoutTwigEnvironmentMock)
+            ->globally()
+            ->ordered()
+            ->once();
+        $Page2
+            ->shouldReceive('setPageTwigEnvironment')
+            ->with($PageTwigEnvironmentMock)
             ->globally()
             ->ordered()
             ->once();
@@ -101,6 +114,11 @@ class Engine extends \Gumdrop\Tests\TestCase
         $TwigMock
             ->shouldReceive('getLayoutEnvironment')
             ->andReturn($LayoutTwigEnvironmentMock)
+            ->once();
+
+        $TwigMock
+            ->shouldReceive('getPageEnvironment')
+            ->andReturn($PageTwigEnvironmentMock)
             ->once();
 
         $app->setTwig($TwigMock);
