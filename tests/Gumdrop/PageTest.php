@@ -183,27 +183,4 @@ class Page extends \Gumdrop\Tests\TestCase
         rmdir($destination . '/folder');
         rmdir($destination);
     }
-
-    public function testGenerateTwigDataReturnsTheCorrectData()
-    {
-        $app = new \Gumdrop\Application();
-
-        $PageCollection = new \Gumdrop\PageCollection($app);
-        $PageConfiguration = new \Gumdrop\PageConfiguration();
-
-        $Page = new \Gumdrop\Page($app);
-        $Page->setConfiguration($PageConfiguration);
-        $Page->setHtmlContent('html content');
-        $Page->setCollection($PageCollection);
-
-        $this->assertEquals(
-            array(
-                'content' => 'html content',
-                'page' => $Page->getConfiguration(),
-                'pages' => $Page->getCollection()
-            ),
-            $Page->generateTwigData()
-        );
-
-    }
 }

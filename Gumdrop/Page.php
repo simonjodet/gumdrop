@@ -115,7 +115,7 @@ class Page
         file_put_contents($destination_file, $this->getHtmlContent());
     }
 
-    public function generateTwigData()
+    private function generateTwigData()
     {
         return
             array(
