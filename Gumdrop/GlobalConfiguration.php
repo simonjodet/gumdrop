@@ -1,14 +1,21 @@
 <?php
 
+/**
+ * Application-level configuration container
+ * @package Gumdrop
+ */
 namespace Gumdrop;
 
 /**
- * Configuration container
+ * Application-level configuration container
  */
 class GlobalConfiguration extends \Gumdrop\Configuration
 {
     /**
+     * Constructor
+     *
      * @param string $location
+     *
      * @throws \Gumdrop\Exception
      */
     public function __construct($location)

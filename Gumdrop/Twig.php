@@ -1,4 +1,8 @@
 <?php
+/**
+ * Twig Environment provider
+ * @package Gumdrop
+ */
 
 namespace Gumdrop;
 
@@ -8,11 +12,13 @@ namespace Gumdrop;
 class Twig
 {
     /**
+     * Dependency injector
      * @var \Gumdrop\Application
      */
     private $app;
 
     /**
+     * Constructor
      * @param \Gumdrop\Application $app Dependency injector
      */
     public function __construct(\Gumdrop\Application $app)

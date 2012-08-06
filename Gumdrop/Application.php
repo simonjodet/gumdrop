@@ -1,4 +1,8 @@
 <?php
+/**
+ * Gumdrop application
+ * @package Gumdrop
+ */
 
 namespace Gumdrop;
 
@@ -8,16 +12,19 @@ namespace Gumdrop;
 class Application
 {
     /**
+     * Application's Markdown parser
      * @var \dflydev\markdown\MarkdownParser
      */
     private $MarkdownParser;
 
     /**
+     * Application's file handler
      * @var \Gumdrop\FileHandler
      */
     private $FileHandler;
 
     /**
+     * Application's engine
      * @var \Gumdrop\Engine
      */
     private $Engine;
@@ -29,19 +36,19 @@ class Application
     private $Twig;
 
     /**
-     * @var string Location of the markdown source files
+     * Location of the markdown source files
+     * @var string
      */
     private $sourceLocation = '';
 
     /**
-     * @var string Location of the generated site
+     * Location of the generated site
+     * @var string
      */
     private $destinationLocation = '';
 
     /**
      * Generates the site
-     *
-     * @param string $destination
      */
     public function generate()
     {
@@ -52,6 +59,8 @@ class Application
 
 
     /**
+     * Set Application's Markdown parser
+     *
      * @param \dflydev\markdown\MarkdownParser $MarkdownParser
      *
      * @codeCoverageIgnore
@@ -62,6 +71,7 @@ class Application
     }
 
     /**
+     * Get Application's Markdown parser
      * @return \dflydev\markdown\MarkdownParser
      * @codeCoverageIgnore
      */
@@ -71,6 +81,8 @@ class Application
     }
 
     /**
+     * Set Application's file handler
+     *
      * @param \Gumdrop\FileHandler $FileHandler
      *
      * @codeCoverageIgnore
@@ -81,6 +93,7 @@ class Application
     }
 
     /**
+     * Get Application's file handler
      * @return \Gumdrop\FileHandler
      * @codeCoverageIgnore
      */
@@ -90,6 +103,8 @@ class Application
     }
 
     /**
+     * Set Application's engine
+     *
      * @param \Gumdrop\Engine $Engine
      *
      * @codeCoverageIgnore
@@ -100,6 +115,7 @@ class Application
     }
 
     /**
+     * Get Application's engine
      * @return \Gumdrop\Engine
      * @codeCoverageIgnore
      */
@@ -148,6 +164,7 @@ class Application
 
     /**
      * Set the Twig environment generator
+     *
      * @param \Gumdrop\Twig $Twig
      */
     public function setTwig($Twig)

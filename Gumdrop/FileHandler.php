@@ -1,20 +1,24 @@
 <?php
-
+/**
+ * Gumdrop-specific file system operations
+ * @package Gumdrop
+ */
 namespace Gumdrop;
 
 /**
- * Contains all file system operations
+ * Gumdrop-specific file system operations
  */
 class FileHandler
 {
     /**
+     * Dependency injector
      * @var \Gumdrop\Application
      */
     private $app;
 
     /**
+     * Constructor
      * @param \Gumdrop\Application $app
-     * @param string $location
      */
     public function __construct(\Gumdrop\Application $app)
     {
@@ -73,8 +77,6 @@ class FileHandler
 
     /**
      * Checks if the page.twig file exists at the given location
-     *
-     * @param string $location
      *
      * @return bool
      */

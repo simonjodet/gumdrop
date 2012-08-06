@@ -1,4 +1,8 @@
 <?php
+/**
+ * Page object representing a page of the website
+ * @package Gumdrop
+ */
 
 namespace Gumdrop;
 
@@ -8,16 +12,20 @@ namespace Gumdrop;
 class Page
 {
     /**
+     * Dependency injector
      * @var \Gumdrop\Application
      */
     private $app;
 
     /**
+     * Page location - relative to the root of the source files
      * @var string
      */
     private $location;
 
     /**
+     * Set page location
+     *
      * @param string string $location
      */
     public function setLocation($location)
@@ -26,6 +34,7 @@ class Page
     }
 
     /**
+     * Get page location
      * @return string
      */
     public function getLocation()
@@ -34,11 +43,14 @@ class Page
     }
 
     /**
+     * Page's Markdown content
      * @var string
      */
     private $markdownContent;
 
     /**
+     * Set Page's Markdown content
+     *
      * @param string $markdownContent
      */
     public function setMarkdownContent($markdownContent)
@@ -47,6 +59,7 @@ class Page
     }
 
     /**
+     * Get Page's Markdown content
      * @return string
      */
     public function getMarkdownContent()
@@ -55,11 +68,14 @@ class Page
     }
 
     /**
+     * Page's HTML content
      * @var string
      */
     private $htmlContent;
 
     /**
+     * Set Page's HTML content
+     *
      * @param string $htmlContent
      */
     public function setHtmlContent($htmlContent)
@@ -68,6 +84,7 @@ class Page
     }
 
     /**
+     * Get Page's HTML content
      * @return string
      */
     public function getHtmlContent()
@@ -76,11 +93,14 @@ class Page
     }
 
     /**
+     * Page's configuration
      * @var \Gumdrop\PageConfiguration
      */
     private $configuration;
 
     /**
+     * Set Page's configuration
+     *
      * @param \Gumdrop\PageConfiguration $configuration
      */
     public function setConfiguration(\Gumdrop\PageConfiguration $configuration)
@@ -90,6 +110,7 @@ class Page
     }
 
     /**
+     * Get Page's configuration
      * @return \Gumdrop\PageConfiguration
      */
     public function getConfiguration()
@@ -98,11 +119,14 @@ class Page
     }
 
     /**
+     * Collection the Page belongs to - Mean to access the other pages
      * @var \Gumdrop\PageCollection
      */
     private $collection;
 
     /**
+     * Set Page's collection
+     *
      * @param \Gumdrop\PageCollection $collection
      */
     public function setCollection(\Gumdrop\PageCollection $collection)
@@ -111,6 +135,7 @@ class Page
     }
 
     /**
+     * Get Page's collection
      * @return \Gumdrop\PageCollection
      */
     public function getCollection()
@@ -119,11 +144,14 @@ class Page
     }
 
     /**
+     * Page's layout Twig environment
      * @var \Twig_Environment
      */
     private $layoutTwigEnvironment;
 
     /**
+     * Set Page's layout Twig environment
+     *
      * @param \Twig_Environment $layoutTwigEnvironment
      */
     public function setLayoutTwigEnvironment(\Twig_Environment $layoutTwigEnvironment)
@@ -132,6 +160,7 @@ class Page
     }
 
     /**
+     * Get Page's layout Twig environment
      * @return \Twig_Environment
      */
     public function getLayoutTwigEnvironment()
@@ -140,11 +169,14 @@ class Page
     }
 
     /**
+     * Page's page Twig environment
      * @var \Twig_Environment
      */
     private $pageTwigEnvironment;
 
     /**
+     * Set Page's page Twig environment
+     *
      * @param \Twig_Environment $pageTwigEnvironment
      */
     public function setPageTwigEnvironment($pageTwigEnvironment)
@@ -153,6 +185,7 @@ class Page
     }
 
     /**
+     * Get Page's page Twig environment
      * @return \Twig_Environment
      */
     public function getPageTwigEnvironment()
@@ -162,6 +195,7 @@ class Page
 
     /* METHODS */
     /**
+     * Constructor
      * @param \Gumdrop\Application $app
      */
     public function __construct(\Gumdrop\Application $app)
@@ -227,6 +261,10 @@ class Page
         file_put_contents($destination_file, $this->getHtmlContent());
     }
 
+    /**
+     * Returns an array containing the data to pass to Twig renderer
+     * @return array
+     */
     private function generateTwigData()
     {
         return

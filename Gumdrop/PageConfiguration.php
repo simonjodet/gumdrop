@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * Page configuration container
+ * @package Gumdrop
+ */
 namespace Gumdrop;
 
 /**

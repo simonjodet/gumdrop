@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<phpdocumentor>
+    <title>Gumdrop</title>
+    <parser>
+        <default-package-name>Gumdrop</default-package-name>
+        <target>doc/phpdoc</target>
+        <markers>
+            <item>TODO</item>
+            <item>FIXME</item>
+        </markers>
+        <extensions>
+            <extension>php</extension>
+        </extensions>
+    </parser>
+    <files>
+        <directory>Gumdrop</directory>
+        <ignore-hidden>on</ignore-hidden>
+        <ignore-symlinks>on</ignore-symlinks>
+    </files>
+    <transformer>
+        <target>doc/phpdoc</target>
+    </transformer>
+    <logging>
+        <level>debug</level>
+        <paths>
+            <default>{APP_ROOT}/doc/log/{DATE}.log</default>
+            <errors>{APP_ROOT}/doc/log/{DATE}.errors.log</errors>
+        </paths>
+    </logging>
+    <transformations>
+        <template name="responsive" />
+    </transformations>
+</phpdocumentor>

@@ -1,5 +1,8 @@
 <?php
-
+/**
+ * Engine - Class handling Markdown files including conversion to HTML
+ * @package Gumdrop
+ */
 namespace Gumdrop;
 
 
@@ -9,11 +12,13 @@ namespace Gumdrop;
 class Engine
 {
     /**
+     * Dependency injector
      * @var \Gumdrop\Application
      */
     private $app;
 
     /**
+     * Constructor
      * @param \Gumdrop\Application $app
      */
     public function __construct(\Gumdrop\Application $app)
@@ -25,7 +30,6 @@ class Engine
      * Runs the PageCollection through all the steps of the process
      *
      * @param PageCollection $PageCollection
-     * @param $destination
      */
     public function run(\Gumdrop\PageCollection $PageCollection)
     {
