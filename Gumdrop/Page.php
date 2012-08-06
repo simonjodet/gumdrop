@@ -97,7 +97,8 @@ class Page
         $this->setHtmlContent($this->getPageTwigEnvironment()->render(
             $this->getHtmlContent(),
             array(
-                'conf' => $this->getConfiguration()
+                'conf' => $this->getConfiguration(),
+                'pages' => $this->getCollection()
             )
         ));
     }
