@@ -51,6 +51,8 @@ class Page extends \Gumdrop\Tests\TestCase
     {
         $app = new \Gumdrop\Application();
 
+        $PageCollection = new \Gumdrop\PageCollection($app);
+
         $PageConfiguration = new \Gumdrop\PageConfiguration();
 
         $FileHandler = \Mockery::mock('\Gumdrop\FileHandler');
@@ -65,7 +67,8 @@ class Page extends \Gumdrop\Tests\TestCase
             'page.twig',
             array(
                 'content' => 'html content 1',
-                'conf' => $PageConfiguration
+                'page' => $PageConfiguration,
+                'pages' => $PageCollection
             ))
             ->andReturn('twig content 1');
 
@@ -75,6 +78,7 @@ class Page extends \Gumdrop\Tests\TestCase
         $Page->setConfiguration($PageConfiguration);
         $Page->setHtmlContent('html content 1');
         $Page->setLayoutTwigEnvironment($LayoutTwigEnvironment);
+        $Page->setCollection($PageCollection);
 
         $Page->renderLayoutTwigEnvironment();
 
@@ -103,6 +107,8 @@ class Page extends \Gumdrop\Tests\TestCase
     {
         $app = new \Gumdrop\Application();
 
+        $PageCollection = new \Gumdrop\PageCollection($app);
+
         $PageConfiguration = new \Gumdrop\PageConfiguration();
         $PageConfiguration['layout'] = 'twig_layout.twig';
 
@@ -113,7 +119,8 @@ class Page extends \Gumdrop\Tests\TestCase
             'twig_layout.twig',
             array(
                 'content' => 'html content 1',
-                'conf' => $PageConfiguration
+                'page' => $PageConfiguration,
+                'pages' => $PageCollection
             ))
             ->andReturn('twig content 1');
 
@@ -122,6 +129,7 @@ class Page extends \Gumdrop\Tests\TestCase
         $Page->setConfiguration($PageConfiguration);
         $Page->setHtmlContent('html content 1');
         $Page->setLayoutTwigEnvironment($LayoutTwigEnvironment);
+        $Page->setCollection($PageCollection);
 
         $Page->renderLayoutTwigEnvironment();
     }
@@ -139,8 +147,9 @@ class Page extends \Gumdrop\Tests\TestCase
             ->with(
             'initial html content',
             array(
-                'conf' => $PageConfiguration,
-                'pages'=> $PageCollection
+                'content' => 'initial html content',
+                'page' => $PageConfiguration,
+                'pages' => $PageCollection
             ))
             ->andReturn('new html content');
 
@@ -175,4 +184,26 @@ class Page extends \Gumdrop\Tests\TestCase
         rmdir($destination);
     }
 
+    public function testGenerateTwigDataReturnsTheCorrectData()
+    {
+        $app = new \Gumdrop\Application();
+
+        $PageCollection = new \Gumdrop\PageCollection($app);
+        $PageConfiguration = new \Gumdrop\PageConfiguration();
+
+        $Page = new \Gumdrop\Page($app);
+        $Page->setConfiguration($PageConfiguration);
+        $Page->setHtmlContent('html content');
+        $Page->setCollection($PageCollection);
+
+        $this->assertEquals(
+            array(
+                'content' => 'html content',
+                'page' => $Page->getConfiguration(),
+                'pages' => $Page->getCollection()
+            ),
+            $Page->generateTwigData()
+        );
+
+    }
 }

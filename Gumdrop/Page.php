@@ -55,6 +55,8 @@ class Page
         $this->app = $app;
     }
 
+    /* METHODS */
+
     /**
      * Converts the Markdown code to HTML
      */
@@ -81,10 +83,7 @@ class Page
         {
             $this->setHtmlContent($this->getLayoutTwigEnvironment()->render(
                 $twig_layout,
-                array(
-                    'content' => $this->getHtmlContent(),
-                    'conf' => $this->getConfiguration()
-                )
+                $this->generateTwigData()
             ));
         }
     }
@@ -96,10 +95,7 @@ class Page
     {
         $this->setHtmlContent($this->getPageTwigEnvironment()->render(
             $this->getHtmlContent(),
-            array(
-                'conf' => $this->getConfiguration(),
-                'pages' => $this->getCollection()
-            )
+            $this->generateTwigData()
         ));
     }
 
@@ -118,6 +114,18 @@ class Page
         $destination_file = $destination . '/' . $pathinfo['dirname'] . '/' . $pathinfo['filename'] . '.htm';
         file_put_contents($destination_file, $this->getHtmlContent());
     }
+
+    public function generateTwigData()
+    {
+        return
+            array(
+                'content' => $this->getHtmlContent(),
+                'page' => $this->getConfiguration(),
+                'pages' => $this->getCollection()
+            );
+    }
+
+    /* ACCESSORS */
 
     /**
      * @param string $htmlContent
