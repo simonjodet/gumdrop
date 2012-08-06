@@ -33,6 +33,11 @@ class Page
     private $collection;
 
     /**
+     * @var \Twig_Environment
+     */
+    private $layoutTwigEnvironment;
+
+    /**
      * @var \Gumdrop\Application
      */
     private $app;
@@ -69,7 +74,7 @@ class Page
         }
         if (!is_null($twig_layout))
         {
-            $this->setHtmlContent($this->app->getTwigEnvironment()->render(
+            $this->setHtmlContent($this->getLayoutTwigEnvironment()->render(
                 $twig_layout,
                 array(
                     'content' => $this->getHtmlContent(),
@@ -174,5 +179,21 @@ class Page
     public function getCollection()
     {
         return $this->collection;
+    }
+
+    /**
+     * @param \Twig_Environment $layoutTwigEnvironment
+     */
+    public function setLayoutTwigEnvironment(\Twig_Environment $layoutTwigEnvironment)
+    {
+        $this->layoutTwigEnvironment = $layoutTwigEnvironment;
+    }
+
+    /**
+     * @return \Twig_Environment
+     */
+    public function getLayoutTwigEnvironment()
+    {
+        return $this->layoutTwigEnvironment;
     }
 }

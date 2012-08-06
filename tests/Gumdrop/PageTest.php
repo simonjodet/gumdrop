@@ -4,6 +4,7 @@ namespace Gumdrop\Tests;
 require_once __DIR__ . '/../TestCase.php';
 require_once __DIR__ . '/../../Gumdrop/Page.php';
 require_once __DIR__ . '/../../Gumdrop/PageConfiguration.php';
+require_once __DIR__ . '/../../vendor/twig/twig/lib/Twig/Environment.php';
 require_once __DIR__ . '/../../vendor/dflydev/markdown/src/dflydev/markdown/IMarkdownParser.php';
 require_once __DIR__ . '/../../vendor/dflydev/markdown/src/dflydev/markdown/MarkdownParser.php';
 
@@ -52,8 +53,13 @@ class Page extends \Gumdrop\Tests\TestCase
 
         $PageConfiguration = new \Gumdrop\PageConfiguration();
 
-        $Twig_Environment = \Mockery::mock('\Twig_Environment');
-        $Twig_Environment
+        $FileHandler = \Mockery::mock('\Gumdrop\FileHandler');
+        $FileHandler
+            ->shouldReceive('findPageTwigFile')
+            ->andReturn(true);
+
+        $LayoutTwigEnvironment = \Mockery::mock('\Twig_Environment[render]');
+        $LayoutTwigEnvironment
             ->shouldReceive('render')
             ->with(
             'page.twig',
@@ -63,18 +69,12 @@ class Page extends \Gumdrop\Tests\TestCase
             ))
             ->andReturn('twig content 1');
 
-        $app->setTwigEnvironment($Twig_Environment);
-
-        $FileHandler = \Mockery::mock('\Gumdrop\FileHandler');
-        $FileHandler
-            ->shouldReceive('findPageTwigFile')
-            ->andReturn(true);
-
         $app->setFileHandler($FileHandler);
 
         $Page = new \Gumdrop\Page($app);
         $Page->setConfiguration($PageConfiguration);
         $Page->setHtmlContent('html content 1');
+        $Page->setLayoutTwigEnvironment($LayoutTwigEnvironment);
 
         $Page->applyTwigLayout();
 
@@ -106,8 +106,8 @@ class Page extends \Gumdrop\Tests\TestCase
         $PageConfiguration = new \Gumdrop\PageConfiguration();
         $PageConfiguration['layout'] = 'twig_layout.twig';
 
-        $Twig_Environment = \Mockery::mock('\Twig_Environment');
-        $Twig_Environment
+        $LayoutTwigEnvironment = \Mockery::mock('\Twig_Environment[render]');
+        $LayoutTwigEnvironment
             ->shouldReceive('render')
             ->with(
             'twig_layout.twig',
@@ -117,12 +117,11 @@ class Page extends \Gumdrop\Tests\TestCase
             ))
             ->andReturn('twig content 1');
 
-        $app->setTwigEnvironment($Twig_Environment);
-
         $Page = new \Gumdrop\Page($app);
 
         $Page->setConfiguration($PageConfiguration);
         $Page->setHtmlContent('html content 1');
+        $Page->setLayoutTwigEnvironment($LayoutTwigEnvironment);
 
         $Page->applyTwigLayout();
     }
