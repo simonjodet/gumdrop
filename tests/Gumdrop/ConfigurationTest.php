@@ -15,6 +15,21 @@ class Configuration extends \Gumdrop\Tests\TestCase
         $this->assertInstanceOf('\ArrayAccess', new \Gumdrop\Configuration());
     }
 
+    public function testExtractReturnsTheCorrectArray()
+    {
+        $Configuration = new \Gumdrop\Configuration();
+        $Configuration['test1'] = 'value1';
+        $Configuration['test2'] = 'value2';
+
+        $this->assertEquals(
+            array(
+                'test1' => 'value1',
+                'test2' => 'value2'
+            ),
+            $Configuration->extract()
+        );
+    }
+
     public function testOffsetSetAndOffsetGetWorksAsExpected()
     {
         $Configuration = new \Gumdrop\Configuration();

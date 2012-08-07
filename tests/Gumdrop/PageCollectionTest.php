@@ -45,6 +45,36 @@ class PageCollection extends \Gumdrop\Tests\TestCase
         new \Gumdrop\PageCollection($Pages);
     }
 
+    public function testExportForTwigCallsTheCorrectPageMethodToBuildArray()
+    {
+        $PageCollection = new \Gumdrop\PageCollection();
+
+        $Page1 = \Mockery::mock('\Gumdrop\Page');
+        $Page1
+            ->shouldReceive('exportForTwig')
+            ->once()
+            ->globally()
+            ->andReturn(array('1'));
+        $PageCollection[] = $Page1;
+
+        $Page2 = \Mockery::mock('\Gumdrop\Page');
+        $Page2
+            ->shouldReceive('exportForTwig')
+            ->once()
+            ->globally()
+            ->andReturn(array('2'));
+        $PageCollection[] = $Page2;
+
+
+        $this->assertEquals(
+            array(
+                array('1'),
+                array('2')
+            ),
+            $PageCollection->exportForTwig()
+        );
+    }
+
     public function testAddBehavesAsExpected()
     {
         $PageCollection = new \Gumdrop\PageCollection();

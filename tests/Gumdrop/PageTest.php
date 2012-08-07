@@ -60,23 +60,21 @@ class Page extends \Gumdrop\Tests\TestCase
             ->shouldReceive('findPageTwigFile')
             ->andReturn(true);
 
-        $LayoutTwigEnvironment = \Mockery::mock('\Twig_Environment[render]');
-        $LayoutTwigEnvironment
-            ->shouldReceive('render')
-            ->with(
-            'page.twig',
-            array(
-                'content' => 'html content 1',
-                'page' => $PageConfiguration,
-                'pages' => $PageCollection
-            ))
-            ->andReturn('twig content 1');
-
         $app->setFileHandler($FileHandler);
 
         $Page = new \Gumdrop\Page($app);
         $Page->setConfiguration($PageConfiguration);
         $Page->setHtmlContent('html content 1');
+
+        $LayoutTwigEnvironment = \Mockery::mock('\Twig_Environment[render]');
+        $LayoutTwigEnvironment
+            ->shouldReceive('render')
+            ->with(
+            'page.twig',
+            \Mockery::any()
+        )
+            ->andReturn('twig content 1');
+
         $Page->setLayoutTwigEnvironment($LayoutTwigEnvironment);
         $Page->setCollection($PageCollection);
 
@@ -112,22 +110,20 @@ class Page extends \Gumdrop\Tests\TestCase
         $PageConfiguration = new \Gumdrop\PageConfiguration();
         $PageConfiguration['layout'] = 'twig_layout.twig';
 
+        $Page = new \Gumdrop\Page($app);
+
+        $Page->setConfiguration($PageConfiguration);
+        $Page->setHtmlContent('html content 1');
+
         $LayoutTwigEnvironment = \Mockery::mock('\Twig_Environment[render]');
         $LayoutTwigEnvironment
             ->shouldReceive('render')
             ->with(
             'twig_layout.twig',
-            array(
-                'content' => 'html content 1',
-                'page' => $PageConfiguration,
-                'pages' => $PageCollection
-            ))
+            \Mockery::any()
+        )
             ->andReturn('twig content 1');
 
-        $Page = new \Gumdrop\Page($app);
-
-        $Page->setConfiguration($PageConfiguration);
-        $Page->setHtmlContent('html content 1');
         $Page->setLayoutTwigEnvironment($LayoutTwigEnvironment);
         $Page->setCollection($PageCollection);
 
@@ -141,21 +137,19 @@ class Page extends \Gumdrop\Tests\TestCase
         $PageCollection = new \Gumdrop\PageCollection($app);
         $PageConfiguration = new \Gumdrop\PageConfiguration();
 
+        $Page = new \Gumdrop\Page($app);
+        $Page->setConfiguration($PageConfiguration);
+        $Page->setHtmlContent('initial html content');
+
         $PageTwigEnvironment = \Mockery::mock('\Twig_Environment[render]');
         $PageTwigEnvironment
             ->shouldReceive('render')
             ->with(
             'initial html content',
-            array(
-                'content' => 'initial html content',
-                'page' => $PageConfiguration,
-                'pages' => $PageCollection
-            ))
+            \Mockery::any()
+        )
             ->andReturn('new html content');
 
-        $Page = new \Gumdrop\Page($app);
-        $Page->setConfiguration($PageConfiguration);
-        $Page->setHtmlContent('initial html content');
         $Page->setPageTwigEnvironment($PageTwigEnvironment);
         $Page->setCollection($PageCollection);
 
@@ -164,7 +158,80 @@ class Page extends \Gumdrop\Tests\TestCase
         $this->assertEquals($Page->getHtmlContent(), 'new html content');
     }
 
-    public function testWriteHtmlFilesWritePagesToHtmFiles()
+    public function testRenderPageTwigEnvironmentPassesTheCorrectDataToTemplate()
+    {
+        $app = new \Gumdrop\Application();
+
+        $PageConfiguration = new \Gumdrop\PageConfiguration();
+        $PageConfiguration['layout'] = 'my_layout';
+        $PageConfiguration['title'] = 'my_title';
+
+        $PageCollection = \Mockery::mock('\Gumdrop\PageCollection');
+        $PageCollection
+            ->shouldReceive('exportForTwig')
+            ->andReturn(array('exportForTwig'));
+
+        $Page = new \Gumdrop\Page($app);
+        $Page->setConfiguration($PageConfiguration);
+        $Page->setHtmlContent('initial html content');
+        $Page->setLocation('my_folder/my_file');
+        $Page->setMarkdownContent('markdown content');
+
+
+        $PageTwigEnvironment = \Mockery::mock('\Twig_Environment[render]');
+        $PageTwigEnvironment
+            ->shouldReceive('render')
+            ->with(
+            \Mockery::any(),
+            array(
+                'content' => 'initial html content',
+                'page' => array(
+                    'conf' => array(
+                        'layout' => 'my_layout',
+                        'title' => 'my_title'
+                    ),
+                    'location' => 'my_folder/my_file',
+                    'html' => 'initial html content',
+                    'markdown' => 'markdown content'
+                ),
+                'pages' => array('exportForTwig')
+            ));
+
+        $Page->setPageTwigEnvironment($PageTwigEnvironment);
+        $Page->setCollection($PageCollection);
+        $Page->renderPageTwigEnvironment();
+    }
+
+    public function testExportForTwigReturnsTheCorrectInfo()
+    {
+        $app = new \Gumdrop\Application();
+
+        $PageConfiguration = new \Gumdrop\PageConfiguration();
+        $PageConfiguration['layout'] = 'my_layout';
+        $PageConfiguration['title'] = 'my_title';
+
+
+        $Page = new \Gumdrop\Page($app);
+        $Page->setConfiguration($PageConfiguration);
+        $Page->setHtmlContent('html content');
+        $Page->setLocation('my_folder/my_file');
+        $Page->setMarkdownContent('markdown content');
+
+        $this->assertEquals(
+            array(
+                'conf' => array(
+                    'layout' => 'my_layout',
+                    'title' => 'my_title'
+                ),
+                'location' => 'my_folder/my_file',
+                'html' => 'html content',
+                'markdown' => 'markdown content'
+            ),
+            $Page->exportForTwig()
+        );
+    }
+
+        public function testWriteHtmlFilesWritePagesToHtmFiles()
     {
         $app = new \Gumdrop\Application();
 

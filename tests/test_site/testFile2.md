@@ -1,14 +1,14 @@
 ***
 {
-    "layout":"page.twig"
+    "layout":"page2.twig",
+    "title":"Page 2 Title"
 }
 ***
 
-{{ conf.layout }}
+{{ page.conf.layout }}
 
 {% for page in pages %}
-  {{ page.getLocation }}
+  {{ page.conf.layout }}-{{ page.conf.title }}
 {% endfor %}
 
-Lorem ipsum
-===========
+# {{ page.conf.title }}

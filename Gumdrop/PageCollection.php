@@ -40,6 +40,20 @@ class PageCollection implements \Iterator, \Countable, \ArrayAccess
     }
 
     /**
+     * Returns an array of Pages' data for use in Twig rendering phase
+     * @return array
+     */
+    public function exportForTwig()
+    {
+        $extract = array();
+        foreach ($this->Pages as $Page)
+        {
+            $extract[] = $Page->exportForTwig();
+        }
+        return $extract;
+    }
+
+    /**
      * Appends a Page to the collection
      *
      * @param \Gumdrop\Page $Page

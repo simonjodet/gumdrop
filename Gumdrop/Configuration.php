@@ -28,9 +28,18 @@ class Configuration implements \Iterator, \Countable, \ArrayAccess
      *
      * @param array $configuration
      */
-    function __construct($configuration = array())
+    public function __construct($configuration = array())
     {
         $this->configuration = $configuration;
+    }
+
+    /**
+     * Extract the configuration as a pure array
+     * @return array
+     */
+    public function extract()
+    {
+        return $this->configuration;
     }
 
     /**

@@ -196,6 +196,7 @@ class Page
     /* METHODS */
     /**
      * Constructor
+     *
      * @param \Gumdrop\Application $app
      */
     public function __construct(\Gumdrop\Application $app)
@@ -262,16 +263,29 @@ class Page
     }
 
     /**
+     * Return the Page's data for use in Twig rendering phase
+     * @return array
+     */
+    public function exportForTwig()
+    {
+        return array(
+            'conf' => $this->getConfiguration()->extract(),
+            'location' => $this->getLocation(),
+            'html' => $this->getHtmlContent(),
+            'markdown' => $this->getMarkdownContent()
+        );
+    }
+
+    /**
      * Returns an array containing the data to pass to Twig renderer
      * @return array
      */
     private function generateTwigData()
     {
-        return
-            array(
-                'content' => $this->getHtmlContent(),
-                'page' => $this->getConfiguration(),
-                'pages' => $this->getCollection()
-            );
+        return array(
+            'content' => $this->getHtmlContent(),
+            'page' => $this->exportForTwig(),
+            'pages' => $this->getCollection()->exportForTwig()
+        );
     }
 }
