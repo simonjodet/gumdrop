@@ -1,4 +1,8 @@
+## Download
+Download the [latest stable version](https://github.com/simonjodet/gumdrop/zipball/master). 
+
 ## Installation
+
 
 Gumdrop requires PHP 5.3 CLI.  
 If you're using Linux, your distribution most likely has a PHP CLI package for you to install.  
@@ -7,7 +11,7 @@ Gumdrop has not been tested on Windows.
 
 You'll then need the latest version of [Composer](http://getcomposer.org/ "Composer").
 
-Once it's installed, run the following:
+Once Composer is installed, unzip the ZIP archive you've downloaded and run the following in a terminal:
 
     cd /path/to/gumdrop
     composer install
@@ -114,7 +118,7 @@ Run the following:
 
 ## Contributions
 ### Forking
-You can of course fork this project at your leisure.  
+You can of course fork [this project](https://github.com/simonjodet/gumdrop/tree/develop) at your leisure.  
 Any PR should be done with a dedicated branch originating from the `develop` branch.  
 I will **not** merge the latest commits on the `develop` branch for you so please make sure you're up-to-date before issuing a PR.  
 Anyone willing to test and fix Windows issues is welcome to do so ^^
