@@ -55,6 +55,7 @@ class Application
         $PageCollection = $this->FileHandler->listMarkdownFiles();
         $PageCollection = $this->FileHandler->getMarkdownFiles($PageCollection);
         $this->Engine->run($PageCollection);
+        $this->FileHandler->copyStaticFiles();
     }
 
 
