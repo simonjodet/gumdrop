@@ -1,106 +1,139 @@
 <?php
-namespace Gumdrop\tests\units;
+namespace Gumdrop\Tests;
 
 require_once __DIR__ . '/../TestCase.php';
 require_once __DIR__ . '/../../Gumdrop/Engine.php';
+require_once __DIR__ . '/../../Gumdrop/Configuration.php';
+require_once __DIR__ . '/../../Gumdrop/PageConfiguration.php';
+require_once __DIR__ . '/../../Gumdrop/PageCollection.php';
+require_once __DIR__ . '/../../Gumdrop/Twig.php';
+require_once __DIR__ . '/../../vendor/twig/twig/lib/Twig/Autoloader.php';
 require_once __DIR__ . '/../../vendor/dflydev/markdown/src/dflydev/markdown/IMarkdownParser.php';
 require_once __DIR__ . '/../../vendor/dflydev/markdown/src/dflydev/markdown/MarkdownParser.php';
 
-class Engine extends \tests\units\TestCase
+class Engine extends \Gumdrop\Tests\TestCase
 {
-    public function testConvertMarkdownToHtmlUsesTheMarkdownParser()
+    public function testRunBehavesAsExpected()
     {
-        $app = new \Gumdrop\Application();
-        $MarkdownParserMock = \Mockery::mock('\dflydev\markdown\MarkdownParser');
-        $MarkdownParserMock
-            ->shouldReceive('transformMarkdown')
+        \Twig_Autoloader::register();
+        $LayoutTwigEnvironmentMock = \Mockery::mock('\Twig_Environment');
+        $PageTwigEnvironmentMock = \Mockery::mock('\Twig_Environment');
+
+        $Page1 = \Mockery::mock('\Gumdrop\Page');
+        $Page2 = \Mockery::mock('\Gumdrop\Page');
+
+        $Page1
+            ->shouldReceive('setConfiguration')
+            ->with(\Mockery::type('\Gumdrop\PageConfiguration'))
+            ->globally()
+            ->ordered()
+            ->once();
+        $Page1
+            ->shouldReceive('convertMarkdownToHtml')
+            ->globally()
+            ->ordered()
+            ->once();
+        $Page1
+            ->shouldReceive('setCollection')
+            ->globally()
+            ->ordered()
             ->once()
-            ->with('page 1 content')
-            ->andReturn('html content 1');
-
-        $MarkdownParserMock
-            ->shouldReceive('transformMarkdown')
+            ->andReturn('collection1');
+        $Page2
+            ->shouldReceive('setConfiguration')
+            ->with(\Mockery::type('\Gumdrop\PageConfiguration'))
+            ->globally()
+            ->ordered()
+            ->once();
+        $Page2
+            ->shouldReceive('convertMarkdownToHtml')
+            ->globally()
+            ->ordered()
+            ->once();
+        $Page2
+            ->shouldReceive('setCollection')
+            ->globally()
+            ->ordered()
             ->once()
-            ->with('page 2 content')
-            ->andReturn('html content 2');
-        $app->setMarkdownParser($MarkdownParserMock);
+            ->andReturn('collection2');
+        $Page1
+            ->shouldReceive('setLayoutTwigEnvironment')
+            ->with($LayoutTwigEnvironmentMock)
+            ->globally()
+            ->ordered()
+            ->once();
+        $Page1
+            ->shouldReceive('setPageTwigEnvironment')
+            ->with($PageTwigEnvironmentMock)
+            ->globally()
+            ->ordered()
+            ->once();
+        $Page1
+            ->shouldReceive('renderPageTwigEnvironment')
+            ->globally()
+            ->ordered()
+            ->once();
+        $Page1
+            ->shouldReceive('renderLayoutTwigEnvironment')
+            ->globally()
+            ->ordered()
+            ->once();
+        $Page1
+            ->shouldReceive('writeHtmFiles')
+            ->with('destination')
+            ->globally()
+            ->ordered()
+            ->once();
+        $Page2
+            ->shouldReceive('setLayoutTwigEnvironment')
+            ->with($LayoutTwigEnvironmentMock)
+            ->globally()
+            ->ordered()
+            ->once();
+        $Page2
+            ->shouldReceive('setPageTwigEnvironment')
+            ->with($PageTwigEnvironmentMock)
+            ->globally()
+            ->ordered()
+            ->once();
+        $Page2
+            ->shouldReceive('renderPageTwigEnvironment')
+            ->globally()
+            ->ordered()
+            ->once();
+        $Page2
+            ->shouldReceive('renderLayoutTwigEnvironment')
+            ->globally()
+            ->ordered()
+            ->once();
+        $Page2
+            ->shouldReceive('writeHtmFiles')
+            ->globally()
+            ->ordered()
+            ->with('destination')
+            ->once();
+        $PageCollection = new \Gumdrop\PageCollection(array(
+            $Page1,
+            $Page2
+        ));
 
-        $pages = array(
-            'file_1_path.md' => 'page 1 content',
-            'file_2_path.md' => 'page 2 content'
-        );
+        $app = $this->getApp();
+        $app->setDestinationLocation('destination');
 
-        $MarkdownFiles = new \Gumdrop\Engine($app);
-        $converted_pages = $MarkdownFiles->convertMarkdownToHtml($pages);
+        $TwigMock = \Mockery::mock('\Gumdrop\Twig');
+        $TwigMock
+            ->shouldReceive('getLayoutEnvironment')
+            ->andReturn($LayoutTwigEnvironmentMock)
+            ->once();
 
-        $this->array($converted_pages)->isEqualTo(
-            array(
-                'file_1_path.md' => 'html content 1',
-                'file_2_path.md' => 'html content 2'
-            )
-        );
-    }
+        $TwigMock
+            ->shouldReceive('getPageEnvironment')
+            ->andReturn($PageTwigEnvironmentMock)
+            ->once();
 
-    public function testApplyTwigLayoutAppliesTheLayoutToPages()
-    {
-        $app = new \Gumdrop\Application();
-        $Twig_Environment = \Mockery::mock('\Twig_Environment');
-        $Twig_Environment
-            ->shouldReceive('render')
-            ->with(
-            'page.twig',
-            array(
-                'content' => 'html content 1'
-            ))
-            ->once()
-            ->andReturn('twig content 1');
+        $app->setTwig($TwigMock);
 
-        $Twig_Environment
-            ->shouldReceive('render')
-            ->with(
-            'page.twig',
-            array(
-                'content' => 'html content 2'
-            ))
-            ->once()
-            ->andReturn('twig content 2');
-
-        $pages = array(
-            'file_1_path.md' => 'html content 1',
-            'file_2_path.md' => 'html content 2'
-        );
-
-        $app->setTwigEnvironment($Twig_Environment);
-        $MarkdownFiles = new \Gumdrop\Engine($app);
-        $converted_pages = $MarkdownFiles->applyTwigLayout($pages);
-
-        $this->array($converted_pages)->isEqualTo(
-            array(
-                'file_1_path.md' => 'twig content 1',
-                'file_2_path.md' => 'twig content 2'
-            )
-        );
-    }
-
-    public function testWriteHtmlFilesWritePagesToHtmFiles()
-    {
-        $app = new \Gumdrop\Application();
-        $pages = array(
-            'folder/file_1_path.md' => 'twig content 1',
-            'file_2_path.md' => 'twig content 2'
-        );
-        $destination = TMP_FOLDER . $this->getUniqueId();
-        mkdir($destination);
-
-        $MarkdownFiles = new \Gumdrop\Engine($app);
-        $MarkdownFiles->writeHtmFiles($pages, $destination);
-
-        $this->string(file_get_contents($destination . '/folder/file_1_path.htm'))->isEqualTo('twig content 1');
-        $this->string(file_get_contents($destination . '/file_2_path.htm'))->isEqualTo('twig content 2');
-
-        unlink($destination . '/folder/file_1_path.htm');
-        unlink($destination . '/file_2_path.htm');
-        rmdir($destination.'/folder');
-        rmdir($destination);
+        $Engine = new \Gumdrop\Engine($app);
+        $Engine->run($PageCollection);
     }
 }

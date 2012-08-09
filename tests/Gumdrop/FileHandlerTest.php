@@ -1,15 +1,17 @@
 <?php
-namespace Gumdrop\tests\units;
+namespace Gumdrop\Tests;
 
 require_once __DIR__ . '/../TestCase.php';
 require_once __DIR__ . '/../../Gumdrop/FileHandler.php';
+require_once __DIR__ . '/../../Gumdrop/PageCollection.php';
 
-class FileHandler extends \tests\units\TestCase
+class FileHandler extends \Gumdrop\Tests\TestCase
 {
     private $testLocation;
 
-    public function beforeTestMethod($method)
+    public function setUp()
     {
+        parent::setUp();
         $this->testLocation = TMP_FOLDER . 'Gumdrop_FileOperations';
     }
 
@@ -23,7 +25,7 @@ class FileHandler extends \tests\units\TestCase
         exec('rm -rf ' . $this->testLocation . '/' . $id);
     }
 
-    public function testListMarkdwonFilesListsFilesRecursively()
+    public function testListMarkdownFilesListsFilesRecursively()
     {
         $id = '/' . $this->getUniqueId();
         mkdir($this->testLocation . '/' . $id . '/folder', 0777, true);
@@ -31,8 +33,10 @@ class FileHandler extends \tests\units\TestCase
         touch($this->testLocation . '/' . $id . '/file2.markdown');
         touch($this->testLocation . '/' . $id . '/file3.txt');
 
-        $FileHandler = new \Gumdrop\FileHandler();
-        $list = $FileHandler->listMarkdownFiles($this->testLocation . '/' . $id . '/');
+        $app = $this->getApp();
+        $app->setSourceLocation($this->testLocation . '/' . $id . '/');
+        $FileHandler = new \Gumdrop\FileHandler($app);
+        $list = $FileHandler->listMarkdownFiles();
         $expected = array(
             realpath($this->testLocation . '/' . $id . '/folder/file1.md'),
             realpath($this->testLocation . '/' . $id . '/file2.markdown')
@@ -44,7 +48,7 @@ class FileHandler extends \tests\units\TestCase
         rmdir($this->testLocation . '/' . $id . '/folder');
         $this->deleteTestLocation($id);
 
-        $this->array($list)->isEqualTo($expected);
+        $this->assertEquals($list, $expected);
     }
 
     public function testGetMarkdownFilesReturnsFilesContent()
@@ -54,22 +58,151 @@ class FileHandler extends \tests\units\TestCase
         file_put_contents($this->testLocation . '/' . $id . '/folder/file1.md', 'md content 1');
         file_put_contents($this->testLocation . '/' . $id . '/file2.markdown', 'md content 2');
 
-        $FileHandler = new \Gumdrop\FileHandler();
-        $list = $FileHandler->getMarkdownFiles(array(
+        $app = $this->getApp();
+        $app->setSourceLocation($this->testLocation . '/' . $id . '/');
+
+        $FileHandler = new \Gumdrop\FileHandler($app);
+        $Pages = $FileHandler->getMarkdownFiles(array(
             realpath($this->testLocation . '/' . $id . '/folder/file1.md'),
             realpath($this->testLocation . '/' . $id . '/file2.markdown')
-        ), $this->testLocation . '/' . $id . '/');
+        ));
 
-        $expected = array(
-            'folder/file1.md' => 'md content 1',
-            'file2.markdown' => 'md content 2'
-        );
+        $expected = new \Gumdrop\PageCollection();
+        $Page1 = new \Gumdrop\Page($app);
+        $Page1->setLocation('folder/file1.md');
+        $Page1->setMarkdownContent('md content 1');
+        $expected->offsetSet(null, $Page1);
+        $Page2 = new \Gumdrop\Page($app);
+        $Page2->setLocation('file2.markdown');
+        $Page2->setMarkdownContent('md content 2');
+        $expected->offsetSet(null, $Page2);
 
         unlink($this->testLocation . '/' . $id . '/folder/file1.md');
         unlink($this->testLocation . '/' . $id . '/file2.markdown');
         rmdir($this->testLocation . '/' . $id . '/folder');
         $this->deleteTestLocation($id);
 
-        $this->array($list)->isEqualTo($expected);
+        $this->assertEquals($Pages, $expected);
+    }
+
+    public function testFindPageTwigFileReturnsTrueIfThisTwigFileExists()
+    {
+        $location = __DIR__ . '/FileHandler/with_page_twig';
+
+        $app = $this->getApp();
+        $app->setSourceLocation($location);
+
+        $FileHandler = new \Gumdrop\FileHandler($app);
+        $this->assertTrue($FileHandler->findPageTwigFile());
+    }
+
+    public function testFindPageTwigFileReturnsFalseIfThisTwigFileDoesNotExist()
+    {
+        $location = __DIR__ . '/FileHandler/without_page_twig';
+
+        $app = $this->getApp();
+        $app->setSourceLocation($location);
+
+        $FileHandler = new \Gumdrop\FileHandler($app);
+        $this->assertFalse($FileHandler->findPageTwigFile());
+    }
+
+    public function testFindStaticFilesReturnsStaticFiles()
+    {
+        $location = __DIR__ . '/FileHandler/static_files';
+
+
+        $app = $this->getApp();
+        $app->setSourceLocation($location);
+
+        $FileHandler = new \Gumdrop\FileHandler($app);
+        $staticFiles = $FileHandler->listStaticFiles();
+        $this->assertEquals(
+            array(
+                'file1',
+                'folder/file2'
+            ),
+            $staticFiles
+        );
+    }
+
+    public function testFindStaticFilesReturnsDoesNotReturnLayoutFiles()
+    {
+        $location = __DIR__ . '/FileHandler/static_files';
+
+
+        $app = $this->getApp();
+        $app->setSourceLocation($location);
+
+        $FileHandler = new \Gumdrop\FileHandler($app);
+        $staticFiles = $FileHandler->listStaticFiles();
+        $this->assertFalse(in_array('_layout/file1', $staticFiles));
+    }
+
+    public function testFindStaticFilesReturnsDoesNotReturnMarkdownFiles()
+    {
+        $location = __DIR__ . '/FileHandler/static_files';
+
+
+        $app = $this->getApp();
+        $app->setSourceLocation($location);
+
+        $FileHandler = new \Gumdrop\FileHandler($app);
+        $staticFiles = $FileHandler->listStaticFiles();
+        $this->assertFalse(in_array('markdown_file.md', $staticFiles));
+        $this->assertFalse(in_array('folder/markdown_file.markdown', $staticFiles));
+    }
+
+    public function testCopyStaticFilesCopiesAllTheFilesAtTheCorrectPlace()
+    {
+        $destination = TMP_FOLDER . $this->getUniqueId();
+        mkdir($destination);
+        $destination = realpath($destination);
+
+        $location = __DIR__ . '/FileHandler/static_files';
+
+
+        $app = $this->getApp();
+        $app->setSourceLocation($location);
+        $app->setDestinationLocation($destination);
+
+        $FileHandler = new \Gumdrop\FileHandler($app);
+        $FileHandler->copyStaticFiles();
+
+        try
+        {
+            $this->assertFileExists($destination . '/file1');
+            $this->assertFileExists($destination . '/folder/file2');
+        }
+        catch (\Exception $e)
+        {
+            exec('rm -rf ' . $destination);
+            throw $e;
+        }
+        exec('rm -rf ' . $destination);
+    }
+
+    public function testCopyStaticFilesCreatesFoldersWithTheSamePermissionsAsSource()
+    {
+        $destination = TMP_FOLDER . $this->getUniqueId();
+        mkdir($destination);
+        $destination = realpath($destination);
+
+        $location = __DIR__ . '/FileHandler/static_files';
+        chmod($location . '/folder', 0755);
+
+
+        $app = $this->getApp();
+        $app->setSourceLocation($location);
+        $app->setDestinationLocation($destination);
+
+        $FileHandler = new \Gumdrop\FileHandler($app);
+        $FileHandler->copyStaticFiles();
+
+        $stats = stat($destination . '/folder');
+        $mode = decoct($stats['mode']);
+        $this->assertEquals('40755', $mode);
+
+        exec('rm -rf ' . $destination);
     }
 }

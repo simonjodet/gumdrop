@@ -1,16 +1,15 @@
 {
     "name":"simonjodet/gumdrop",
-    "description":"Gumdrop is a static website generator using Markdown files and built with PHP 5.3",
-    "version":"0.0.1-alpha",
+    "description":"Gumdrop is a static website generator converting Markdown files and using the Twig templating engine.",
+    "version":"0.0.5-beta",
     "type":"library",
     "license":"MIT",
     "require":{
         "dflydev/markdown":"dev-master",
-        "twig/twig":"1.x"
+        "twig/twig":"dev-master"
     },
     "require-dev":{
-        "mockery/mockery":"0.7.2",
-        "mageekguy/atoum":"dev-master"
+        "mockery/mockery":"0.7.2"
     },
     "autoload":{
         "psr-0":{

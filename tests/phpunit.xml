@@ -1,0 +1,11 @@
+<testsuites>
+    <testsuite name="Gumdrop">
+        <directory>Gumdrop</directory>
+        <exclude>TestCase.php</exclude>
+    </testsuite>
+    <filter>
+        <blacklist>
+            <directory suffix=".php">../vendor</directory>
+        </blacklist>
+    </filter>
+</testsuites>

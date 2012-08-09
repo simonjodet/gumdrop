@@ -1,6 +1,10 @@
 <?php
-
+/**
+ * Engine - Class handling Markdown files including conversion to HTML
+ * @package Gumdrop
+ */
 namespace Gumdrop;
+
 
 /**
  * Class handling Markdown files including conversion to HTML
@@ -8,11 +12,13 @@ namespace Gumdrop;
 class Engine
 {
     /**
+     * Dependency injector
      * @var \Gumdrop\Application
      */
     private $app;
 
     /**
+     * Constructor
      * @param \Gumdrop\Application $app
      */
     public function __construct(\Gumdrop\Application $app)
@@ -21,52 +27,27 @@ class Engine
     }
 
     /**
-     * Convert Markdown content to HTML pages
-     * @param $pages
-     * @return array
+     * Runs the PageCollection through all the steps of the process
+     *
+     * @param PageCollection $PageCollection
      */
-    public function convertMarkdownToHtml($pages)
+    public function run(\Gumdrop\PageCollection $PageCollection)
     {
-        foreach ($pages as $location => $page)
+        $LayoutTwigEnvironment = $this->app->getTwig()->getLayoutEnvironment();
+        $PageTwigEnvironment = $this->app->getTwig()->getPageEnvironment();
+        foreach ($PageCollection as $key => $Page)
         {
-            $pages[$location] = $this->app->getMarkdownParser()->transformMarkdown($page);
+            $PageCollection[$key]->setConfiguration(new \Gumdrop\PageConfiguration());
+            $PageCollection[$key]->convertMarkdownToHtml();
+            $PageCollection[$key]->setCollection($PageCollection);
         }
-        return $pages;
-    }
-
-    /**
-     * Apply a twig layout to the HTML pages
-     * @param $pages
-     * @return array
-     */
-    public function applyTwigLayout($pages)
-    {
-        foreach ($pages as $location => $page)
+        foreach ($PageCollection as $key => $Page)
         {
-            $pages[$location] = $this->app->getTwigEnvironment()->render(
-                'page.twig',
-                array('content' => $page)
-            );
-        }
-        return $pages;
-    }
-
-    /**
-     * Write HTML files to their destination
-     * @param $pages
-     * @param $destination
-     */
-    public function writeHtmFiles($pages, $destination)
-    {
-        foreach ($pages as $location => $page)
-        {
-            $pathinfo = pathinfo($location);
-            if (!file_exists($destination . '/' . $pathinfo['dirname']))
-            {
-                mkdir($destination . '/' . $pathinfo['dirname'], 0777, true);
-            }
-            $destination_file = $destination . '/' . $pathinfo['dirname'] . '/' . $pathinfo['filename'] . '.htm';
-            file_put_contents($destination_file, $page);
+            $PageCollection[$key]->setLayoutTwigEnvironment($LayoutTwigEnvironment);
+            $PageCollection[$key]->setPageTwigEnvironment($PageTwigEnvironment);
+            $PageCollection[$key]->renderPageTwigEnvironment();
+            $PageCollection[$key]->renderLayoutTwigEnvironment();
+            $PageCollection[$key]->writeHtmFiles($this->app->getDestinationLocation());
         }
     }
 }

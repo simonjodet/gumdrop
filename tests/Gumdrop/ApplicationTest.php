@@ -1,52 +1,59 @@
 <?php
-namespace Gumdrop\tests\units;
+namespace Gumdrop\Tests;
 
 require_once __DIR__ . '/../TestCase.php';
 require_once __DIR__ . '/../../Gumdrop/Application.php';
 require_once __DIR__ . '/../../Gumdrop/FileHandler.php';
 require_once __DIR__ . '/../../Gumdrop/Engine.php';
 
-class Application extends \tests\units\TestCase
+class Application extends \Gumdrop\Tests\TestCase
 {
-    /**
-     * @isNotVoid
-     */
-    public function testGenerateListFilesThenConvertThem()
+    public function testGenerateListsFilesThenConvertThem()
     {
+        $Page = new \Gumdrop\Page($this->getApp());
+        $PageCollection = new \Gumdrop\PageCollection(array($Page));
+
         $FileHandlerMock = \Mockery::mock('\Gumdrop\FileHandler');
         $FileHandlerMock
             ->shouldReceive('listMarkdownFiles')
-            ->once()->ordered('generate')
-            ->with('source_path')
-            ->andReturn(array('md_file_1.md'));
+            ->once()
+            ->ordered('generate')
+            ->globally()
+            ->andReturn($PageCollection);
 
         $FileHandlerMock
             ->shouldReceive('getMarkdownFiles')
-            ->once()->ordered('generate')
-            ->with(array('md_file_1.md'), 'source_path')
-            ->andReturn(array('md_file_1.md' => 'md content 1'));
+            ->once()
+            ->ordered('generate')
+            ->globally()
+            ->with($PageCollection)
+            ->andReturnUsing(
+            function() use($PageCollection)
+            {
+                $PageCollection[0]->setMarkdownContent('md content');
+                return $PageCollection;
+            });
+
+        $PageCollection[0]->setMarkdownContent('md content');
+
 
         $Engine = \Mockery::mock('\Gumdrop\Engine');
         $Engine
-            ->shouldReceive('convertMarkdownToHtml')
-            ->once()->ordered('generate')
-            ->with(array('md_file_1.md' => 'md content 1'))
-            ->andReturn(array('md_file_1.md' => 'html content 1'));
+            ->shouldReceive('run')
+            ->once()
+            ->globally()
+            ->with($PageCollection);
 
-        $Engine
-            ->shouldReceive('applyTwigLayout')
-            ->once()->ordered('generate')
-            ->with(array('md_file_1.md' => 'html content 1'))
-            ->andReturn(array('md_file_1.md' => 'twig content 1'));
-
-        $Engine
-            ->shouldReceive('writeHtmFiles')
-            ->once()->ordered('generate')
-            ->with(array('md_file_1.md' => 'twig content 1'), 'destination_path');
+        $FileHandlerMock
+            ->shouldReceive('copyStaticFiles')
+            ->ordered('generate')
+            ->globally()
+            ->once();
 
         $Application = new \Gumdrop\Application();
         $Application->setFileHandler($FileHandlerMock);
         $Application->setEngine($Engine);
-        $Application->generate('source_path', 'destination_path');
+        $Application->setDestinationLocation('destination_path');
+        $Application->generate();
     }
 }

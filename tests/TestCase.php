@@ -1,7 +1,6 @@
 <?php
-namespace tests\units;
 
-require_once __DIR__ . '/../vendor/mageekguy/atoum/classes/autoloader.php';
+namespace Gumdrop\Tests;
 
 set_include_path(get_include_path() . PATH_SEPARATOR . __DIR__ . '/../vendor/mockery/mockery/library/');
 date_default_timezone_set('UTC');
@@ -11,18 +10,13 @@ $loader = new \Mockery\Loader;
 $loader->register();
 
 require_once __DIR__ . '/../Gumdrop/Application.php';
-
-use \mageekguy\atoum;
+require_once __DIR__ . '/../Gumdrop/Exception.php';
 
 define('TMP_FOLDER', '/tmp/');
 
-class TestCase extends atoum\test
+class TestCase extends \PHPUnit_Framework_TestCase
 {
-    public function beforeTestMethod($method)
-    {
-    }
-
-    public function afterTestMethod($method)
+    protected function tearDown()
     {
         \Mockery::close();
     }
@@ -30,5 +24,18 @@ class TestCase extends atoum\test
     protected function getUniqueId()
     {
         return rand(0, 1000000);
+    }
+
+    /**
+     * @return \Gumdrop\Application
+     */
+    protected function getApp()
+    {
+        return new \Gumdrop\Application();
+    }
+
+    public function testNothing()
+    {
+        $this->assertTrue(true);
     }
 }

@@ -1,4 +1,8 @@
 <?php
+/**
+ * Gumdrop application
+ * @package Gumdrop
+ */
 
 namespace Gumdrop;
 
@@ -8,48 +12,59 @@ namespace Gumdrop;
 class Application
 {
     /**
+     * Application's Markdown parser
      * @var \dflydev\markdown\MarkdownParser
      */
     private $MarkdownParser;
 
     /**
+     * Application's file handler
      * @var \Gumdrop\FileHandler
      */
     private $FileHandler;
 
     /**
+     * Application's engine
      * @var \Gumdrop\Engine
      */
     private $Engine;
 
     /**
-     * @var \Twig_Loader_Filesystem
+     * Twig environment generator
+     * @var \Gumdrop\Twig
      */
-    private $TwigLoaderFileSystem;
+    private $Twig;
 
     /**
-     * @var \Twig_Environment
+     * Location of the markdown source files
+     * @var string
      */
-    private $Twig_Environment;
+    private $sourceLocation = '';
 
+    /**
+     * Location of the generated site
+     * @var string
+     */
+    private $destinationLocation = '';
 
     /**
      * Generates the site
-     * @param string $source
-     * @param string $destination
      */
-    public function generate($source, $destination)
+    public function generate()
     {
-        $pages = $this->FileHandler->listMarkdownFiles($source);
-        $pages = $this->FileHandler->getMarkdownFiles($pages, $source);
-        $pages = $this->Engine->convertMarkdownToHtml($pages);
-        $pages = $this->Engine->applyTwigLayout($pages);
-        $this->Engine->writeHtmFiles($pages, $destination);
+        $PageCollection = $this->FileHandler->listMarkdownFiles();
+        $PageCollection = $this->FileHandler->getMarkdownFiles($PageCollection);
+        $this->Engine->run($PageCollection);
+        $this->FileHandler->copyStaticFiles();
     }
 
 
     /**
+     * Set Application's Markdown parser
+     *
      * @param \dflydev\markdown\MarkdownParser $MarkdownParser
+     *
+     * @codeCoverageIgnore
      */
     public function setMarkdownParser(\dflydev\markdown\MarkdownParser $MarkdownParser)
     {
@@ -57,7 +72,9 @@ class Application
     }
 
     /**
+     * Get Application's Markdown parser
      * @return \dflydev\markdown\MarkdownParser
+     * @codeCoverageIgnore
      */
     public function getMarkdownParser()
     {
@@ -65,7 +82,11 @@ class Application
     }
 
     /**
+     * Set Application's file handler
+     *
      * @param \Gumdrop\FileHandler $FileHandler
+     *
+     * @codeCoverageIgnore
      */
     public function setFileHandler($FileHandler)
     {
@@ -73,7 +94,9 @@ class Application
     }
 
     /**
+     * Get Application's file handler
      * @return \Gumdrop\FileHandler
+     * @codeCoverageIgnore
      */
     public function getFileHandler()
     {
@@ -81,7 +104,11 @@ class Application
     }
 
     /**
+     * Set Application's engine
+     *
      * @param \Gumdrop\Engine $Engine
+     *
+     * @codeCoverageIgnore
      */
     public function setEngine($Engine)
     {
@@ -89,7 +116,9 @@ class Application
     }
 
     /**
+     * Get Application's engine
      * @return \Gumdrop\Engine
+     * @codeCoverageIgnore
      */
     public function getEngine()
     {
@@ -97,35 +126,59 @@ class Application
     }
 
     /**
-     * @param \Twig_Loader_Filesystem $TwigLoaderFileSystem
+     * Set location of the markdown source files
+     *
+     * @param string $sourceLocation
      */
-    public function setTwigLoaderFileSystem($TwigLoaderFileSystem)
+    public function setSourceLocation($sourceLocation)
     {
-        $this->TwigLoaderFileSystem = $TwigLoaderFileSystem;
+        $this->sourceLocation = $sourceLocation;
     }
 
     /**
-     * @return \Twig_Loader_Filesystem
+     * Get location of the markdown source files
+     * @return string
      */
-    public function getTwigLoaderFileSystem()
+    public function getSourceLocation()
     {
-        return $this->TwigLoaderFileSystem;
+        return $this->sourceLocation;
     }
 
     /**
-     * @param \Twig_Environment $Twig_Environment
+     * Set the location of the generated site
+     *
+     * @param string $destinationLocation
      */
-    public function setTwigEnvironment($Twig_Environment)
+    public function setDestinationLocation($destinationLocation)
     {
-        $this->Twig_Environment = $Twig_Environment;
+        $this->destinationLocation = $destinationLocation;
     }
 
     /**
-     * @return \Twig_Environment
+     * Get the location of the generated site
+     * @return string
      */
-    public function getTwigEnvironment()
+    public function getDestinationLocation()
     {
-        return $this->Twig_Environment;
+        return $this->destinationLocation;
     }
 
+    /**
+     * Set the Twig environment generator
+     *
+     * @param \Gumdrop\Twig $Twig
+     */
+    public function setTwig($Twig)
+    {
+        $this->Twig = $Twig;
+    }
+
+    /**
+     * Get the Twig environment generator
+     * @return \Gumdrop\Twig
+     */
+    public function getTwig()
+    {
+        return $this->Twig;
+    }
 }
