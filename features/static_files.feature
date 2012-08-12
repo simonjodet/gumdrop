@@ -17,3 +17,10 @@ Feature: static files
     Then I should not have the Markdown file in the destination folder
     And Then delete the destination folder
 
+  Scenario: Layout files are ignored
+    Given I have my test site "test_site"
+    And It has a layout folder
+    When I generate my site in "destination_site"
+    Then I should not have the Layout folder in the destination folder
+    And Then delete the destination folder
+
