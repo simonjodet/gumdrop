@@ -3,3 +3,5 @@ gumdrop.iml
 vendor/
 doc/phpdoc/
 !doc/phpdoc/empty
+
+/.idea/
