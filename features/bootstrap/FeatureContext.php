@@ -20,6 +20,7 @@ Behat\Gherkin\Node\TableNode;
 class FeatureContext extends BehatContext
 {
     private $cssFile;
+    private $markdownFile;
     private $source;
     private $destination;
 
@@ -96,6 +97,30 @@ class FeatureContext extends BehatContext
         if(file_exists($this->destination))
         {
             exec('rm -rf '.$this->destination);
+        }
+    }
+
+    /**
+     * @Given /^It has a Markdown file at "([^"]*)"$/
+     */
+    public function itHasAMarkdownFileAt($path)
+    {
+        if (!file_exists($this->source . '/' . $path))
+        {
+            throw new \Exception('Missing Markdown file');
+        }
+        $this->markdownFile = $path;
+
+    }
+
+    /**
+     * @Then /^I should not have the Markdown file in the destination folder$/
+     */
+    public function iShouldNotHaveTheMarkdownFileInTheDestinationFolder()
+    {
+        if(file_exists($this->destination.'/'.$this->markdownFile))
+        {
+            throw new \Exception('The Markdown file was copied');
         }
     }
 }
