@@ -5,3 +5,4 @@ doc/phpdoc/
 !doc/phpdoc/empty
 
 /.idea/
+.DS_Store
