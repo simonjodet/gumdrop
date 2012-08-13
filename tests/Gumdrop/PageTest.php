@@ -47,6 +47,20 @@ class Page extends \Gumdrop\Tests\TestCase
         $this->assertEquals($Page->getHtmlContent(), 'html content 1');
     }
 
+    public function testRenderLayoutTwigEnvironmentDoesNothingIfEnvironmentIsNull()
+    {
+        $app = new \Gumdrop\Application();
+
+        $LayoutTwigEnvironment = null;
+
+        $Page = new \Gumdrop\Page($app);
+        $Page->setLayoutTwigEnvironment($LayoutTwigEnvironment);
+        $Page->setHtmlContent('html content 1');
+
+        $Page->renderLayoutTwigEnvironment();
+
+        $this->assertEquals($Page->getHtmlContent(), 'html content 1');
+    }
     public function testRenderLayoutTwigEnvironmentAppliesTheLayoutToPages()
     {
         $app = new \Gumdrop\Application();
