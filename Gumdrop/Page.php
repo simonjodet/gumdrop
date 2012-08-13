@@ -217,21 +217,24 @@ class Page
      */
     public function renderLayoutTwigEnvironment()
     {
-        $twig_layout = null;
-        if (isset($this->configuration['layout']) && !is_null($this->configuration['layout']))
+        if (!is_null($this->getLayoutTwigEnvironment()))
         {
-            $twig_layout = $this->configuration['layout'];
-        }
-        elseif ($this->app->getFileHandler()->findPageTwigFile())
-        {
-            $twig_layout = 'page.twig';
-        }
-        if (!is_null($twig_layout))
-        {
-            $this->setHtmlContent($this->getLayoutTwigEnvironment()->render(
-                $twig_layout,
-                $this->generateTwigData()
-            ));
+            $twig_layout = null;
+            if (isset($this->configuration['layout']) && !is_null($this->configuration['layout']))
+            {
+                $twig_layout = $this->configuration['layout'];
+            }
+            elseif ($this->app->getFileHandler()->findPageTwigFile())
+            {
+                $twig_layout = 'page.twig';
+            }
+            if (!is_null($twig_layout))
+            {
+                $this->setHtmlContent($this->getLayoutTwigEnvironment()->render(
+                    $twig_layout,
+                    $this->generateTwigData()
+                ));
+            }
         }
     }
 

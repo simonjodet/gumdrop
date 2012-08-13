@@ -32,13 +32,20 @@ class Twig
      */
     public function getLayoutEnvironment()
     {
-        return new \Twig_Environment(
-            new \Twig_Loader_Filesystem($this->app->getSourceLocation() . '/_layout/'),
-            array(
-                'autoescape' => false,
-                'strict_variables' => false
-            )
-        );
+        try
+        {
+            return new \Twig_Environment(
+                new \Twig_Loader_Filesystem($this->app->getSourceLocation() . '/_layout/'),
+                array(
+                    'autoescape' => false,
+                    'strict_variables' => false
+                )
+            );
+        }
+        catch (\Twig_Error_Loader $e)
+        {
+            return null;
+        }
     }
 
     /**

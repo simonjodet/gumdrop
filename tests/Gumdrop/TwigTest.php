@@ -27,6 +27,15 @@ class Twig extends \Gumdrop\Tests\TestCase
         $this->assertEquals(__DIR__ . '/markdownFiles//_layout', $paths[0]);
     }
 
+    public function testGetLayoutEnvironmentReturnsNullWhenLayoutFolderDoesNotExist()
+    {
+        $app = $this->getApp();
+        $app->setSourceLocation(__DIR__ . '/site_without_layout/');
+
+        $Twig = new \Gumdrop\Twig($app);
+        $this->assertNull($Twig->getLayoutEnvironment());
+    }
+
     public function testGetPageEnvironmentReturnsTheExpectedEnvironment()
     {
         $app = $this->getApp();
@@ -39,4 +48,5 @@ class Twig extends \Gumdrop\Tests\TestCase
         $this->assertInstanceOf('\Twig_Environment', $LayoutEnvironment);
         $this->assertInstanceOf('\Twig_Loader_String', $Loader);
     }
+
 }

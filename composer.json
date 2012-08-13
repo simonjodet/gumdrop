@@ -9,7 +9,8 @@
         "twig/twig":"dev-master"
     },
     "require-dev":{
-        "mockery/mockery":"0.7.2"
+        "mockery/mockery":"0.7.2",
+        "behat/behat": "2.4.*@stable"
     },
     "autoload":{
         "psr-0":{
