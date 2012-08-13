@@ -112,6 +112,7 @@ class Engine extends \Gumdrop\Tests\TestCase
             ->ordered()
             ->with('destination')
             ->once();
+
         $PageCollection = new \Gumdrop\PageCollection(array(
             $Page1,
             $Page2
@@ -135,5 +136,45 @@ class Engine extends \Gumdrop\Tests\TestCase
 
         $Engine = new \Gumdrop\Engine($app);
         $Engine->run($PageCollection);
+    }
+
+    public function testRunDoesNotSetLayoutEnvironmentIfItIsNull()
+    {
+        $LayoutTwigEnvironmentMock = null;
+        $PageTwigEnvironmentMock = \Mockery::mock('\Twig_Environment');
+
+        $Page1 = \Mockery::mock('\Gumdrop\Page');
+        $Page1
+            ->shouldReceive(
+            'setConfiguration',
+            'convertMarkdownToHtml',
+            'setCollection',
+            'setPageTwigEnvironment',
+            'renderPageTwigEnvironment',
+            'renderLayoutTwigEnvironment',
+            'writeHtmFiles'
+        )
+            ->byDefault();
+        $PageCollection = new \Gumdrop\PageCollection(array($Page1));
+
+        $app = $this->getApp();
+        $app->setDestinationLocation('destination');
+
+        $TwigMock = \Mockery::mock('\Gumdrop\Twig');
+        $TwigMock
+            ->shouldReceive('getLayoutEnvironment')
+            ->andReturn($LayoutTwigEnvironmentMock)
+            ->once();
+
+        $TwigMock
+            ->shouldReceive('getPageEnvironment')
+            ->andReturn($PageTwigEnvironmentMock)
+            ->once();
+
+        $app->setTwig($TwigMock);
+
+        $Engine = new \Gumdrop\Engine($app);
+        $Engine->run($PageCollection);
+
     }
 }

@@ -19,6 +19,7 @@ class Engine
 
     /**
      * Constructor
+     *
      * @param \Gumdrop\Application $app
      */
     public function __construct(\Gumdrop\Application $app)
@@ -29,7 +30,7 @@ class Engine
     /**
      * Runs the PageCollection through all the steps of the process
      *
-     * @param PageCollection $PageCollection
+     * @param \Gumdrop\PageCollection $PageCollection
      */
     public function run(\Gumdrop\PageCollection $PageCollection)
     {
@@ -43,7 +44,10 @@ class Engine
         }
         foreach ($PageCollection as $key => $Page)
         {
-            $PageCollection[$key]->setLayoutTwigEnvironment($LayoutTwigEnvironment);
+            if (!is_null($LayoutTwigEnvironment))
+            {
+                $PageCollection[$key]->setLayoutTwigEnvironment($LayoutTwigEnvironment);
+            }
             $PageCollection[$key]->setPageTwigEnvironment($PageTwigEnvironment);
             $PageCollection[$key]->renderPageTwigEnvironment();
             $PageCollection[$key]->renderLayoutTwigEnvironment();

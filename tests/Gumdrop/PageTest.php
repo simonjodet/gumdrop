@@ -54,7 +54,6 @@ class Page extends \Gumdrop\Tests\TestCase
         $LayoutTwigEnvironment = null;
 
         $Page = new \Gumdrop\Page($app);
-        $Page->setLayoutTwigEnvironment($LayoutTwigEnvironment);
         $Page->setHtmlContent('html content 1');
 
         $Page->renderLayoutTwigEnvironment();
