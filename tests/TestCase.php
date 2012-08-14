@@ -11,6 +11,7 @@ $loader->register();
 
 require_once __DIR__ . '/../Gumdrop/Application.php';
 require_once __DIR__ . '/../Gumdrop/Exception.php';
+require_once __DIR__ . '/../vendor/autoload.php';
 
 define('TMP_FOLDER', '/tmp/');
 
