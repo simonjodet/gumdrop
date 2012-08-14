@@ -7,24 +7,6 @@ require_once __DIR__ . '/../../Gumdrop/PageCollection.php';
 
 class FileHandler extends \Gumdrop\Tests\TestCase
 {
-    private $testLocation;
-
-    public function setUp()
-    {
-        parent::setUp();
-        $this->testLocation = TMP_FOLDER . 'Gumdrop_FileOperations';
-    }
-
-    public function createTestLocation($id)
-    {
-        mkdir($this->testLocation . '/' . $id, 0777, true);
-    }
-
-    public function deleteTestLocation($id)
-    {
-        exec('rm -rf ' . $this->testLocation . '/' . $id);
-    }
-
     public function testListMarkdownFilesListsFilesRecursively()
     {
         $FSTestHelper = new \FSTestHelper\FSTestHelper();
