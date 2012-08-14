@@ -118,7 +118,30 @@ class Engine extends \Gumdrop\Tests\TestCase
             $Page2
         ));
 
+
+        $FileHandlerMock = \Mockery::mock('\Gumdrop\FileHandler');
+        $FileHandlerMock
+            ->shouldReceive('listMarkdownFiles')
+            ->once()
+            ->ordered('generate')
+            ->globally()
+            ->andReturn($PageCollection);
+        $FileHandlerMock
+            ->shouldReceive('getMarkdownFiles')
+            ->once()
+            ->ordered('generate')
+            ->globally()
+            ->with($PageCollection)
+            ->andReturn($PageCollection);
+        $FileHandlerMock
+            ->shouldReceive('copyStaticFiles')
+            ->ordered('generate')
+            ->globally()
+            ->once();
+
+
         $app = $this->getApp();
+        $app->setFileHandler($FileHandlerMock);
         $app->setDestinationLocation('destination');
 
         $TwigMock = \Mockery::mock('\Gumdrop\Twig');
@@ -135,7 +158,7 @@ class Engine extends \Gumdrop\Tests\TestCase
         $app->setTwig($TwigMock);
 
         $Engine = new \Gumdrop\Engine($app);
-        $Engine->run($PageCollection);
+        $Engine->run();
     }
 
     public function testRunDoesNotSetLayoutEnvironmentIfItIsNull()
@@ -160,6 +183,16 @@ class Engine extends \Gumdrop\Tests\TestCase
         $app = $this->getApp();
         $app->setDestinationLocation('destination');
 
+        $FileHandlerMock = \Mockery::mock('\Gumdrop\FileHandler');
+        $FileHandlerMock
+            ->shouldReceive('listMarkdownFiles', 'copyStaticFiles')
+            ->byDefault();
+
+        $FileHandlerMock
+            ->shouldReceive('getMarkdownFiles')
+            ->andReturn($PageCollection);
+        $app->setFileHandler($FileHandlerMock);
+
         $TwigMock = \Mockery::mock('\Gumdrop\Twig');
         $TwigMock
             ->shouldReceive('getLayoutEnvironment')
@@ -174,7 +207,7 @@ class Engine extends \Gumdrop\Tests\TestCase
         $app->setTwig($TwigMock);
 
         $Engine = new \Gumdrop\Engine($app);
-        $Engine->run($PageCollection);
+        $Engine->run();
 
     }
 }

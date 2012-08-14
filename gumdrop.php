@@ -25,6 +25,6 @@ $Application->setTwig(new \Gumdrop\Twig($Application));
 $Application->setFileHandler(new \Gumdrop\FileHandler($Application));
 $Application->setEngine(new \Gumdrop\Engine($Application));
 
-$Application->generate();
+$Application->getEngine()->run();
 echo 'Gumdrop converted your MarkDown files converted to ' . $destination . PHP_EOL;
 exit(0);

@@ -29,11 +29,11 @@ class Engine
 
     /**
      * Runs the PageCollection through all the steps of the process
-     *
-     * @param \Gumdrop\PageCollection $PageCollection
      */
-    public function run(\Gumdrop\PageCollection $PageCollection)
+    public function run()
     {
+        $PageCollection = $this->app->getFileHandler()->listMarkdownFiles();
+        $PageCollection = $this->app->getFileHandler()->getMarkdownFiles($PageCollection);
         $LayoutTwigEnvironment = $this->app->getTwig()->getLayoutEnvironment();
         $PageTwigEnvironment = $this->app->getTwig()->getPageEnvironment();
         foreach ($PageCollection as $key => $Page)
@@ -53,5 +53,6 @@ class Engine
             $PageCollection[$key]->renderLayoutTwigEnvironment();
             $PageCollection[$key]->writeHtmFiles($this->app->getDestinationLocation());
         }
+        $this->app->getFileHandler()->copyStaticFiles();
     }
 }

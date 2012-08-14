@@ -48,18 +48,6 @@ class Application
     private $destinationLocation = '';
 
     /**
-     * Generates the site
-     */
-    public function generate()
-    {
-        $PageCollection = $this->FileHandler->listMarkdownFiles();
-        $PageCollection = $this->FileHandler->getMarkdownFiles($PageCollection);
-        $this->Engine->run($PageCollection);
-        $this->FileHandler->copyStaticFiles();
-    }
-
-
-    /**
      * Set Application's Markdown parser
      *
      * @param \dflydev\markdown\MarkdownParser $MarkdownParser
