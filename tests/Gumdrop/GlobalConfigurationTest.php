@@ -11,7 +11,18 @@ class GlobalConfiguration extends \Gumdrop\Tests\TestCase
 {
     public function testConstructorThrowsAnExceptionIfConfigurationFileIsMissing()
     {
-        $location = __DIR__ . '/Configuration/no_file/';
+        $FSTestHelper = new \FSTestHelper\FSTestHelper();
+        $FSTestHelper->createTree(array(
+            'folders' => array(),
+            'files' => array(
+                array(
+                    'path' => 'empty',
+                    'content' => ''
+                )
+            )
+        ));
+
+        $location = $FSTestHelper->getTemporaryPath();
 
         $this->setExpectedException(
             'Gumdrop\Exception', 'Could not find the configuration file at ' . $location . '/conf.json'
@@ -21,7 +32,19 @@ class GlobalConfiguration extends \Gumdrop\Tests\TestCase
 
     public function testConstructorThrowsAnExceptionIfCouldNotReadConfiguration()
     {
-        $location = __DIR__ . '/Configuration/invalid_conf/';
+        $FSTestHelper = new \FSTestHelper\FSTestHelper();
+        $FSTestHelper->createTree(array(
+            'folders' => array(),
+            'files' => array(
+                array(
+                    'path' => 'conf.json',
+                    'content' => 'invalid JSON'
+                )
+            )
+        ));
+
+        $location = $FSTestHelper->getTemporaryPath();
+
         $this->setExpectedException(
             'Gumdrop\Exception', 'Invalid configuration in ' . $location . '/conf.json'
         );
@@ -30,7 +53,18 @@ class GlobalConfiguration extends \Gumdrop\Tests\TestCase
 
     public function testConfigurationIsReturnedThroughObjectProperties()
     {
-        $location = __DIR__ . '/Configuration/valid_conf/';
+        $FSTestHelper = new \FSTestHelper\FSTestHelper();
+        $FSTestHelper->createTree(array(
+            'folders' => array(),
+            'files' => array(
+                array(
+                    'path' => 'conf.json',
+                    'content' => '{"conf1":"value1","conf2":{"conf3":"value3"}}'
+                )
+            )
+        ));
+
+        $location = $FSTestHelper->getTemporaryPath();
         $Configuration = new \Gumdrop\GlobalConfiguration($location);
         $this->assertEquals($Configuration['conf1'], 'value1');
     }
