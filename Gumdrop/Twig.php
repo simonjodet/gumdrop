@@ -19,6 +19,7 @@ class Twig
 
     /**
      * Constructor
+     *
      * @param \Gumdrop\Application $app Dependency injector
      */
     public function __construct(\Gumdrop\Application $app)
@@ -56,6 +57,21 @@ class Twig
     {
         return new \Twig_Environment(
             new \Twig_Loader_String(),
+            array(
+                'autoescape' => false,
+                'strict_variables' => false
+            )
+        );
+    }
+
+    /**
+     * Get Twig site environment
+     * @return \Twig_Environment Twig site environment
+     */
+    public function getSiteEnvironment()
+    {
+        return new \Twig_Environment(
+            new \Twig_Loader_Filesystem($this->app->getSourceLocation() . '/'),
             array(
                 'autoescape' => false,
                 'strict_variables' => false

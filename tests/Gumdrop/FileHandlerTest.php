@@ -125,7 +125,7 @@ class FileHandler extends \Gumdrop\Tests\TestCase
 
     public function testFindStaticFilesReturnsStaticFiles()
     {
-        $FSTestHelper = $this->createTestFSForStaticFiles();
+        $FSTestHelper = $this->createTestFSForStaticAndHtmlFiles();
         $location = $FSTestHelper->getTemporaryPath();
 
         $app = $this->getApp();
@@ -144,7 +144,7 @@ class FileHandler extends \Gumdrop\Tests\TestCase
 
     public function testFindStaticFilesReturnsDoesNotReturnLayoutFiles()
     {
-        $FSTestHelper = $this->createTestFSForStaticFiles();
+        $FSTestHelper = $this->createTestFSForStaticAndHtmlFiles();
         $location = $FSTestHelper->getTemporaryPath();
 
         $app = $this->getApp();
@@ -157,7 +157,7 @@ class FileHandler extends \Gumdrop\Tests\TestCase
 
     public function testFindStaticFilesReturnsDoesNotReturnMarkdownFiles()
     {
-        $FSTestHelper = $this->createTestFSForStaticFiles();
+        $FSTestHelper = $this->createTestFSForStaticAndHtmlFiles();
         $location = $FSTestHelper->getTemporaryPath();
 
         $app = $this->getApp();
@@ -169,13 +169,27 @@ class FileHandler extends \Gumdrop\Tests\TestCase
         $this->assertFalse(in_array('folder/markdown_file.markdown', $staticFiles));
     }
 
+    public function testFindStaticFilesReturnsDoesNotReturnHTMLFiles()
+    {
+        $FSTestHelper = $this->createTestFSForStaticAndHtmlFiles();
+        $location = $FSTestHelper->getTemporaryPath();
+
+        $app = $this->getApp();
+        $app->setSourceLocation($location);
+
+        $FileHandler = new \Gumdrop\FileHandler($app);
+        $staticFiles = $FileHandler->listStaticFiles();
+        $this->assertFalse(in_array('index.htm', $staticFiles));
+        $this->assertFalse(in_array('folder/index.html', $staticFiles));
+    }
+
     public function testCopyStaticFilesCopiesAllTheFilesAtTheCorrectPlace()
     {
         $FSTestHelperForDestination = new \FSTestHelper\FSTestHelper();
         $destination = $FSTestHelperForDestination->getTemporaryPath();
         $destination = realpath($destination);
 
-        $FSTestHelper = $this->createTestFSForStaticFiles();
+        $FSTestHelper = $this->createTestFSForStaticAndHtmlFiles();
         $location = $FSTestHelper->getTemporaryPath();
 
         $app = $this->getApp();
@@ -204,7 +218,7 @@ class FileHandler extends \Gumdrop\Tests\TestCase
         $destination = $FSTestHelperForDestination->getTemporaryPath();
         $destination = realpath($destination);
 
-        $FSTestHelper = $this->createTestFSForStaticFiles();
+        $FSTestHelper = $this->createTestFSForStaticAndHtmlFiles();
         $location = $FSTestHelper->getTemporaryPath();
         chmod($location . '/folder', 0755);
 
@@ -223,14 +237,52 @@ class FileHandler extends \Gumdrop\Tests\TestCase
         exec('rm -rf ' . $destination);
     }
 
-    private function createTestFSForStaticFiles()
+    public function testListTwigFilesReturnsTwigFiles()
+    {
+        $FSTestHelper = $this->createTestFSForStaticAndHtmlFiles();
+        $location = $FSTestHelper->getTemporaryPath();
+
+        $app = $this->getApp();
+        $app->setSourceLocation($location);
+
+        $FileHandler = new \Gumdrop\FileHandler($app);
+        $twigFiles = $FileHandler->listTwigFiles();
+        $this->assertTrue(in_array('index.twig', $twigFiles));
+        $this->assertTrue(in_array('folder/index.twig', $twigFiles));
+
+    }
+
+    public function testListTwigFilesIgnoresTheLayoutFolder()
+    {
+        $FSTestHelper = $this->createTestFSForStaticAndHtmlFiles();
+        $location = $FSTestHelper->getTemporaryPath();
+
+        $app = $this->getApp();
+        $app->setSourceLocation($location);
+
+        $FileHandler = new \Gumdrop\FileHandler($app);
+        $twigFiles = $FileHandler->listTwigFiles();
+        $this->assertFalse(in_array('_layout/file1.twig', $twigFiles));
+    }
+
+    public function testRenderTwigFilesRendersTheTwigFilesAndWriteThem()
+    {
+        $twigFiles = array(
+            'index.twig',
+            'folder/index.twig'
+        );
+
+        ;
+    }
+
+    private function createTestFSForStaticAndHtmlFiles()
     {
         $FSTestHelper = new \FSTestHelper\FSTestHelper();
         $FSTestHelper->createTree(array(
             'folders' => array(),
             'files' => array(
                 array(
-                    'path' => '_layout/file1',
+                    'path' => '_layout/file1.twig',
                     'content' => ''
                 ),
                 array(
@@ -249,6 +301,14 @@ class FileHandler extends \Gumdrop\Tests\TestCase
                     'path' => 'markdown_file.md',
                     'content' => ''
                 ),
+                array(
+                    'path' => 'index.twig',
+                    'content' => ''
+                ),
+                array(
+                    'path' => 'folder/index.twig',
+                    'content' => ''
+                )
             )
         ));
         return $FSTestHelper;
