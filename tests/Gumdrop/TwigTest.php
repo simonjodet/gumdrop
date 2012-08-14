@@ -14,8 +14,26 @@ class Twig extends \Gumdrop\Tests\TestCase
 
     public function testGetLayoutEnvironmentReturnsTheExpectedEnvironment()
     {
+        $FSTestHelper = new \FSTestHelper\FSTestHelper();
+        $FSTestHelper->createTree(array(
+            'folders' => array(),
+            'files' => array(
+                array(
+                    'path' => 'testFile2.md',
+                    'content' => ''
+                ),
+                array(
+                    'path' => '_layout/default.twig',
+                    'content' => ''
+                ),                array(
+                    'path' => '_layout/page.twig',
+                    'content' => ''
+                )
+            )
+        ));
+
         $app = $this->getApp();
-        $app->setSourceLocation(__DIR__ . '/markdownFiles/');
+        $app->setSourceLocation($FSTestHelper->getTemporaryPath());
 
         $Twig = new \Gumdrop\Twig($app);
         $LayoutEnvironment = $Twig->getLayoutEnvironment();
@@ -24,13 +42,24 @@ class Twig extends \Gumdrop\Tests\TestCase
 
         $this->assertInstanceOf('\Twig_Environment', $LayoutEnvironment);
         $this->assertInstanceOf('\Twig_Loader_Filesystem', $Loader);
-        $this->assertEquals(__DIR__ . '/markdownFiles//_layout', $paths[0]);
+        $this->assertEquals($FSTestHelper->getTemporaryPath() . '/_layout', $paths[0]);
     }
 
     public function testGetLayoutEnvironmentReturnsNullWhenLayoutFolderDoesNotExist()
     {
+        $FSTestHelper = new \FSTestHelper\FSTestHelper();
+        $FSTestHelper->createTree(array(
+            'folders' => array(),
+            'files' => array(
+                array(
+                    'path' => 'testFile2.md',
+                    'content' => ''
+                )
+            )
+        ));
+
         $app = $this->getApp();
-        $app->setSourceLocation(__DIR__ . '/site_without_layout/');
+        $app->setSourceLocation($FSTestHelper->getTemporaryPath());
 
         $Twig = new \Gumdrop\Twig($app);
         $this->assertNull($Twig->getLayoutEnvironment());
@@ -39,7 +68,6 @@ class Twig extends \Gumdrop\Tests\TestCase
     public function testGetPageEnvironmentReturnsTheExpectedEnvironment()
     {
         $app = $this->getApp();
-        $app->setSourceLocation(__DIR__ . '/markdownFiles/');
 
         $Twig = new \Gumdrop\Twig($app);
         $LayoutEnvironment = $Twig->getPageEnvironment();
