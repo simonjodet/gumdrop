@@ -206,10 +206,8 @@ class FileHandler extends \Gumdrop\Tests\TestCase
         }
         catch (\Exception $e)
         {
-            exec('rm -rf ' . $destination);
             throw $e;
         }
-        exec('rm -rf ' . $destination);
     }
 
     public function testCopyStaticFilesCreatesFoldersWithTheSamePermissionsAsSource()
@@ -234,7 +232,6 @@ class FileHandler extends \Gumdrop\Tests\TestCase
         $mode = decoct($stats['mode']);
         $this->assertEquals('40755', $mode);
 
-        exec('rm -rf ' . $destination);
     }
 
     public function testListTwigFilesReturnsTwigFiles()
