@@ -184,6 +184,14 @@ class FileHandler
 
     public function renderTwigFiles()
     {
-        ;
+        $twigFiles = $this->listTwigFiles();
+        $SiteTwigEnvironment = $this->app->getTwig()->getSiteEnvironment();
+        $PageCollection = $this->app->getPageCollection()->exportForTwig();
+        foreach ($twigFiles as $twigFile)
+        {
+            $SiteTwigEnvironment->render($twigFile, $PageCollection);
+        }
+
+
     }
 }

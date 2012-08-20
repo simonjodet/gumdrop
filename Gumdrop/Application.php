@@ -36,6 +36,12 @@ class Application
     private $Twig;
 
     /**
+     * Page collection
+     * @var \Gumdrop\PageCollection
+     */
+    private $PageCollection;
+
+    /**
      * Location of the markdown source files
      * @var string
      */
@@ -46,6 +52,7 @@ class Application
      * @var string
      */
     private $destinationLocation = '';
+
 
     /**
      * Set Application's Markdown parser
@@ -168,5 +175,25 @@ class Application
     public function getTwig()
     {
         return $this->Twig;
+    }
+
+    /**
+     * Set the Page collection
+     *
+     * @param \Gumdrop\PageCollection $PageCollection
+     */
+    public function setPageCollection($PageCollection)
+    {
+        $this->PageCollection = $PageCollection;
+    }
+
+    /**
+     * Get the Page collection
+     *
+     * @return \Gumdrop\PageCollection PageCollection
+     */
+    public function getPageCollection()
+    {
+        return $this->PageCollection;
     }
 }

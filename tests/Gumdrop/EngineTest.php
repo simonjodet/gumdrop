@@ -155,10 +155,12 @@ class Engine extends \Gumdrop\Tests\TestCase
             ->andReturn($PageTwigEnvironmentMock)
             ->once();
 
+
         $app->setTwig($TwigMock);
 
         $Engine = new \Gumdrop\Engine($app);
         $Engine->run();
+        $this->assertEquals($PageCollection, $app->getPageCollection());
     }
 
     public function testRunDoesNotSetLayoutEnvironmentIfItIsNull()

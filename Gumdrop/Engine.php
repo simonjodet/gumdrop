@@ -53,6 +53,7 @@ class Engine
             $PageCollection[$key]->renderLayoutTwigEnvironment();
             $PageCollection[$key]->writeHtmFiles($this->app->getDestinationLocation());
         }
+        $this->app->setPageCollection($PageCollection);
         $this->app->getFileHandler()->copyStaticFiles();
     }
 }
