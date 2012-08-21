@@ -6,34 +6,6 @@ require_once __DIR__ . '/../../Gumdrop/TwigFileHandler.php';
 
 class TwigFiles extends \Gumdrop\Tests\TestCase
 {
-    public function testListTwigFilesReturnsTwigFiles()
-    {
-        $FSTestHelper = $this->createTestFSForStaticAndHtmlFiles();
-        $location = $FSTestHelper->getTemporaryPath();
-
-        $app = $this->getApp();
-        $app->setSourceLocation($location);
-
-        $TwigFileHandler = new \Gumdrop\TwigFileHandler($app);
-        $twigFiles = $TwigFileHandler->listTwigFiles();
-        $this->assertTrue(in_array('index.twig', $twigFiles));
-        $this->assertTrue(in_array('folder/index.twig', $twigFiles));
-
-    }
-
-    public function testListTwigFilesIgnoresTheLayoutFolder()
-    {
-        $FSTestHelper = $this->createTestFSForStaticAndHtmlFiles();
-        $location = $FSTestHelper->getTemporaryPath();
-
-        $app = $this->getApp();
-        $app->setSourceLocation($location);
-
-        $TwigFileHandler = new \Gumdrop\TwigFileHandler($app);
-        $twigFiles = $TwigFileHandler->listTwigFiles();
-        $this->assertFalse(in_array('_layout/file1.twig', $twigFiles));
-    }
-
     public function testRenderTwigFilesRendersTheTwigFiles()
     {
         $FSTestHelper = $this->createTestFSForStaticAndHtmlFiles();
@@ -74,6 +46,18 @@ class TwigFiles extends \Gumdrop\Tests\TestCase
         $app->setPageCollection($PageCollectionMock);
 
         $app->setDestinationLocation($destination);
+
+        $twigFiles = array(
+            'index.twig',
+            'folder/index.twig'
+        );
+        $FileHandlerMock = \Mockery::mock('\Gumdrop\FileHandler');
+        $FileHandlerMock
+            ->shouldReceive('listTwigFiles')
+            ->once()
+            ->andReturn($twigFiles);
+
+        $app->setFileHandler($FileHandlerMock);
 
         $TwigFileHandler = new \Gumdrop\TwigFileHandler($app);
         $TwigFileHandler->renderTwigFiles();

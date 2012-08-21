@@ -234,4 +234,33 @@ class FileHandler extends \Gumdrop\Tests\TestCase
         $this->assertEquals('40755', $mode);
 
     }
+
+    public function testListTwigFilesReturnsTwigFiles()
+    {
+        $FSTestHelper = $this->createTestFSForStaticAndHtmlFiles();
+        $location = $FSTestHelper->getTemporaryPath();
+
+        $app = $this->getApp();
+        $app->setSourceLocation($location);
+
+        $FileHandler = new \Gumdrop\FileHandler($app);
+        $twigFiles = $FileHandler->listTwigFiles();
+        $this->assertTrue(in_array('index.twig', $twigFiles));
+        $this->assertTrue(in_array('folder/index.twig', $twigFiles));
+
+    }
+
+    public function testListTwigFilesIgnoresTheLayoutFolder()
+    {
+        $FSTestHelper = $this->createTestFSForStaticAndHtmlFiles();
+        $location = $FSTestHelper->getTemporaryPath();
+
+        $app = $this->getApp();
+        $app->setSourceLocation($location);
+
+        $FileHandler = new \Gumdrop\FileHandler($app);
+        $twigFiles = $FileHandler->listTwigFiles();
+        $this->assertFalse(in_array('_layout/file1.twig', $twigFiles));
+    }
+
 }
