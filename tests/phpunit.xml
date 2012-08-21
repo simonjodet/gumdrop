@@ -8,7 +8,7 @@
             <directory suffix=".php">../vendor</directory>
         </blacklist>
     </filter>
-    <logging>
-        <log type="coverage-html" target="../doc/coverage" charset="UTF-8" yui="true" highlight="true"/>
-    </logging>
+    <!--<logging>-->
+        <!--<log type="coverage-html" target="../doc/coverage" charset="UTF-8" yui="true" highlight="true"/>-->
+    <!--</logging>-->
 </testsuites>
