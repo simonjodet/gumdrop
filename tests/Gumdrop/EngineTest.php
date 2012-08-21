@@ -6,7 +6,7 @@ require_once __DIR__ . '/../../Gumdrop/Engine.php';
 require_once __DIR__ . '/../../Gumdrop/Configuration.php';
 require_once __DIR__ . '/../../Gumdrop/PageConfiguration.php';
 require_once __DIR__ . '/../../Gumdrop/PageCollection.php';
-require_once __DIR__ . '/../../Gumdrop/Twig.php';
+require_once __DIR__ . '/../../Gumdrop/TwigEnvironments.php';
 require_once __DIR__ . '/../../vendor/twig/twig/lib/Twig/Autoloader.php';
 require_once __DIR__ . '/../../vendor/dflydev/markdown/src/dflydev/markdown/IMarkdownParser.php';
 require_once __DIR__ . '/../../vendor/dflydev/markdown/src/dflydev/markdown/MarkdownParser.php';
@@ -144,7 +144,7 @@ class Engine extends \Gumdrop\Tests\TestCase
         $app->setFileHandler($FileHandlerMock);
         $app->setDestinationLocation('destination');
 
-        $TwigMock = \Mockery::mock('\Gumdrop\Twig');
+        $TwigMock = \Mockery::mock('\Gumdrop\TwigEnvironments');
         $TwigMock
             ->shouldReceive('getLayoutEnvironment')
             ->andReturn($LayoutTwigEnvironmentMock)
@@ -195,7 +195,7 @@ class Engine extends \Gumdrop\Tests\TestCase
             ->andReturn($PageCollection);
         $app->setFileHandler($FileHandlerMock);
 
-        $TwigMock = \Mockery::mock('\Gumdrop\Twig');
+        $TwigMock = \Mockery::mock('\Gumdrop\TwigEnvironments');
         $TwigMock
             ->shouldReceive('getLayoutEnvironment')
             ->andReturn($LayoutTwigEnvironmentMock)

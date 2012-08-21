@@ -2,7 +2,7 @@
 namespace Gumdrop\Tests;
 
 require_once __DIR__ . '/../TestCase.php';
-require_once __DIR__ . '/../../Gumdrop/Twig.php';
+require_once __DIR__ . '/../../Gumdrop/TwigEnvironments.php';
 require_once __DIR__ . '/../../vendor/twig/twig/lib/Twig/Autoloader.php';
 
 class Twig extends \Gumdrop\Tests\TestCase
@@ -35,7 +35,7 @@ class Twig extends \Gumdrop\Tests\TestCase
         $app = $this->getApp();
         $app->setSourceLocation($FSTestHelper->getTemporaryPath());
 
-        $Twig = new \Gumdrop\Twig($app);
+        $Twig = new \Gumdrop\TwigEnvironments($app);
         $LayoutEnvironment = $Twig->getLayoutEnvironment();
         $Loader = $LayoutEnvironment->getLoader();
         $paths = $Loader->getPaths();
@@ -61,7 +61,7 @@ class Twig extends \Gumdrop\Tests\TestCase
         $app = $this->getApp();
         $app->setSourceLocation($FSTestHelper->getTemporaryPath());
 
-        $Twig = new \Gumdrop\Twig($app);
+        $Twig = new \Gumdrop\TwigEnvironments($app);
         $this->assertNull($Twig->getLayoutEnvironment());
     }
 
@@ -69,7 +69,7 @@ class Twig extends \Gumdrop\Tests\TestCase
     {
         $app = $this->getApp();
 
-        $Twig = new \Gumdrop\Twig($app);
+        $Twig = new \Gumdrop\TwigEnvironments($app);
         $LayoutEnvironment = $Twig->getPageEnvironment();
         $Loader = $LayoutEnvironment->getLoader();
 
@@ -100,7 +100,7 @@ class Twig extends \Gumdrop\Tests\TestCase
         $app = $this->getApp();
         $app->setSourceLocation($FSTestHelper->getTemporaryPath());
 
-        $Twig = new \Gumdrop\Twig($app);
+        $Twig = new \Gumdrop\TwigEnvironments($app);
         $LayoutEnvironment = $Twig->getSiteEnvironment();
         $Loader = $LayoutEnvironment->getLoader();
         $paths = $Loader->getPaths();

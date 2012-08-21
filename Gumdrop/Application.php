@@ -30,8 +30,8 @@ class Application
     private $Engine;
 
     /**
-     * Twig environment generator
-     * @var \Gumdrop\Twig
+     * TwigEnvironments environment generator
+     * @var \Gumdrop\TwigEnvironments
      */
     private $Twig;
 
@@ -161,7 +161,7 @@ class Application
     /**
      * Set the Twig environment generator
      *
-     * @param \Gumdrop\Twig $Twig
+     * @param \Gumdrop\TwigEnvironments $Twig
      */
     public function setTwig($Twig)
     {
@@ -170,7 +170,7 @@ class Application
 
     /**
      * Get the Twig environment generator
-     * @return \Gumdrop\Twig
+     * @return \Gumdrop\TwigEnvironments
      */
     public function getTwig()
     {

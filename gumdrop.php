@@ -21,7 +21,7 @@ $Application->setSourceLocation($source);
 $Application->setDestinationLocation($destination);
 
 $Application->setMarkdownParser(new \dflydev\markdown\MarkdownParser());
-$Application->setTwig(new \Gumdrop\Twig($Application));
+$Application->setTwig(new \Gumdrop\TwigEnvironments($Application));
 $Application->setFileHandler(new \Gumdrop\FileHandler($Application));
 $Application->setEngine(new \Gumdrop\Engine($Application));
 

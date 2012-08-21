@@ -4,7 +4,7 @@ namespace Gumdrop\Tests;
 require_once __DIR__ . '/../TestCase.php';
 require_once __DIR__ . '/../../Gumdrop/FileHandler.php';
 require_once __DIR__ . '/../../Gumdrop/PageCollection.php';
-require_once __DIR__ . '/../../Gumdrop/Twig.php';
+require_once __DIR__ . '/../../Gumdrop/TwigEnvironments.php';
 
 class FileHandler extends \Gumdrop\Tests\TestCase
 {
@@ -233,118 +233,5 @@ class FileHandler extends \Gumdrop\Tests\TestCase
         $mode = decoct($stats['mode']);
         $this->assertEquals('40755', $mode);
 
-    }
-
-    public function testListTwigFilesReturnsTwigFiles()
-    {
-        $FSTestHelper = $this->createTestFSForStaticAndHtmlFiles();
-        $location = $FSTestHelper->getTemporaryPath();
-
-        $app = $this->getApp();
-        $app->setSourceLocation($location);
-
-        $FileHandler = new \Gumdrop\FileHandler($app);
-        $twigFiles = $FileHandler->listTwigFiles();
-        $this->assertTrue(in_array('index.twig', $twigFiles));
-        $this->assertTrue(in_array('folder/index.twig', $twigFiles));
-
-    }
-
-    public function testListTwigFilesIgnoresTheLayoutFolder()
-    {
-        $FSTestHelper = $this->createTestFSForStaticAndHtmlFiles();
-        $location = $FSTestHelper->getTemporaryPath();
-
-        $app = $this->getApp();
-        $app->setSourceLocation($location);
-
-        $FileHandler = new \Gumdrop\FileHandler($app);
-        $twigFiles = $FileHandler->listTwigFiles();
-        $this->assertFalse(in_array('_layout/file1.twig', $twigFiles));
-    }
-
-    public function testRenderTwigFilesRendersTheTwigFiles()
-    {
-        $FSTestHelper = $this->createTestFSForStaticAndHtmlFiles();
-        $location = $FSTestHelper->getTemporaryPath();
-
-//        $FSTestHelperForDestination = new \FSTestHelper\FSTestHelper();
-//        $destination = realpath($FSTestHelperForDestination->getTemporaryPath());
-
-        $PageCollectionMock = \Mockery::mock('\Gumdrop\PageCollection');
-        $PageCollectionMock
-            ->shouldReceive('exportForTwig')
-            ->andReturn(array('some array'));
-
-
-        $twigFiles = array(
-            'index.twig',
-            'folder/index.twig'
-        );
-
-        $app = $this->getApp();
-        $app->setSourceLocation($location);
-        $SiteTwigMock = \Mockery::mock('\Twig_Environment');
-        $SiteTwigMock
-            ->shouldReceive('render')
-            ->once()
-            ->with('index.twig', array('some array'));
-
-        $SiteTwigMock
-            ->shouldReceive('render')
-            ->once()
-            ->with('folder/index.twig', array('some array'));
-
-
-        $TwigMock = \Mockery::mock('\Gumdrop\Twig');
-        $TwigMock
-            ->shouldReceive('getSiteEnvironment')
-            ->once()
-            ->andReturn($SiteTwigMock);
-
-        $app->setTwig($TwigMock);
-
-        $FileHandler = new \Gumdrop\FileHandler($app);
-        $FileHandler->renderTwigFiles();
-
-    }
-
-    private function createTestFSForStaticAndHtmlFiles()
-    {
-        $FSTestHelper = new \FSTestHelper\FSTestHelper();
-        $FSTestHelper->createTree(array(
-            'folders' => array(),
-            'files' => array(
-                array(
-                    'path' => '_layout/file1.twig',
-                    'content' => ''
-                ),
-                array(
-                    'path' => 'folder/file2',
-                    'content' => ''
-                ),
-                array(
-                    'path' => 'folder/markdown_file.markdown',
-                    'content' => ''
-                ),
-                array(
-                    'path' => 'file1',
-                    'content' => ''
-                ),
-                array(
-                    'path' => 'markdown_file.md',
-                    'content' => ''
-                ),
-                array(
-                    'path' => 'index.twig',
-                    'content' => ''
-                ),
-                array(
-                    'path' => 'folder/index.twig',
-                    'content' => ''
-                )
-            )
-        ));
-        return $FSTestHelper;
     }
 }

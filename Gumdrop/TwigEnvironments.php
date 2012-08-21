@@ -7,9 +7,9 @@
 namespace Gumdrop;
 
 /**
- * Twig Environment provider
+ * TwigEnvironments Environment provider
  */
-class Twig
+class TwigEnvironments
 {
     /**
      * Dependency injector
