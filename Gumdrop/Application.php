@@ -42,6 +42,7 @@ class Application
     private $PageCollection;
 
     /**
+     * Twig files handler
      * @var \Gumdrop\TwigFileHandler
      */
     private $TwigFileHandler;

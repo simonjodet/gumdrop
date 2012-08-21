@@ -33,12 +33,6 @@ class Engine extends \Gumdrop\Tests\TestCase
             ->globally()
             ->ordered()
             ->once();
-        $Page1
-            ->shouldReceive('setCollection')
-            ->globally()
-            ->ordered()
-            ->once()
-            ->andReturn('collection1');
         $Page2
             ->shouldReceive('setConfiguration')
             ->with(\Mockery::type('\Gumdrop\PageConfiguration'))
@@ -50,12 +44,6 @@ class Engine extends \Gumdrop\Tests\TestCase
             ->globally()
             ->ordered()
             ->once();
-        $Page2
-            ->shouldReceive('setCollection')
-            ->globally()
-            ->ordered()
-            ->once()
-            ->andReturn('collection2');
         $Page1
             ->shouldReceive('setLayoutTwigEnvironment')
             ->with($LayoutTwigEnvironmentMock)
@@ -193,7 +181,6 @@ class Engine extends \Gumdrop\Tests\TestCase
             ->shouldReceive(
             'setConfiguration',
             'convertMarkdownToHtml',
-            'setCollection',
             'setPageTwigEnvironment',
             'renderPageTwigEnvironment',
             'renderLayoutTwigEnvironment',

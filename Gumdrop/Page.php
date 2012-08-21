@@ -119,31 +119,6 @@ class Page
     }
 
     /**
-     * Collection the Page belongs to - Mean to access the other pages
-     * @var \Gumdrop\PageCollection
-     */
-    private $collection;
-
-    /**
-     * Set Page's collection
-     *
-     * @param \Gumdrop\PageCollection $collection
-     */
-    public function setCollection(\Gumdrop\PageCollection $collection)
-    {
-        $this->collection = $collection;
-    }
-
-    /**
-     * Get Page's collection
-     * @return \Gumdrop\PageCollection
-     */
-    public function getCollection()
-    {
-        return $this->collection;
-    }
-
-    /**
      * Page's layout Twig environment
      * @var \Twig_Environment
      */
@@ -288,7 +263,7 @@ class Page
         return array(
             'content' => $this->getHtmlContent(),
             'page' => $this->exportForTwig(),
-            'pages' => $this->getCollection()->exportForTwig()
+            'pages' => $this->app->getPageCollection()->exportForTwig()
         );
     }
 }

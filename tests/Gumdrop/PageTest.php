@@ -89,7 +89,7 @@ class Page extends \Gumdrop\Tests\TestCase
             ->andReturn('twig content 1');
 
         $Page->setLayoutTwigEnvironment($LayoutTwigEnvironment);
-        $Page->setCollection($PageCollection);
+        $app->setPageCollection($PageCollection);
 
         $Page->renderLayoutTwigEnvironment();
 
@@ -138,7 +138,7 @@ class Page extends \Gumdrop\Tests\TestCase
             ->andReturn('twig content 1');
 
         $Page->setLayoutTwigEnvironment($LayoutTwigEnvironment);
-        $Page->setCollection($PageCollection);
+        $app->setPageCollection($PageCollection);
 
         $Page->renderLayoutTwigEnvironment();
     }
@@ -164,7 +164,7 @@ class Page extends \Gumdrop\Tests\TestCase
             ->andReturn('new html content');
 
         $Page->setPageTwigEnvironment($PageTwigEnvironment);
-        $Page->setCollection($PageCollection);
+        $app->setPageCollection($PageCollection);
 
         $Page->renderPageTwigEnvironment();
 
@@ -211,7 +211,7 @@ class Page extends \Gumdrop\Tests\TestCase
             ));
 
         $Page->setPageTwigEnvironment($PageTwigEnvironment);
-        $Page->setCollection($PageCollection);
+        $app->setPageCollection($PageCollection);
         $Page->renderPageTwigEnvironment();
     }
 
