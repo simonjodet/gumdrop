@@ -34,7 +34,7 @@ class TwigFileHandler
     public function renderTwigFiles()
     {
         $twigFiles = $this->app->getFileHandler()->listTwigFiles();
-        $SiteTwigEnvironment = $this->app->getTwig()->getSiteEnvironment();
+        $SiteTwigEnvironment = $this->app->getTwigEnvironments()->getSiteEnvironment();
         $PageCollection = $this->app->getPageCollection()->exportForTwig();
         foreach ($twigFiles as $twigFile)
         {
@@ -46,7 +46,7 @@ class TwigFileHandler
             }
             $destination_file = $destination . '/' . $pathinfo['dirname'] . '/' . $pathinfo['filename'] . '.htm';
 
-            $TwigPage = $SiteTwigEnvironment->render($twigFile, $PageCollection);
+            $TwigPage = $SiteTwigEnvironment->render($twigFile, array('pages' => $PageCollection));
             file_put_contents($destination_file, $TwigPage);
         }
 

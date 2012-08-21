@@ -139,24 +139,44 @@ class Engine extends \Gumdrop\Tests\TestCase
             ->globally()
             ->once();
 
+        $twigFiles = array(
+            'index.twig',
+            'folder/index.twig'
+        );
+        $FileHandlerMock
+            ->shouldReceive('listTwigFiles')
+            ->once()
+            ->globally()
+            ->andReturn($twigFiles);
 
         $app = $this->getApp();
         $app->setFileHandler($FileHandlerMock);
+
+        $TwigFileHandler = \Mockery::mock('\Gumdrop\TwigFileHandler');
+        $TwigFileHandler
+            ->shouldReceive('renderTwigFiles')
+            ->once()
+            ->globally()
+            ->with($twigFiles);
+        $app->setTwigFileHandler($TwigFileHandler);
+
         $app->setDestinationLocation('destination');
 
-        $TwigMock = \Mockery::mock('\Gumdrop\TwigEnvironments');
-        $TwigMock
+        $TwigEnvironmentsMock = \Mockery::mock('\Gumdrop\TwigEnvironments');
+        $TwigEnvironmentsMock
             ->shouldReceive('getLayoutEnvironment')
             ->andReturn($LayoutTwigEnvironmentMock)
             ->once();
 
-        $TwigMock
+        $TwigEnvironmentsMock
             ->shouldReceive('getPageEnvironment')
             ->andReturn($PageTwigEnvironmentMock)
             ->once();
+        $app->setTwigEnvironments($TwigEnvironmentsMock);
 
 
-        $app->setTwig($TwigMock);
+        $app->setFileHandler($FileHandlerMock);
+
 
         $Engine = new \Gumdrop\Engine($app);
         $Engine->run();
@@ -193,20 +213,30 @@ class Engine extends \Gumdrop\Tests\TestCase
         $FileHandlerMock
             ->shouldReceive('getMarkdownFiles')
             ->andReturn($PageCollection);
+        $FileHandlerMock
+            ->shouldReceive('listTwigFiles')
+            ->once()
+            ->andReturn(array());
+
         $app->setFileHandler($FileHandlerMock);
 
-        $TwigMock = \Mockery::mock('\Gumdrop\TwigEnvironments');
-        $TwigMock
+        $TwigFileHandler = \Mockery::mock('\Gumdrop\TwigFileHandler');
+        $TwigFileHandler
+            ->shouldReceive('renderTwigFiles');
+        $app->setTwigFileHandler($TwigFileHandler);
+
+        $TwigEnvironmentsMock = \Mockery::mock('\Gumdrop\TwigEnvironments');
+        $TwigEnvironmentsMock
             ->shouldReceive('getLayoutEnvironment')
             ->andReturn($LayoutTwigEnvironmentMock)
             ->once();
 
-        $TwigMock
+        $TwigEnvironmentsMock
             ->shouldReceive('getPageEnvironment')
             ->andReturn($PageTwigEnvironmentMock)
             ->once();
 
-        $app->setTwig($TwigMock);
+        $app->setTwigEnvironments($TwigEnvironmentsMock);
 
         $Engine = new \Gumdrop\Engine($app);
         $Engine->run();

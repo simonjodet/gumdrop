@@ -33,13 +33,18 @@ class Application
      * TwigEnvironments environment generator
      * @var \Gumdrop\TwigEnvironments
      */
-    private $Twig;
+    private $TwigEnvironments;
 
     /**
      * Page collection
-     * @var \Gumdrop\PageCollection
+     * @var PageCollection
      */
     private $PageCollection;
+
+    /**
+     * @var \Gumdrop\TwigFileHandler
+     */
+    private $TwigFileHandler;
 
     /**
      * Location of the markdown source files
@@ -168,9 +173,9 @@ class Application
      * @param \Gumdrop\TwigEnvironments $Twig
      * @codeCoverageIgnore
      */
-    public function setTwig($Twig)
+    public function setTwigEnvironments($Twig)
     {
-        $this->Twig = $Twig;
+        $this->TwigEnvironments = $Twig;
     }
 
     /**
@@ -178,9 +183,9 @@ class Application
      * @return \Gumdrop\TwigEnvironments
      * @codeCoverageIgnore
      */
-    public function getTwig()
+    public function getTwigEnvironments()
     {
-        return $this->Twig;
+        return $this->TwigEnvironments;
     }
 
     /**
@@ -203,5 +208,25 @@ class Application
     public function getPageCollection()
     {
         return $this->PageCollection;
+    }
+
+    /**
+     * Set Twig files handler
+     * @param \Gumdrop\TwigFileHandler $TwigFileHandler
+     * @codeCoverageIgnore
+     */
+    public function setTwigFileHandler($TwigFileHandler)
+    {
+        $this->TwigFileHandler = $TwigFileHandler;
+    }
+
+    /**
+     * Get Twig files handler
+     * @return \Gumdrop\TwigFileHandler
+     * @codeCoverageIgnore
+     */
+    public function getTwigFileHandler()
+    {
+        return $this->TwigFileHandler;
     }
 }
