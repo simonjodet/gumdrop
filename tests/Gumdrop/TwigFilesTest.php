@@ -47,12 +47,6 @@ class TwigFiles extends \Gumdrop\Tests\TestCase
             ->shouldReceive('exportForTwig')
             ->andReturn(array('some array'));
 
-
-        $twigFiles = array(
-            'index.twig',
-            'folder/index.twig'
-        );
-
         $app = $this->getApp();
         $app->setSourceLocation($location);
         $SiteTwigMock = \Mockery::mock('\Twig_Environment');

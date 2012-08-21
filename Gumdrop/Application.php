@@ -1,6 +1,6 @@
 <?php
 /**
- * Gumdrop application
+ * Gumdrop dependency injector
  * @package Gumdrop
  */
 
@@ -124,6 +124,7 @@ class Application
      * Set location of the markdown source files
      *
      * @param string $sourceLocation
+     * @codeCoverageIgnore
      */
     public function setSourceLocation($sourceLocation)
     {
@@ -133,6 +134,7 @@ class Application
     /**
      * Get location of the markdown source files
      * @return string
+     * @codeCoverageIgnore
      */
     public function getSourceLocation()
     {
@@ -143,6 +145,7 @@ class Application
      * Set the location of the generated site
      *
      * @param string $destinationLocation
+     * @codeCoverageIgnore
      */
     public function setDestinationLocation($destinationLocation)
     {
@@ -152,6 +155,7 @@ class Application
     /**
      * Get the location of the generated site
      * @return string
+     * @codeCoverageIgnore
      */
     public function getDestinationLocation()
     {
@@ -162,6 +166,7 @@ class Application
      * Set the Twig environment generator
      *
      * @param \Gumdrop\TwigEnvironments $Twig
+     * @codeCoverageIgnore
      */
     public function setTwig($Twig)
     {
@@ -171,6 +176,7 @@ class Application
     /**
      * Get the Twig environment generator
      * @return \Gumdrop\TwigEnvironments
+     * @codeCoverageIgnore
      */
     public function getTwig()
     {
@@ -181,6 +187,7 @@ class Application
      * Set the Page collection
      *
      * @param \Gumdrop\PageCollection $PageCollection
+     * @codeCoverageIgnore
      */
     public function setPageCollection($PageCollection)
     {
@@ -191,6 +198,7 @@ class Application
      * Get the Page collection
      *
      * @return \Gumdrop\PageCollection PageCollection
+     * @codeCoverageIgnore
      */
     public function getPageCollection()
     {
