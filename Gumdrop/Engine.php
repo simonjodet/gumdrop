@@ -34,8 +34,8 @@ class Engine
     {
         $PageCollection = $this->app->getFileHandler()->listMarkdownFiles();
         $PageCollection = $this->app->getFileHandler()->getMarkdownFiles($PageCollection);
-        $LayoutTwigEnvironment = $this->app->getTwig()->getLayoutEnvironment();
-        $PageTwigEnvironment = $this->app->getTwig()->getPageEnvironment();
+        $LayoutTwigEnvironment = $this->app->getTwigEnvironments()->getLayoutEnvironment();
+        $PageTwigEnvironment = $this->app->getTwigEnvironments()->getPageEnvironment();
         foreach ($PageCollection as $key => $Page)
         {
             $PageCollection[$key]->setConfiguration(new \Gumdrop\PageConfiguration());
@@ -53,6 +53,8 @@ class Engine
             $PageCollection[$key]->renderLayoutTwigEnvironment();
             $PageCollection[$key]->writeHtmFiles($this->app->getDestinationLocation());
         }
+        $this->app->setPageCollection($PageCollection);
         $this->app->getFileHandler()->copyStaticFiles();
+        $this->app->getTwigFileHandler()->renderTwigFiles($this->app->getFileHandler()->listTwigFiles());
     }
 }

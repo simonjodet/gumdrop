@@ -39,4 +39,43 @@ class TestCase extends \PHPUnit_Framework_TestCase
     {
         $this->assertTrue(true);
     }
+
+    protected function createTestFSForStaticAndHtmlFiles()
+    {
+        $FSTestHelper = new \FSTestHelper\FSTestHelper();
+        $FSTestHelper->createTree(array(
+            'folders' => array(),
+            'files' => array(
+                array(
+                    'path' => '_layout/file1.twig',
+                    'content' => ''
+                ),
+                array(
+                    'path' => 'folder/file2',
+                    'content' => ''
+                ),
+                array(
+                    'path' => 'folder/markdown_file.markdown',
+                    'content' => ''
+                ),
+                array(
+                    'path' => 'file1',
+                    'content' => ''
+                ),
+                array(
+                    'path' => 'markdown_file.md',
+                    'content' => ''
+                ),
+                array(
+                    'path' => 'index.twig',
+                    'content' => ''
+                ),
+                array(
+                    'path' => 'folder/index.twig',
+                    'content' => ''
+                )
+            )
+        ));
+        return $FSTestHelper;
+    }
 }

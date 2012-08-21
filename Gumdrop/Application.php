@@ -1,6 +1,6 @@
 <?php
 /**
- * Gumdrop application
+ * Gumdrop dependency injector
  * @package Gumdrop
  */
 
@@ -30,10 +30,21 @@ class Application
     private $Engine;
 
     /**
-     * Twig environment generator
-     * @var \Gumdrop\Twig
+     * TwigEnvironments environment generator
+     * @var \Gumdrop\TwigEnvironments
      */
-    private $Twig;
+    private $TwigEnvironments;
+
+    /**
+     * Page collection
+     * @var PageCollection
+     */
+    private $PageCollection;
+
+    /**
+     * @var \Gumdrop\TwigFileHandler
+     */
+    private $TwigFileHandler;
 
     /**
      * Location of the markdown source files
@@ -46,6 +57,7 @@ class Application
      * @var string
      */
     private $destinationLocation = '';
+
 
     /**
      * Set Application's Markdown parser
@@ -117,6 +129,7 @@ class Application
      * Set location of the markdown source files
      *
      * @param string $sourceLocation
+     * @codeCoverageIgnore
      */
     public function setSourceLocation($sourceLocation)
     {
@@ -126,6 +139,7 @@ class Application
     /**
      * Get location of the markdown source files
      * @return string
+     * @codeCoverageIgnore
      */
     public function getSourceLocation()
     {
@@ -136,6 +150,7 @@ class Application
      * Set the location of the generated site
      *
      * @param string $destinationLocation
+     * @codeCoverageIgnore
      */
     public function setDestinationLocation($destinationLocation)
     {
@@ -145,6 +160,7 @@ class Application
     /**
      * Get the location of the generated site
      * @return string
+     * @codeCoverageIgnore
      */
     public function getDestinationLocation()
     {
@@ -154,19 +170,63 @@ class Application
     /**
      * Set the Twig environment generator
      *
-     * @param \Gumdrop\Twig $Twig
+     * @param \Gumdrop\TwigEnvironments $Twig
+     * @codeCoverageIgnore
      */
-    public function setTwig($Twig)
+    public function setTwigEnvironments($Twig)
     {
-        $this->Twig = $Twig;
+        $this->TwigEnvironments = $Twig;
     }
 
     /**
      * Get the Twig environment generator
-     * @return \Gumdrop\Twig
+     * @return \Gumdrop\TwigEnvironments
+     * @codeCoverageIgnore
      */
-    public function getTwig()
+    public function getTwigEnvironments()
     {
-        return $this->Twig;
+        return $this->TwigEnvironments;
+    }
+
+    /**
+     * Set the Page collection
+     *
+     * @param \Gumdrop\PageCollection $PageCollection
+     * @codeCoverageIgnore
+     */
+    public function setPageCollection($PageCollection)
+    {
+        $this->PageCollection = $PageCollection;
+    }
+
+    /**
+     * Get the Page collection
+     *
+     * @return \Gumdrop\PageCollection PageCollection
+     * @codeCoverageIgnore
+     */
+    public function getPageCollection()
+    {
+        return $this->PageCollection;
+    }
+
+    /**
+     * Set Twig files handler
+     * @param \Gumdrop\TwigFileHandler $TwigFileHandler
+     * @codeCoverageIgnore
+     */
+    public function setTwigFileHandler($TwigFileHandler)
+    {
+        $this->TwigFileHandler = $TwigFileHandler;
+    }
+
+    /**
+     * Get Twig files handler
+     * @return \Gumdrop\TwigFileHandler
+     * @codeCoverageIgnore
+     */
+    public function getTwigFileHandler()
+    {
+        return $this->TwigFileHandler;
     }
 }

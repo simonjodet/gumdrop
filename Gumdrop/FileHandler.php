@@ -113,7 +113,44 @@ class FileHandler
                 {
                     $item = ltrim(str_replace(realpath($this->app->getSourceLocation()), '', realpath($item)), '/');
                     $pathinfo = pathinfo($item);
-                    if (strpos($item, '_layout') === false && (!isset($pathinfo['extension']) || ($pathinfo['extension'] != 'md' && $pathinfo['extension'] != 'markdown')))
+                    if (strpos($item, '_layout') === false && (!isset($pathinfo['extension']) || ($pathinfo['extension'] != 'md' && $pathinfo['extension'] != 'markdown' && $pathinfo['extension'] != 'twig')))
+                    {
+                        $files[] = $item;
+                    }
+                }
+            }
+        }
+        return $files;
+    }
+
+    /**
+     * Returns the list of Twig files
+     *
+     * @param string $location Used for recursive purposes
+     *
+     * @return array The list of Twig files
+     */
+    public function listTwigFiles($location = '')
+    {
+        if ($location == '')
+        {
+            $location = $this->app->getSourceLocation();
+        }
+        $files = array();
+        $items = glob($location . '/*');
+        if (is_array($items) && count($items) > 0)
+        {
+            foreach ($items as $item)
+            {
+                if (is_dir($item))
+                {
+                    $files = array_merge($files, $this->listTwigFiles($item));
+                }
+                else
+                {
+                    $item = ltrim(str_replace(realpath($this->app->getSourceLocation()), '', realpath($item)), '/');
+                    $pathinfo = pathinfo($item);
+                    if (strpos($item, '_layout') === false && (isset($pathinfo['extension']) && $pathinfo['extension'] == 'twig'))
                     {
                         $files[] = $item;
                     }
