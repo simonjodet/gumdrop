@@ -4,7 +4,7 @@ namespace Gumdrop\Tests;
 require_once __DIR__ . '/../TestCase.php';
 require_once __DIR__ . '/../../Gumdrop/TwigFileHandler.php';
 
-class TwigFiles extends \Gumdrop\Tests\TestCase
+class TwigFileHandler extends \Gumdrop\Tests\TestCase
 {
     public function testRenderTwigFilesRendersTheTwigFiles()
     {
