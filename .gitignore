@@ -3,6 +3,8 @@ gumdrop.iml
 vendor/
 doc/phpdoc/
 !doc/phpdoc/empty
+doc/coverage/
+!doc/coverage/empty
 
 /.idea/
 .DS_Store
