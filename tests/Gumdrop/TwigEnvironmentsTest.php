@@ -5,7 +5,7 @@ require_once __DIR__ . '/../TestCase.php';
 require_once __DIR__ . '/../../Gumdrop/TwigEnvironments.php';
 require_once __DIR__ . '/../../vendor/twig/twig/lib/Twig/Autoloader.php';
 
-class Twig extends \Gumdrop\Tests\TestCase
+class TwigEnvironments extends \Gumdrop\Tests\TestCase
 {
     public static function setUpBeforeClass()
     {
