@@ -250,15 +250,62 @@ class Page extends \Gumdrop\Tests\TestCase
         $Page->setLocation('folder/file_1_path.md');
         $Page->setPageContent('twig content 1');
 
-        $destination = TMP_FOLDER . $this->getUniqueId();
-        mkdir($destination);
+        $FSTestHelper = new \FSTestHelper\FSTestHelper();
+        $FSTestHelper->createTree(array(
+            'folders' => array(),
+            'files' => array(
+                array(
+                    'path' => 'folder/file1.md',
+                    'content' => ''
+                ),
+                array(
+                    'path' => 'file2.markdown',
+                    'content' => ''
+                ),
+                array(
+                    'path' => 'file3.txt',
+                    'content' => ''
+                )
+            )
+        ));
+        $destination = $FSTestHelper->getTemporaryPath();
 
         $Page->writeHtmFiles($destination);
 
         $this->assertStringEqualsFile($destination . '/folder/file_1_path.htm', 'twig content 1');
+    }
 
-        unlink($destination . '/folder/file_1_path.htm');
-        rmdir($destination . '/folder');
-        rmdir($destination);
+    public function testWriteHtmFilesWritePagesToSpecifiedFilename()
+    {
+        $app = new \Gumdrop\Application();
+
+        $Page = new \Gumdrop\Page($app);
+        $Page->setLocation('folder/file_1_path.md');
+        $Page->setPageContent('twig content 1');
+        $Page->setConfiguration(new \Gumdrop\PageConfiguration(array('target_name' => 'file.ext')));
+
+        $FSTestHelper = new \FSTestHelper\FSTestHelper();
+        $FSTestHelper->createTree(array(
+            'folders' => array(),
+            'files' => array(
+                array(
+                    'path' => 'folder/file1.md',
+                    'content' => ''
+                ),
+                array(
+                    'path' => 'file2.markdown',
+                    'content' => ''
+                ),
+                array(
+                    'path' => 'file3.txt',
+                    'content' => ''
+                )
+            )
+        ));
+        $destination = $FSTestHelper->getTemporaryPath();
+
+        $Page->writeHtmFiles($destination);
+
+        $this->assertStringEqualsFile($destination . '/folder/file.ext', 'twig content 1');
     }
 }

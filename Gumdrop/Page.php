@@ -262,7 +262,15 @@ class Page
         {
             mkdir($destination . '/' . $pathinfo['dirname'], 0777, true);
         }
-        $destination_file = $destination . '/' . $pathinfo['dirname'] . '/' . $pathinfo['filename'] . '.htm';
+        $conf = $this->getConfiguration();
+        if (isset($conf['target_name']) && !empty($conf['target_name']))
+        {
+            $destination_file = $destination . '/' . $pathinfo['dirname'] . '/' . $conf['target_name'];
+        }
+        else
+        {
+            $destination_file = $destination . '/' . $pathinfo['dirname'] . '/' . $pathinfo['filename'] . '.htm';
+        }
         file_put_contents($destination_file, $this->getPageContent());
     }
 
