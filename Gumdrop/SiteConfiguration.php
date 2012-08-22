@@ -9,7 +9,7 @@ namespace Gumdrop;
 /**
  * Application-level configuration container
  */
-class GlobalConfiguration extends \Gumdrop\Configuration
+class SiteConfiguration extends \Gumdrop\Configuration
 {
     /**
      * Constructor

@@ -4,7 +4,7 @@ namespace Gumdrop\Tests;
 require_once __DIR__ . '/../TestCase.php';
 require_once __DIR__ . '/../../Gumdrop/PageConfiguration.php';
 
-class PageConfiguration extends \Gumdrop\Tests\TestCase
+class SiteConfiguration extends \Gumdrop\Tests\TestCase
 {
     public function testExtractHeaderCanExtractConfigurationHeaderFromMarkdownContent()
     {
