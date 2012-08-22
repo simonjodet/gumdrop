@@ -187,7 +187,7 @@ class Page extends \Gumdrop\Tests\TestCase
         $Page = new \Gumdrop\Page($app);
         $Page->setConfiguration($PageConfiguration);
         $Page->setHtmlContent('initial html content');
-        $Page->setLocation('my_folder/my_file');
+        $Page->setLocation('my_folder/my_file.md');
         $Page->setMarkdownContent('markdown content');
 
 
@@ -203,7 +203,7 @@ class Page extends \Gumdrop\Tests\TestCase
                         'layout' => 'my_layout',
                         'title' => 'my_title'
                     ),
-                    'location' => 'my_folder/my_file',
+                    'location' => 'my_folder/my_file.htm',
                     'html' => 'initial html content',
                     'markdown' => 'markdown content'
                 ),
@@ -227,7 +227,7 @@ class Page extends \Gumdrop\Tests\TestCase
         $Page = new \Gumdrop\Page($app);
         $Page->setConfiguration($PageConfiguration);
         $Page->setHtmlContent('html content');
-        $Page->setLocation('my_folder/my_file');
+        $Page->setLocation('my_folder/my_file.markdown');
         $Page->setMarkdownContent('markdown content');
 
         $this->assertEquals(
@@ -236,7 +236,7 @@ class Page extends \Gumdrop\Tests\TestCase
                     'layout' => 'my_layout',
                     'title' => 'my_title'
                 ),
-                'location' => 'my_folder/my_file',
+                'location' => 'my_folder/my_file.htm',
                 'html' => 'html content',
                 'markdown' => 'markdown content'
             ),
