@@ -58,7 +58,7 @@ class Page extends \Gumdrop\Tests\TestCase
 
         $Page->renderLayoutTwigEnvironment();
 
-        $this->assertEquals($Page->getHtmlContent(), 'html content 1');
+        $this->assertEquals($Page->getPageContent(), 'html content 1');
     }
     public function testRenderLayoutTwigEnvironmentAppliesTheLayoutToPages()
     {
@@ -93,7 +93,7 @@ class Page extends \Gumdrop\Tests\TestCase
 
         $Page->renderLayoutTwigEnvironment();
 
-        $this->assertEquals($Page->getHtmlContent(), 'twig content 1');
+        $this->assertEquals($Page->getPageContent(), 'twig content 1');
     }
 
     public function testRenderLayoutTwigEnvironmentDoesNotApplyTheLayoutToPagesIfItDoesNotExist()
@@ -111,7 +111,7 @@ class Page extends \Gumdrop\Tests\TestCase
 
         $Page->renderLayoutTwigEnvironment();
 
-        $this->assertEquals($Page->getHtmlContent(), 'html content 1');
+        $this->assertEquals($Page->getPageContent(), 'html content 1');
     }
 
     public function testRenderLayoutTwigEnvironmentPreferablyUsesLayoutSetInPageConfiguration()
@@ -244,13 +244,13 @@ class Page extends \Gumdrop\Tests\TestCase
         );
     }
 
-        public function testWriteHtmlFilesWritePagesToHtmFiles()
+        public function testWriteHtmFilesWritePagesToHtmFiles()
     {
         $app = new \Gumdrop\Application();
 
         $Page = new \Gumdrop\Page($app);
         $Page->setLocation('folder/file_1_path.md');
-        $Page->setHtmlContent('twig content 1');
+        $Page->setPageContent('twig content 1');
 
         $destination = TMP_FOLDER . $this->getUniqueId();
         mkdir($destination);

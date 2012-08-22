@@ -93,6 +93,31 @@ class Page
     }
 
     /**
+     * Page's final content
+     * @var string
+     */
+    private $pageContent;
+
+    /**
+     * Set Page's content
+     *
+     * @param string $pageContent
+     */
+    public function setPageContent($pageContent)
+    {
+        $this->pageContent = $pageContent;
+    }
+
+    /**
+     * Get Page's content
+     * @return string
+     */
+    public function getPageContent()
+    {
+        return $this->pageContent;
+    }
+
+    /**
      * Page's configuration
      * @var \Gumdrop\PageConfiguration
      */
@@ -192,6 +217,7 @@ class Page
      */
     public function renderLayoutTwigEnvironment()
     {
+        $this->setPageContent($this->getHtmlContent());
         if (!is_null($this->getLayoutTwigEnvironment()))
         {
             $twig_layout = null;
@@ -205,7 +231,7 @@ class Page
             }
             if (!is_null($twig_layout))
             {
-                $this->setHtmlContent($this->getLayoutTwigEnvironment()->render(
+                $this->setPageContent($this->getLayoutTwigEnvironment()->render(
                     $twig_layout,
                     $this->generateTwigData()
                 ));
@@ -237,7 +263,7 @@ class Page
             mkdir($destination . '/' . $pathinfo['dirname'], 0777, true);
         }
         $destination_file = $destination . '/' . $pathinfo['dirname'] . '/' . $pathinfo['filename'] . '.htm';
-        file_put_contents($destination_file, $this->getHtmlContent());
+        file_put_contents($destination_file, $this->getPageContent());
     }
 
     /**
