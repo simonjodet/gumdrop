@@ -21,17 +21,24 @@ class TwigFileHandler extends \Gumdrop\Tests\TestCase
 
         $app = $this->getApp();
         $app->setSourceLocation($location);
+        $app->setSiteConfiguration(array('some_configuration'));
         $SiteTwigMock = \Mockery::mock('\Twig_Environment');
         $SiteTwigMock
             ->shouldReceive('render')
             ->once()
-            ->with('index.twig', array('pages' => array('some array')))
+            ->with('index.twig', array(
+            'site' => array('some_configuration'),
+            'pages' => array('some array')
+        ))
             ->andReturn('index_twig_rendering');
 
         $SiteTwigMock
             ->shouldReceive('render')
             ->once()
-            ->with('folder/index.twig', array('pages' => array('some array')))
+            ->with('folder/index.twig', array(
+            'site' => array('some_configuration'),
+            'pages' => array('some array')
+        ))
             ->andReturn('folder_index_twig_rendering');
 
 

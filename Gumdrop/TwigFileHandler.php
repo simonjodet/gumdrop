@@ -46,7 +46,13 @@ class TwigFileHandler
             }
             $destination_file = $destination . '/' . $pathinfo['dirname'] . '/' . $pathinfo['filename'] . '.htm';
 
-            $TwigPage = $SiteTwigEnvironment->render($twigFile, array('pages' => $PageCollection));
+            $TwigPage = $SiteTwigEnvironment->render(
+                $twigFile,
+                array(
+                    'site' => $this->app->getSiteConfiguration(),
+                    'pages' => $PageCollection
+                )
+            );
             file_put_contents($destination_file, $TwigPage);
         }
 

@@ -32,6 +32,7 @@ class Engine
      */
     public function run()
     {
+        $this->app->setSiteConfiguration(new \Gumdrop\SiteConfiguration($this->app->getSourceLocation()));
         $PageCollection = $this->app->getFileHandler()->listMarkdownFiles();
         $PageCollection = $this->app->getFileHandler()->getMarkdownFiles($PageCollection);
         $LayoutTwigEnvironment = $this->app->getTwigEnvironments()->getLayoutEnvironment();

@@ -4,6 +4,7 @@ namespace Gumdrop\Tests;
 require_once __DIR__ . '/../TestCase.php';
 require_once __DIR__ . '/../../Gumdrop/Engine.php';
 require_once __DIR__ . '/../../Gumdrop/Configuration.php';
+require_once __DIR__ . '/../../Gumdrop/SiteConfiguration.php';
 require_once __DIR__ . '/../../Gumdrop/PageConfiguration.php';
 require_once __DIR__ . '/../../Gumdrop/PageCollection.php';
 require_once __DIR__ . '/../../Gumdrop/TwigEnvironments.php';
@@ -13,6 +14,25 @@ require_once __DIR__ . '/../../vendor/dflydev/markdown/src/dflydev/markdown/Mark
 
 class Engine extends \Gumdrop\Tests\TestCase
 {
+    /**
+     * @var \FSTestHelper\FSTestHelper
+     */
+    private $FSTestHelper;
+
+    protected function setUp()
+    {
+        $this->FSTestHelper = new \FSTestHelper\FSTestHelper();
+        $this->FSTestHelper->createTree(array(
+            'folders' => array(),
+            'files' => array(
+                array(
+                    'path' => 'conf.json',
+                    'content' => '{}'
+                )
+            )
+        ));
+    }
+
     public function testRunBehavesAsExpected()
     {
         \Twig_Autoloader::register();
@@ -162,13 +182,15 @@ class Engine extends \Gumdrop\Tests\TestCase
             ->once();
         $app->setTwigEnvironments($TwigEnvironmentsMock);
 
-
         $app->setFileHandler($FileHandlerMock);
 
+        $app->setSourceLocation($this->FSTestHelper->getTemporaryPath() . '/');
 
         $Engine = new \Gumdrop\Engine($app);
         $Engine->run();
         $this->assertEquals($PageCollection, $app->getPageCollection());
+
+        $this->assertInstanceOf('\Gumdrop\SiteConfiguration', $app->getSiteConfiguration());
     }
 
     public function testRunDoesNotSetLayoutEnvironmentIfItIsNull()
@@ -224,9 +246,9 @@ class Engine extends \Gumdrop\Tests\TestCase
             ->once();
 
         $app->setTwigEnvironments($TwigEnvironmentsMock);
+        $app->setSourceLocation($this->FSTestHelper->getTemporaryPath() . '/');
 
         $Engine = new \Gumdrop\Engine($app);
         $Engine->run();
-
     }
 }

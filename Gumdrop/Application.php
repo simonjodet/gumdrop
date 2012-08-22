@@ -48,6 +48,12 @@ class Application
     private $TwigFileHandler;
 
     /**
+     * Site configuration container
+     * @var \Gumdrop\SiteConfiguration
+     */
+    private $SiteConfiguration;
+
+    /**
      * Location of the markdown source files
      * @var string
      */
@@ -130,6 +136,7 @@ class Application
      * Set location of the markdown source files
      *
      * @param string $sourceLocation
+     *
      * @codeCoverageIgnore
      */
     public function setSourceLocation($sourceLocation)
@@ -151,6 +158,7 @@ class Application
      * Set the location of the generated site
      *
      * @param string $destinationLocation
+     *
      * @codeCoverageIgnore
      */
     public function setDestinationLocation($destinationLocation)
@@ -172,6 +180,7 @@ class Application
      * Set the Twig environment generator
      *
      * @param \Gumdrop\TwigEnvironments $Twig
+     *
      * @codeCoverageIgnore
      */
     public function setTwigEnvironments($Twig)
@@ -193,6 +202,7 @@ class Application
      * Set the Page collection
      *
      * @param \Gumdrop\PageCollection $PageCollection
+     *
      * @codeCoverageIgnore
      */
     public function setPageCollection($PageCollection)
@@ -213,7 +223,9 @@ class Application
 
     /**
      * Set Twig files handler
+     *
      * @param \Gumdrop\TwigFileHandler $TwigFileHandler
+     *
      * @codeCoverageIgnore
      */
     public function setTwigFileHandler($TwigFileHandler)
@@ -229,5 +241,23 @@ class Application
     public function getTwigFileHandler()
     {
         return $this->TwigFileHandler;
+    }
+
+    /**
+     * Set the site configuration container
+     * @param \Gumdrop\SiteConfiguration $SiteConfiguration
+     */
+    public function setSiteConfiguration($SiteConfiguration)
+    {
+        $this->SiteConfiguration = $SiteConfiguration;
+    }
+
+    /**
+     * Get the site configuration container
+     * @return \Gumdrop\SiteConfiguration
+     */
+    public function getSiteConfiguration()
+    {
+        return $this->SiteConfiguration;
     }
 }
