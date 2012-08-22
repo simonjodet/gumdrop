@@ -113,7 +113,7 @@ class FileHandler
                 {
                     $item = ltrim(str_replace(realpath($this->app->getSourceLocation()), '', realpath($item)), '/');
                     $pathinfo = pathinfo($item);
-                    if (strpos($item, '_layout') === false && (!isset($pathinfo['extension']) || ($pathinfo['extension'] != 'md' && $pathinfo['extension'] != 'markdown' && $pathinfo['extension'] != 'twig')))
+                    if ($item != 'conf.json' && strpos($item, '_layout') === false && (!isset($pathinfo['extension']) || ($pathinfo['extension'] != 'md' && $pathinfo['extension'] != 'markdown' && $pathinfo['extension'] != 'twig')))
                     {
                         $files[] = $item;
                     }
