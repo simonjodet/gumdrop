@@ -273,12 +273,13 @@ class Page
     public function exportForTwig()
     {
         $path_info = pathinfo($this->getLocation());
-        return array(
-            'conf' => $this->getConfiguration()->extract(),
-            'location' => str_replace($path_info['basename'], $path_info['filename'] . '.htm', $this->getLocation()),
-            'html' => $this->getHtmlContent(),
-            'markdown' => $this->getMarkdownContent()
-        );
+        return array_merge(
+            $this->getConfiguration()->extract(),
+            array(
+                'location' => str_replace($path_info['basename'], $path_info['filename'] . '.htm', $this->getLocation()),
+                'html' => $this->getHtmlContent(),
+                'markdown' => $this->getMarkdownContent()
+            ));
     }
 
     /**

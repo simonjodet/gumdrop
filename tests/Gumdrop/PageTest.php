@@ -60,6 +60,7 @@ class Page extends \Gumdrop\Tests\TestCase
 
         $this->assertEquals($Page->getPageContent(), 'html content 1');
     }
+
     public function testRenderLayoutTwigEnvironmentAppliesTheLayoutToPages()
     {
         $app = new \Gumdrop\Application();
@@ -199,10 +200,8 @@ class Page extends \Gumdrop\Tests\TestCase
             array(
                 'content' => 'initial html content',
                 'page' => array(
-                    'conf' => array(
-                        'layout' => 'my_layout',
-                        'title' => 'my_title'
-                    ),
+                    'layout' => 'my_layout',
+                    'title' => 'my_title',
                     'location' => 'my_folder/my_file.htm',
                     'html' => 'initial html content',
                     'markdown' => 'markdown content'
@@ -222,6 +221,7 @@ class Page extends \Gumdrop\Tests\TestCase
         $PageConfiguration = new \Gumdrop\PageConfiguration();
         $PageConfiguration['layout'] = 'my_layout';
         $PageConfiguration['title'] = 'my_title';
+        $PageConfiguration['html'] = 'this should be overwritten by the page html content';
 
 
         $Page = new \Gumdrop\Page($app);
@@ -232,10 +232,8 @@ class Page extends \Gumdrop\Tests\TestCase
 
         $this->assertEquals(
             array(
-                'conf' => array(
-                    'layout' => 'my_layout',
-                    'title' => 'my_title'
-                ),
+                'layout' => 'my_layout',
+                'title' => 'my_title',
                 'location' => 'my_folder/my_file.htm',
                 'html' => 'html content',
                 'markdown' => 'markdown content'
@@ -244,7 +242,7 @@ class Page extends \Gumdrop\Tests\TestCase
         );
     }
 
-        public function testWriteHtmFilesWritePagesToHtmFiles()
+    public function testWriteHtmFilesWritePagesToHtmFiles()
     {
         $app = new \Gumdrop\Application();
 
