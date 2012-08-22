@@ -245,8 +245,8 @@ class FileHandler extends \Gumdrop\Tests\TestCase
 
         $FileHandler = new \Gumdrop\FileHandler($app);
         $twigFiles = $FileHandler->listTwigFiles();
-        $this->assertTrue(in_array('index.twig', $twigFiles));
-        $this->assertTrue(in_array('folder/index.twig', $twigFiles));
+        $this->assertTrue(in_array('index.htm.twig', $twigFiles));
+        $this->assertTrue(in_array('folder/pages.rss.twig', $twigFiles));
 
     }
 

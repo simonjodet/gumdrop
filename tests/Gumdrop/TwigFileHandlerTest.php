@@ -26,7 +26,7 @@ class TwigFileHandler extends \Gumdrop\Tests\TestCase
         $SiteTwigMock
             ->shouldReceive('render')
             ->once()
-            ->with('index.twig', array(
+            ->with('index.htm.twig', array(
             'site' => array('some_configuration'),
             'pages' => array('some array')
         ))
@@ -35,7 +35,7 @@ class TwigFileHandler extends \Gumdrop\Tests\TestCase
         $SiteTwigMock
             ->shouldReceive('render')
             ->once()
-            ->with('folder/index.twig', array(
+            ->with('folder/pages.rss.twig', array(
             'site' => array('some_configuration'),
             'pages' => array('some array')
         ))
@@ -55,8 +55,8 @@ class TwigFileHandler extends \Gumdrop\Tests\TestCase
         $app->setDestinationLocation($destination);
 
         $twigFiles = array(
-            'index.twig',
-            'folder/index.twig'
+            'index.htm.twig',
+            'folder/pages.rss.twig'
         );
         $FileHandlerMock = \Mockery::mock('\Gumdrop\FileHandler');
         $FileHandlerMock
@@ -70,7 +70,6 @@ class TwigFileHandler extends \Gumdrop\Tests\TestCase
         $TwigFileHandler->renderTwigFiles();
 
         $this->assertStringEqualsFile($destination . '/index.htm', 'index_twig_rendering');
-        $this->assertStringEqualsFile($destination . '/folder/index.htm', 'folder_index_twig_rendering');
-
+        $this->assertStringEqualsFile($destination . '/folder/pages.rss', 'folder_index_twig_rendering');
     }
 }

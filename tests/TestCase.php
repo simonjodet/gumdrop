@@ -47,6 +47,10 @@ class TestCase extends \PHPUnit_Framework_TestCase
             'folders' => array(),
             'files' => array(
                 array(
+                    'path' => 'conf.json',
+                    'content' => '{}'
+                ),
+                array(
                     'path' => '_layout/file1.twig',
                     'content' => ''
                 ),
@@ -67,11 +71,11 @@ class TestCase extends \PHPUnit_Framework_TestCase
                     'content' => ''
                 ),
                 array(
-                    'path' => 'index.twig',
+                    'path' => 'index.htm.twig',
                     'content' => ''
                 ),
                 array(
-                    'path' => 'folder/index.twig',
+                    'path' => 'folder/pages.rss.twig',
                     'content' => ''
                 )
             )

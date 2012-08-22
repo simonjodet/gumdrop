@@ -44,7 +44,7 @@ class TwigFileHandler
             {
                 mkdir($destination . '/' . $pathinfo['dirname'], 0777, true);
             }
-            $destination_file = $destination . '/' . $pathinfo['dirname'] . '/' . $pathinfo['filename'] . '.htm';
+            $destination_file = $destination . '/' . $pathinfo['dirname'] . '/' . $pathinfo['filename'];
 
             $TwigPage = $SiteTwigEnvironment->render(
                 $twigFile,
