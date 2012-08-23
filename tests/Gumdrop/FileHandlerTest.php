@@ -263,4 +263,34 @@ class FileHandler extends \Gumdrop\Tests\TestCase
         $this->assertFalse(in_array('_layout/file1.twig', $twigFiles));
     }
 
+    public function testClearDestinationLocationRemovesAllContent()
+    {
+        $FSTestHelper = new \FSTestHelper\FSTestHelper();
+        $FSTestHelper->createTree(array(
+            'folders' => array(),
+            'files' => array(
+                array(
+                    'path' => 'folder/file1.htm',
+                    'content' => ''
+                ),
+                array(
+                    'path' => 'file2.htm',
+                    'content' => ''
+                ),
+                array(
+                    'path' => 'file3.txt',
+                    'content' => ''
+                )
+            )
+        ));
+
+        $location = $FSTestHelper->getTemporaryPath();
+
+        $app = $this->getApp();
+        $app->setDestinationLocation($location);
+
+        $FileHandler = new \Gumdrop\FileHandler($app);
+        $FileHandler->clearDestinationLocation();
+        $this->assertEquals(array('.', '..'), scandir($location));
+    }
 }

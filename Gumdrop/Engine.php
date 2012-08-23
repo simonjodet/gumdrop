@@ -54,6 +54,12 @@ class Engine
             $PageCollection[$key]->setPageTwigEnvironment($PageTwigEnvironment);
             $PageCollection[$key]->renderPageTwigEnvironment();
             $PageCollection[$key]->renderLayoutTwigEnvironment();
+        }
+
+        $this->app->getFileHandler()->clearDestinationLocation();
+
+        foreach ($PageCollection as $key => $Page)
+        {
             $PageCollection[$key]->writeHtmFiles($this->app->getDestinationLocation());
         }
 

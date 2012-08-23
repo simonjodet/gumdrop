@@ -39,6 +39,8 @@ class Engine extends \Gumdrop\Tests\TestCase
         $LayoutTwigEnvironmentMock = \Mockery::mock('\Twig_Environment');
         $PageTwigEnvironmentMock = \Mockery::mock('\Twig_Environment');
 
+        $FileHandlerMock = \Mockery::mock('\Gumdrop\FileHandler');
+
         $Page1 = \Mockery::mock('\Gumdrop\Page');
         $Page2 = \Mockery::mock('\Gumdrop\Page');
 
@@ -86,12 +88,6 @@ class Engine extends \Gumdrop\Tests\TestCase
             ->globally()
             ->ordered()
             ->once();
-        $Page1
-            ->shouldReceive('writeHtmFiles')
-            ->with('destination')
-            ->globally()
-            ->ordered()
-            ->once();
         $Page2
             ->shouldReceive('setLayoutTwigEnvironment')
             ->with($LayoutTwigEnvironmentMock)
@@ -114,6 +110,38 @@ class Engine extends \Gumdrop\Tests\TestCase
             ->globally()
             ->ordered()
             ->once();
+        $PageCollection = new \Gumdrop\PageCollection(array(
+            $Page1,
+            $Page2
+        ));
+
+        $FileHandlerMock
+            ->shouldReceive('listMarkdownFiles')
+            ->once()
+            ->ordered()
+            ->globally()
+            ->andReturn($PageCollection);
+        $FileHandlerMock
+            ->shouldReceive('getMarkdownFiles')
+            ->once()
+            ->ordered()
+            ->globally()
+            ->with($PageCollection)
+            ->andReturn($PageCollection);
+
+        $FileHandlerMock
+            ->shouldReceive('clearDestinationLocation')
+            ->once()
+            ->ordered()
+            ->globally();
+
+
+        $Page1
+            ->shouldReceive('writeHtmFiles')
+            ->with('destination')
+            ->globally()
+            ->ordered()
+            ->once();
         $Page2
             ->shouldReceive('writeHtmFiles')
             ->globally()
@@ -121,29 +149,10 @@ class Engine extends \Gumdrop\Tests\TestCase
             ->with('destination')
             ->once();
 
-        $PageCollection = new \Gumdrop\PageCollection(array(
-            $Page1,
-            $Page2
-        ));
 
-
-        $FileHandlerMock = \Mockery::mock('\Gumdrop\FileHandler');
-        $FileHandlerMock
-            ->shouldReceive('listMarkdownFiles')
-            ->once()
-            ->ordered('generate')
-            ->globally()
-            ->andReturn($PageCollection);
-        $FileHandlerMock
-            ->shouldReceive('getMarkdownFiles')
-            ->once()
-            ->ordered('generate')
-            ->globally()
-            ->with($PageCollection)
-            ->andReturn($PageCollection);
         $FileHandlerMock
             ->shouldReceive('copyStaticFiles')
-            ->ordered('generate')
+            ->ordered()
             ->globally()
             ->once();
 
@@ -216,7 +225,7 @@ class Engine extends \Gumdrop\Tests\TestCase
 
         $FileHandlerMock = \Mockery::mock('\Gumdrop\FileHandler');
         $FileHandlerMock
-            ->shouldReceive('listMarkdownFiles', 'copyStaticFiles')
+            ->shouldReceive('listMarkdownFiles', 'copyStaticFiles', 'clearDestinationLocation')
             ->byDefault();
 
         $FileHandlerMock

@@ -179,6 +179,34 @@ class FileHandler
             }
             copy(realpath($this->app->getSourceLocation() . '/' . $file), realpath($this->app->getDestinationLocation()) . '/' . $file);
         }
+    }
 
+    /**
+     * Clears the destination location
+     *
+     * @param string $path Used for recursion, should not be set when using this method
+     */
+    public function clearDestinationLocation($path = '')
+    {
+        if ($path == '')
+        {
+            $path = $this->app->getDestinationLocation();
+        }
+
+        foreach (glob($path . '/*') as $file)
+        {
+            if (is_dir($file))
+            {
+                $this->clearDestinationLocation($file);
+            }
+            else
+            {
+                unlink($file);
+            }
+        }
+        if ($path != $this->app->getDestinationLocation())
+        {
+            rmdir($path);
+        }
     }
 }
