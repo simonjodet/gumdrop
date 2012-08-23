@@ -13,8 +13,6 @@ if ($destination == '/' || $destination === false)
     exit(2);
 }
 
-date_default_timezone_set('UTC');
-
 require_once __DIR__ . '/vendor/autoload.php';
 
 $Application = new \Gumdrop\Application();

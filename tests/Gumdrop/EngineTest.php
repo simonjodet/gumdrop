@@ -27,7 +27,7 @@ class Engine extends \Gumdrop\Tests\TestCase
             'files' => array(
                 array(
                     'path' => 'conf.json',
-                    'content' => '{}'
+                    'content' => '{"timezone":"Europe/Paris"}'
                 )
             )
         ));
@@ -200,6 +200,7 @@ class Engine extends \Gumdrop\Tests\TestCase
         $this->assertEquals($PageCollection, $app->getPageCollection());
 
         $this->assertInstanceOf('\Gumdrop\SiteConfiguration', $app->getSiteConfiguration());
+        $this->assertEquals('Europe/Paris', date_default_timezone_get());
     }
 
     public function testRunDoesNotSetLayoutEnvironmentIfItIsNull()

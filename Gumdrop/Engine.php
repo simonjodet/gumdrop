@@ -33,6 +33,10 @@ class Engine
     public function run()
     {
         $this->app->setSiteConfiguration(new \Gumdrop\SiteConfiguration($this->app->getSourceLocation()));
+        if ($this->app->getSiteConfiguration()->offsetExists('timezone'))
+        {
+            date_default_timezone_set($this->app->getSiteConfiguration()->offsetGet('timezone'));
+        }
         $PageCollection = $this->app->getFileHandler()->listMarkdownFiles();
         $PageCollection = $this->app->getFileHandler()->getMarkdownFiles($PageCollection);
         $LayoutTwigEnvironment = $this->app->getTwigEnvironments()->getLayoutEnvironment();
