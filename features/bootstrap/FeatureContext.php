@@ -21,7 +21,6 @@ class FeatureContext extends BehatContext
 {
     private $cssFile;
     private $markdownFile;
-    private $layoutFile;
     private $source;
     private $destination;
 
@@ -41,10 +40,39 @@ class FeatureContext extends BehatContext
      */
     public function iHaveMyTestSite($source)
     {
-        $source = __DIR__ . '/../' . $source;
-        if (!file_exists($source)) {
-            throw new \Exception('Missing test site');
-        }
+        $FSTestHelper = new \FSTestHelper\FSTestHelper();
+        $FSTestHelper->createTree(array(
+            'folders' => array(),
+            'files' => array(
+                array(
+                    'path' => 'testFile2.md',
+                    'content' => <<<'EOD'
+***
+{
+    "layout":"page2.twig",
+    "title":"Page 2 Title"
+}
+***
+
+{{ page.conf.layout }}
+
+{% for page in pages %}
+  {{ page.conf.layout }}-{{ page.conf.title }}
+{% endfor %}
+
+# {{ page.conf.title }}
+EOD
+                ),
+                array(
+                    'path' => 'style/default.css',
+                    'content' => ''
+                ),
+                array(
+                    'path' => 'folder/testFile.markdown',
+                    'content' => ''
+                )
+            )
+        ));
         $this->source = $source;
     }
 
@@ -53,7 +81,8 @@ class FeatureContext extends BehatContext
      */
     public function itHasACssFileAt($path)
     {
-        if (!file_exists($this->source . '/' . $path)) {
+        if (!file_exists($this->source . '/' . $path))
+        {
             throw new \Exception('Missing CSS file');
         }
         $this->cssFile = $path;
@@ -65,11 +94,13 @@ class FeatureContext extends BehatContext
     public function iGenerateMySiteIn($destination)
     {
         $destination = __DIR__ . '/../' . $destination;
-        if (!file_exists($destination)) {
+        if (!file_exists($destination))
+        {
             mkdir($destination);
         }
         exec(__DIR__ . '/../../gumdrop.php ' . $this->source . ' ' . $destination, $output, $return_var);
-        if ($return_var != 0) {
+        if ($return_var != 0)
+        {
             throw new \Exception('Something went wrong during site generation');
         }
         $this->destination = $destination;
@@ -80,7 +111,8 @@ class FeatureContext extends BehatContext
      */
     public function iShouldHaveTheCssFileInTheDestinationFolder()
     {
-        if (!file_exists($this->destination . '/' . $this->cssFile)) {
+        if (!file_exists($this->destination . '/' . $this->cssFile))
+        {
             throw new \Exception('The CSS file was not copied');
         }
     }
@@ -90,7 +122,8 @@ class FeatureContext extends BehatContext
      */
     public function thenDeleteTheDestinationFolder()
     {
-        if (file_exists($this->destination)) {
+        if (file_exists($this->destination))
+        {
             exec('rm -rf ' . $this->destination);
         }
     }
@@ -100,7 +133,8 @@ class FeatureContext extends BehatContext
      */
     public function itHasAMarkdownFileAt($path)
     {
-        if (!file_exists($this->source . '/' . $path)) {
+        if (!file_exists($this->source . '/' . $path))
+        {
             throw new \Exception('Missing Markdown file');
         }
         $this->markdownFile = $path;
@@ -111,7 +145,8 @@ class FeatureContext extends BehatContext
      */
     public function iShouldNotHaveTheMarkdownFileInTheDestinationFolder()
     {
-        if (file_exists($this->destination . '/' . $this->markdownFile)) {
+        if (file_exists($this->destination . '/' . $this->markdownFile))
+        {
             throw new \Exception('The Markdown file was copied');
         }
     }
@@ -121,7 +156,8 @@ class FeatureContext extends BehatContext
      */
     public function itHasALayoutFolder()
     {
-        if (!file_exists($this->source . '/_layout')) {
+        if (!file_exists($this->source . '/_layout'))
+        {
             throw new \Exception('Missing Layout folder');
         }
     }
@@ -131,7 +167,8 @@ class FeatureContext extends BehatContext
      */
     public function iShouldNotHaveTheLayoutFolderInTheDestinationFolder()
     {
-        if (file_exists($this->destination . '/_layout')) {
+        if (file_exists($this->destination . '/_layout'))
+        {
             throw new \Exception('The Layout file was copied');
         }
     }

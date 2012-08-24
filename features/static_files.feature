@@ -1,6 +1,6 @@
 Feature: static files
   In order to create nice-looking websites
-  As a Gumdrop
+  As a Gumdrop user
   I need static files to be copied over the destination folder
 
   Scenario: My CSS file is moved
