@@ -209,4 +209,43 @@ class FileHandler
             rmdir($path);
         }
     }
+
+    public function getLatestFileDate($location = '')
+    {
+        if ($location == '')
+        {
+            $location = $this->app->getSourceLocation();
+        }
+        $files = array();
+        $items = glob($location . '/*');
+        if (is_array($items) && count($items) > 0)
+        {
+            foreach ($items as $item)
+            {
+                if (is_dir($item))
+                {
+                    $files = array_merge($files, $this->getLatestFileDate($item));
+                }
+                else
+                {
+                    $files[] = $item;
+                }
+            }
+        }
+
+        if ($location == $this->app->getSourceLocation())
+        {
+            $date = 0;
+            foreach ($files as $file)
+            {
+                $file_date = filemtime($file);
+                if ($file_date > $date)
+                {
+                    $date = $file_date;
+                }
+            }
+            return $date;
+        }
+        return $files;
+    }
 }
