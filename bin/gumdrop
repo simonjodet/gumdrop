@@ -24,13 +24,17 @@ while getopts ":s:t:rw" opt; do
       ;;
   esac
 done
-if [ $RELOAD ] ; then
-    ./../gumdrop.php $SOURCE_FOLDER $TARGET_FOLDER -r &
-    ACKBAR=$!
+if [ $RELOAD != FALSE ] ; then
+    if [ $START_WEBSERVER != FALSE ] ; then
+        ./../gumdrop.php $SOURCE_FOLDER $TARGET_FOLDER -r &
+        ACKBAR=$!
+    else
+        ./../gumdrop.php $SOURCE_FOLDER $TARGET_FOLDER -r
+    fi
 else
     ./../gumdrop.php $SOURCE_FOLDER $TARGET_FOLDER
 fi
-if [ $START_WEBSERVER ] ; then
+if [ $START_WEBSERVER != FALSE ] ; then
     php -S localhost:8000 -t $TARGET_FOLDER
     if [ $ACKBAR != FALSE ]; then
         trap '' 2
