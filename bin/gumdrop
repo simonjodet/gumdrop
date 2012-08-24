@@ -1,0 +1,39 @@
+#!/bin/bash
+START_WEBSERVER=FALSE
+SOURCE_FOLDER=FALSE
+TARGET_FOLDER=FALSE
+RELOAD=FALSE
+ACKBAR=FALSE
+
+while getopts ":s:t:rw" opt; do
+  case $opt in
+    s)
+      SOURCE_FOLDER=$OPTARG
+      ;;
+    t)
+      TARGET_FOLDER=$OPTARG
+      ;;
+    r)
+      RELOAD=TRUE
+      ;;
+    w)
+      START_WEBSERVER=TRUE
+      ;;
+    \?)
+      echo "Invalid option: -$OPTARG" >&2
+      ;;
+  esac
+done
+if [ $RELOAD ] ; then
+    ./../gumdrop.php $SOURCE_FOLDER $TARGET_FOLDER -r &
+    ACKBAR=$!
+else
+    ./../gumdrop.php $SOURCE_FOLDER $TARGET_FOLDER
+fi
+if [ $START_WEBSERVER ] ; then
+    php -S localhost:8000 -t $TARGET_FOLDER
+    if [ $ACKBAR != FALSE ]; then
+        trap '' 2
+        kill $ACKBAR #http://en.wikipedia.org/wiki/Admiral_Ackbar#.22It.27s_a_trap.21.22
+    fi
+fi
