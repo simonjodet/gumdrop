@@ -27,7 +27,7 @@ $Application->setEngine(new \Gumdrop\Engine($Application));
 
 $Application->getEngine()->run();
 echo 'Gumdrop converted your MarkDown files to ' . $destination . PHP_EOL;
-if ($_SERVER['argv'][3] == '-r')
+if (isset($_SERVER['argv'][3]) && $_SERVER['argv'][3] == '-r')
 {
     $last_date = $Application->getFileHandler()->getLatestFileDate();
     while (true)

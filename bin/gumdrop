@@ -8,10 +8,10 @@ ACKBAR=FALSE
 while getopts ":s:t:rw" opt; do
   case $opt in
     s)
-      SOURCE_FOLDER=$OPTARG
+      SOURCE_FOLDER=`cd "$OPTARG"; pwd`
       ;;
     t)
-      TARGET_FOLDER=$OPTARG
+      TARGET_FOLDER=`cd "$OPTARG"; pwd`
       ;;
     r)
       RELOAD=TRUE
@@ -24,15 +24,16 @@ while getopts ":s:t:rw" opt; do
       ;;
   esac
 done
+GUMDROP=$(cd $(dirname "$0"); pwd)"/../gumdrop.php"
 if [ $RELOAD != FALSE ] ; then
     if [ $START_WEBSERVER != FALSE ] ; then
-        ./../gumdrop.php $SOURCE_FOLDER $TARGET_FOLDER -r &
+        $GUMDROP $SOURCE_FOLDER $TARGET_FOLDER -r &
         ACKBAR=$!
     else
-        ./../gumdrop.php $SOURCE_FOLDER $TARGET_FOLDER -r
+        $GUMDROP $SOURCE_FOLDER $TARGET_FOLDER -r
     fi
 else
-    ./../gumdrop.php $SOURCE_FOLDER $TARGET_FOLDER
+    $GUMDROP $SOURCE_FOLDER $TARGET_FOLDER
 fi
 if [ $START_WEBSERVER != FALSE ] ; then
     php -S localhost:8000 -t $TARGET_FOLDER
