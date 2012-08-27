@@ -325,4 +325,72 @@ class FileHandler extends \Gumdrop\Tests\TestCase
             $FileHandler->getLatestFileDate()
         );
     }
+
+    public function testGetSourceFolderHashUpdatesTheReturnedHashWhenFileIsModified()
+    {
+        $FSTestHelper = new \FSTestHelper\FSTestHelper();
+        $FSTestHelper->createTree(array(
+            'folders' => array(),
+            'files' => array(
+                array(
+                    'path' => 'file1',
+                    'content' => 'content'
+                ),
+                array(
+                    'path' => 'folder/file2',
+                    'content' => 'content'
+                ),
+                array(
+                    'path' => 'file3',
+                    'content' => 'content'
+                )
+            )
+        ));
+        $app = $this->getApp();
+        $app->setSourceLocation($FSTestHelper->getTemporaryPath());
+
+        $FileHandler = new \Gumdrop\FileHandler($app);
+        $initialHash = $FileHandler->getSourceFolderHash();
+
+        //Testing file edit
+        file_put_contents($FSTestHelper->getTemporaryPath() . '/file1', 'something else');
+        $updatedHash = $FileHandler->getSourceFolderHash();
+        $this->assertNotEquals(
+            $initialHash,
+            $updatedHash
+        );
+
+        // Testing file deletion
+        $initialHash = $updatedHash;
+
+        unlink($FSTestHelper->getTemporaryPath() . '/file1');
+        $updatedHash = $FileHandler->getSourceFolderHash();
+
+        $this->assertNotEquals(
+            $initialHash,
+            $updatedHash
+        );
+
+        // Testing file creation
+        $initialHash = $updatedHash;
+
+        touch($FSTestHelper->getTemporaryPath() . '/file1');
+        $updatedHash = $FileHandler->getSourceFolderHash();
+
+        $this->assertNotEquals(
+            $initialHash,
+            $updatedHash
+        );
+
+        // Testing file rename
+        $initialHash = $updatedHash;
+
+        rename($FSTestHelper->getTemporaryPath() . '/file3', $FSTestHelper->getTemporaryPath() . '/file4');
+        $updatedHash = $FileHandler->getSourceFolderHash();
+
+        $this->assertNotEquals(
+            $initialHash,
+            $updatedHash
+        );
+    }
 }

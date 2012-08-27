@@ -29,15 +29,15 @@ $Application->getEngine()->run();
 echo 'Gumdrop converted your MarkDown files to ' . $destination . PHP_EOL;
 if (isset($_SERVER['argv'][3]) && $_SERVER['argv'][3] == '-r')
 {
-    $last_date = $Application->getFileHandler()->getLatestFileDate();
+    $last_checksum = $Application->getFileHandler()->getSourceFolderHash();
     while (true)
     {
-        $date = $Application->getFileHandler()->getLatestFileDate();
-        if ($last_date < $date)
+        $checksum = $Application->getFileHandler()->getLatestFileDate();
+        if ($last_checksum != $checksum)
         {
             $Application->getEngine()->run();
             echo 'Gumdrop converted your MarkDown files to ' . $destination . PHP_EOL;
-            $last_date = $date;
+            $last_checksum = $checksum;
         }
         sleep(2);
     }

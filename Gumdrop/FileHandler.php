@@ -248,4 +248,43 @@ class FileHandler
         }
         return $files;
     }
+
+    public function getSourceFolderHash($location = '')
+    {
+        if ($location == '')
+        {
+            $location = $this->app->getSourceLocation();
+        }
+        $files = array();
+        $items = glob($location . '/*');
+        if (is_array($items) && count($items) > 0)
+        {
+            foreach ($items as $item)
+            {
+                if (is_dir($item))
+                {
+                    $files = array_merge($files, $this->getLatestFileDate($item));
+                }
+                else
+                {
+                    $files[] = $item;
+                }
+            }
+        }
+
+        if ($location == $this->app->getSourceLocation())
+        {
+            $content = '';
+            sort($files);
+            foreach ($files as $file)
+            {
+                $content .= $file . file_get_contents($file);
+            }
+            //Using crc32 because it's fast and it's a non-cryptographic use case
+            $checksum = crc32($content);
+            $checksum = sprintf("%u", $checksum);
+            return $checksum;
+        }
+        return $files;
+    }
 }
