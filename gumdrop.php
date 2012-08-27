@@ -25,21 +25,13 @@ $Application->setFileHandler(new \Gumdrop\FileHandler($Application));
 $Application->setTwigFileHandler(new \Gumdrop\TwigFileHandler($Application));
 $Application->setEngine(new \Gumdrop\Engine($Application));
 
-$Application->getEngine()->run();
-echo 'Gumdrop converted your MarkDown files to ' . $destination . PHP_EOL;
-if (isset($_SERVER['argv'][3]) && $_SERVER['argv'][3] == '-r')
+if (isset($_SERVER['argv'][3]) && $_SERVER['argv'][3] == '-c')
 {
-    $last_checksum = $Application->getFileHandler()->getSourceFolderHash();
-    while (true)
-    {
-        $checksum = $Application->getFileHandler()->getLatestFileDate();
-        if ($last_checksum != $checksum)
-        {
-            $Application->getEngine()->run();
-            echo 'Gumdrop converted your MarkDown files to ' . $destination . PHP_EOL;
-            $last_checksum = $checksum;
-        }
-        sleep(2);
-    }
+    echo $Application->getFileHandler()->getSourceFolderHash() . PHP_EOL;
+}
+else
+{
+    $Application->getEngine()->run();
+    echo 'Gumdrop converted your MarkDown files to ' . $destination . PHP_EOL;
 }
 exit(0);
