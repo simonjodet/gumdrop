@@ -49,6 +49,19 @@ class FileHandler
             }
         }
         $files = array_merge($files, glob($location . '/*.{md,markdown}', GLOB_BRACE));
+        $conf = $this->app->getSiteConfiguration();
+        if (isset($conf['blacklist']) && is_array($conf['blacklist']) && count($conf['blacklist']) > 0)
+        {
+            foreach ($files as $key => $file)
+            {
+                $file = ltrim(str_replace(realpath($this->app->getSourceLocation()), '', $file), DIRECTORY_SEPARATOR);
+                if (in_array($file, $conf['blacklist']))
+                {
+                    unset($files[$key]);
+                }
+            }
+        }
+
         array_walk($files, function(&$file)
         {
             $file = realpath($file);

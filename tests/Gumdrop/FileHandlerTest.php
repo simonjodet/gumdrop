@@ -30,12 +30,51 @@ class FileHandler extends \Gumdrop\Tests\TestCase
         ));
 
         $app = $this->getApp();
+        $app->setSiteConfiguration(array());
+
         $app->setSourceLocation($FSTestHelper->getTemporaryPath() . '/');
         $FileHandler = new \Gumdrop\FileHandler($app);
         $list = $FileHandler->listMarkdownFiles();
         $expected = array(
             realpath($FSTestHelper->getTemporaryPath() . '/folder/file1.md'),
             realpath($FSTestHelper->getTemporaryPath() . '/file2.markdown')
+        );
+
+        $this->assertEquals($list, $expected);
+    }
+
+    public function testListMarkdownFilesIgnoresBlackListedFiles()
+    {
+        $FSTestHelper = new \FSTestHelper\FSTestHelper();
+        $FSTestHelper->createTree(array(
+            'folders' => array(),
+            'files' => array(
+                array(
+                    'path' => 'folder/file1.md',
+                    'content' => ''
+                ),
+                array(
+                    'path' => 'file2.markdown',
+                    'content' => ''
+                ),
+                array(
+                    'path' => 'file3.txt',
+                    'content' => ''
+                )
+            )
+        ));
+
+        $app = $this->getApp();
+        $app->setSiteConfiguration(array(
+            'blacklist' => array('file2.markdown')
+        ));
+        $app->setSourceLocation($FSTestHelper->getTemporaryPath() . '/');
+        $FileHandler = new \Gumdrop\FileHandler($app);
+        $list = $FileHandler->listMarkdownFiles();
+
+
+        $expected = array(
+            realpath($FSTestHelper->getTemporaryPath() . '/folder/file1.md')
         );
 
         $this->assertEquals($list, $expected);
