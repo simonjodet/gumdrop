@@ -21,7 +21,13 @@ class FeatureContext extends BehatContext
 {
     private $cssFile;
     private $markdownFile;
+    /**
+     * @var \FSTestHelper\FSTestHelper
+     */
     private $source;
+    /**
+     * @var \FSTestHelper\FSTestHelper
+     */
     private $destination;
 
     /**
@@ -41,39 +47,8 @@ class FeatureContext extends BehatContext
     public function iHaveMyTestSite($source)
     {
         $FSTestHelper = new \FSTestHelper\FSTestHelper();
-        $FSTestHelper->createTree(array(
-            'folders' => array(),
-            'files' => array(
-                array(
-                    'path' => 'testFile2.md',
-                    'content' => <<<'EOD'
-***
-{
-    "layout":"page2.twig",
-    "title":"Page 2 Title"
-}
-***
-
-{{ page.conf.layout }}
-
-{% for page in pages %}
-  {{ page.conf.layout }}-{{ page.conf.title }}
-{% endfor %}
-
-# {{ page.conf.title }}
-EOD
-                ),
-                array(
-                    'path' => 'style/default.css',
-                    'content' => ''
-                ),
-                array(
-                    'path' => 'folder/testFile.markdown',
-                    'content' => ''
-                )
-            )
-        ));
-        $this->source = $source;
+        $FSTestHelper->cloneTree(__DIR__ . '/../test_site');
+        $this->source = $FSTestHelper;
     }
 
     /**
@@ -81,7 +56,7 @@ EOD
      */
     public function itHasACssFileAt($path)
     {
-        if (!file_exists($this->source . '/' . $path))
+        if (!file_exists($this->source->getTemporaryPath() . '/' . $path))
         {
             throw new \Exception('Missing CSS file');
         }
@@ -89,21 +64,17 @@ EOD
     }
 
     /**
-     * @When /^I generate my site in "([^"]*)"$/
+     * @When /^I generate my site$/
      */
-    public function iGenerateMySiteIn($destination)
+    public function iGenerateMySite()
     {
-        $destination = __DIR__ . '/../' . $destination;
-        if (!file_exists($destination))
-        {
-            mkdir($destination);
-        }
-        exec(__DIR__ . '/../../gumdrop.php ' . $this->source . ' ' . $destination, $output, $return_var);
+        $this->destination = new \FSTestHelper\FSTestHelper();
+        exec(__DIR__ . '/../../gumdrop.php ' . $this->source->getTemporaryPath() . ' ' . $this->destination->getTemporaryPath(), $output, $return_var);
         if ($return_var != 0)
         {
+            print_r($output);
             throw new \Exception('Something went wrong during site generation');
         }
-        $this->destination = $destination;
     }
 
     /**
@@ -111,20 +82,9 @@ EOD
      */
     public function iShouldHaveTheCssFileInTheDestinationFolder()
     {
-        if (!file_exists($this->destination . '/' . $this->cssFile))
+        if (!file_exists($this->destination->getTemporaryPath() . '/' . $this->cssFile))
         {
             throw new \Exception('The CSS file was not copied');
-        }
-    }
-
-    /**
-     * @Given /^Then delete the destination folder$/
-     */
-    public function thenDeleteTheDestinationFolder()
-    {
-        if (file_exists($this->destination))
-        {
-            exec('rm -rf ' . $this->destination);
         }
     }
 
@@ -133,7 +93,7 @@ EOD
      */
     public function itHasAMarkdownFileAt($path)
     {
-        if (!file_exists($this->source . '/' . $path))
+        if (!file_exists($this->source->getTemporaryPath() . '/' . $path))
         {
             throw new \Exception('Missing Markdown file');
         }
@@ -145,7 +105,7 @@ EOD
      */
     public function iShouldNotHaveTheMarkdownFileInTheDestinationFolder()
     {
-        if (file_exists($this->destination . '/' . $this->markdownFile))
+        if (file_exists($this->destination->getTemporaryPath() . '/' . $this->markdownFile))
         {
             throw new \Exception('The Markdown file was copied');
         }
@@ -156,7 +116,7 @@ EOD
      */
     public function itHasALayoutFolder()
     {
-        if (!file_exists($this->source . '/_layout'))
+        if (!file_exists($this->source->getTemporaryPath() . '/_layout'))
         {
             throw new \Exception('Missing Layout folder');
         }
@@ -167,7 +127,7 @@ EOD
      */
     public function iShouldNotHaveTheLayoutFolderInTheDestinationFolder()
     {
-        if (file_exists($this->destination . '/_layout'))
+        if (file_exists($this->destination->getTemporaryPath() . '/_layout'))
         {
             throw new \Exception('The Layout file was copied');
         }
