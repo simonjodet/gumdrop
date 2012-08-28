@@ -23,7 +23,7 @@ class FileHandler extends \Gumdrop\Tests\TestCase
                     'content' => ''
                 ),
                 array(
-                    'path' => 'file3.txt',
+                    'path' => 'file3',
                     'content' => ''
                 )
             )
@@ -36,11 +36,11 @@ class FileHandler extends \Gumdrop\Tests\TestCase
         $FileHandler = new \Gumdrop\FileHandler($app);
         $list = $FileHandler->listMarkdownFiles();
         $expected = array(
-            realpath($FSTestHelper->getTemporaryPath() . '/folder/file1.md'),
-            realpath($FSTestHelper->getTemporaryPath() . '/file2.markdown')
+            realpath($FSTestHelper->getTemporaryPath() . '/file2.markdown'),
+            realpath($FSTestHelper->getTemporaryPath() . '/folder/file1.md')
         );
 
-        $this->assertEquals($list, $expected);
+        $this->assertEquals($expected, $list);
     }
 
     public function testListMarkdownFilesIgnoresBlackListedFiles()

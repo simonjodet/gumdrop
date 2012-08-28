@@ -26,47 +26,65 @@ class FileHandler
         $this->app = $app;
     }
 
-    /**
-     * Builds a list of Markdown files recursively
-     *
-     * @param $location
-     *
-     * @return array
-     */
-    public function listMarkdownFiles($location = '')
+    private function listFiles($filter_callback, $location = '')
     {
         if ($location == '')
         {
             $location = $this->app->getSourceLocation();
         }
         $files = array();
-        $directories = glob($location . '/*', GLOB_ONLYDIR);
-        if (is_array($directories) && count($directories) > 0)
+        $items = glob($location . '/*');
+        if (is_array($items) && count($items) > 0)
         {
-            foreach ($directories as $directory)
+            foreach ($items as $item)
             {
-                $files = array_merge($files, $this->listMarkdownFiles($directory));
-            }
-        }
-        $files = array_merge($files, glob($location . '/*.{md,markdown}', GLOB_BRACE));
-        $conf = $this->app->getSiteConfiguration();
-        if (isset($conf['blacklist']) && is_array($conf['blacklist']) && count($conf['blacklist']) > 0)
-        {
-            foreach ($files as $key => $file)
-            {
-                $file = ltrim(str_replace(realpath($this->app->getSourceLocation()), '', $file), DIRECTORY_SEPARATOR);
-                if (in_array($file, $conf['blacklist']))
+                if (is_dir($item))
                 {
-                    unset($files[$key]);
+                    $files = array_merge($files, $this->listFiles($filter_callback, $item));
+                }
+                else
+                {
+                    $filter_callback_result = $filter_callback($item);
+                    if ($filter_callback_result !== false)
+                    {
+                        $files[] = $filter_callback_result;
+                    }
                 }
             }
         }
 
-        array_walk($files, function(&$file)
-        {
-            $file = realpath($file);
-        });
         return $files;
+    }
+
+    /**
+     * Builds a list of Markdown files recursively
+     *
+     * @return array
+     */
+    public function listMarkdownFiles()
+    {
+        $app = $this->app;
+        $filter_callback = function($file) use($app)
+        {
+            $conf = $app->getSiteConfiguration();
+            $blacklist = array();
+            if (isset($conf['blacklist']) && is_array($conf['blacklist']))
+            {
+                $blacklist = $conf['blacklist'];
+            }
+            $relative_path = ltrim(str_replace(realpath($app->getSourceLocation()), '', $file), DIRECTORY_SEPARATOR);
+            if (in_array($relative_path, $blacklist))
+            {
+                return false;
+            }
+            $file_info = pathinfo($file);
+            if (isset($file_info['extension']) && ($file_info['extension'] == 'md' || $file_info['extension'] == 'markdown'))
+            {
+                return realpath($file);
+            }
+            return false;
+        };
+        return $this->listFiles($filter_callback);
     }
 
     /**
@@ -102,75 +120,22 @@ class FileHandler
     /**
      * Returns the recursive list of static files that need to be copied to the destination
      *
-     * @param string $location
-     *
      * @return array
      */
-    public function listStaticFiles($location = '')
+    public function listStaticFiles()
     {
-        if ($location == '')
+        $app = $this->app;
+        $filter_callback = function($item) use($app)
         {
-            $location = $this->app->getSourceLocation();
-        }
-        $files = array();
-        $items = glob($location . '/*');
-        if (is_array($items) && count($items) > 0)
-        {
-            foreach ($items as $item)
+            $item = ltrim(str_replace(realpath($app->getSourceLocation()), '', realpath($item)), DIRECTORY_SEPARATOR);
+            $pathinfo = pathinfo($item);
+            if ($item != 'conf.json' && strpos($item, '_layout') === false && (!isset($pathinfo['extension']) || ($pathinfo['extension'] != 'md' && $pathinfo['extension'] != 'markdown' && $pathinfo['extension'] != 'twig')))
             {
-                if (is_dir($item))
-                {
-                    $files = array_merge($files, $this->listStaticFiles($item));
-                }
-                else
-                {
-                    $item = ltrim(str_replace(realpath($this->app->getSourceLocation()), '', realpath($item)), DIRECTORY_SEPARATOR);
-                    $pathinfo = pathinfo($item);
-                    if ($item != 'conf.json' && strpos($item, '_layout') === false && (!isset($pathinfo['extension']) || ($pathinfo['extension'] != 'md' && $pathinfo['extension'] != 'markdown' && $pathinfo['extension'] != 'twig')))
-                    {
-                        $files[] = $item;
-                    }
-                }
+                return $item;
             }
-        }
-        return $files;
-    }
-
-    /**
-     * Returns the list of Twig files
-     *
-     * @param string $location Used for recursive purposes
-     *
-     * @return array The list of Twig files
-     */
-    public function listTwigFiles($location = '')
-    {
-        if ($location == '')
-        {
-            $location = $this->app->getSourceLocation();
-        }
-        $files = array();
-        $items = glob($location . '/*');
-        if (is_array($items) && count($items) > 0)
-        {
-            foreach ($items as $item)
-            {
-                if (is_dir($item))
-                {
-                    $files = array_merge($files, $this->listTwigFiles($item));
-                }
-                else
-                {
-                    $item = ltrim(str_replace(realpath($this->app->getSourceLocation()), '', realpath($item)), DIRECTORY_SEPARATOR);
-                    $pathinfo = pathinfo($item);
-                    if (strpos($item, '_layout') === false && (isset($pathinfo['extension']) && $pathinfo['extension'] == 'twig'))
-                    {
-                        $files[] = $item;
-                    }
-                }
-            }
-        }
-        return $files;
+            return false;
+        };
+        return $this->listFiles($filter_callback);
     }
 
     /**
@@ -246,45 +211,6 @@ class FileHandler
         }
     }
 
-    public function getLatestFileDate($location = '')
-    {
-        if ($location == '')
-        {
-            $location = $this->app->getSourceLocation();
-        }
-        $files = array();
-        $items = glob($location . '/*');
-        if (is_array($items) && count($items) > 0)
-        {
-            foreach ($items as $item)
-            {
-                if (is_dir($item))
-                {
-                    $files = array_merge($files, $this->getLatestFileDate($item));
-                }
-                else
-                {
-                    $files[] = $item;
-                }
-            }
-        }
-
-        if ($location == $this->app->getSourceLocation())
-        {
-            $date = 0;
-            foreach ($files as $file)
-            {
-                $file_date = filemtime($file);
-                if ($file_date > $date)
-                {
-                    $date = $file_date;
-                }
-            }
-            return $date;
-        }
-        return $files;
-    }
-
     public function getSourceFolderHash($location = '')
     {
         if ($location == '')
@@ -299,7 +225,7 @@ class FileHandler
             {
                 if (is_dir($item))
                 {
-                    $files = array_merge($files, $this->getLatestFileDate($item));
+                    $files = array_merge($files, $this->getSourceFolderHash($item));
                 }
                 else
                 {
