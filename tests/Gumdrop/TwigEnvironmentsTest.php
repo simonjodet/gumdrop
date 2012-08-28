@@ -3,7 +3,7 @@ namespace Gumdrop\Tests;
 
 require_once __DIR__ . '/../TestCase.php';
 require_once __DIR__ . '/../../Gumdrop/TwigEnvironments.php';
-require_once __DIR__ . '/../../vendor/twig/twig/lib/Twig/Autoloader.php';
+require_once __DIR__ . '/../../vendor/simonjodet/twig/lib/Twig/Autoloader.php';
 
 class TwigEnvironments extends \Gumdrop\Tests\TestCase
 {

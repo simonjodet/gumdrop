@@ -8,9 +8,9 @@ require_once __DIR__ . '/../../Gumdrop/SiteConfiguration.php';
 require_once __DIR__ . '/../../Gumdrop/PageConfiguration.php';
 require_once __DIR__ . '/../../Gumdrop/PageCollection.php';
 require_once __DIR__ . '/../../Gumdrop/TwigEnvironments.php';
-require_once __DIR__ . '/../../vendor/twig/twig/lib/Twig/Autoloader.php';
-require_once __DIR__ . '/../../vendor/dflydev/markdown/src/dflydev/markdown/IMarkdownParser.php';
-require_once __DIR__ . '/../../vendor/dflydev/markdown/src/dflydev/markdown/MarkdownParser.php';
+require_once __DIR__ . '/../../vendor/simonjodet/twig/lib/Twig/Autoloader.php';
+require_once __DIR__ . '/../../vendor/simonjodet/markdown/src/dflydev/markdown/IMarkdownParser.php';
+require_once __DIR__ . '/../../vendor/simonjodet/markdown/src/dflydev/markdown/MarkdownParser.php';
 
 class Engine extends \Gumdrop\Tests\TestCase
 {
