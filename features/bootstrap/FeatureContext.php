@@ -47,7 +47,7 @@ class FeatureContext extends BehatContext
     public function iHaveMyTestSite($source)
     {
         $FSTestHelper = new \FSTestHelper\FSTestHelper();
-        $FSTestHelper->cloneTree(__DIR__ . '/../test_site');
+        $FSTestHelper->cloneTree(__DIR__ . '/../' . $source);
         $this->source = $FSTestHelper;
     }
 
@@ -130,6 +130,22 @@ class FeatureContext extends BehatContext
         if (file_exists($this->destination->getTemporaryPath() . '/_layout'))
         {
             throw new \Exception('The Layout file was copied');
+        }
+    }
+
+    /**
+     * @Then /^I should have the HTML version created$/
+     */
+    public function iShouldHaveTheHtmlVersionCreated()
+    {
+        $path_info = pathinfo($this->markdownFile);
+        $result = file_get_contents($this->destination . '/' . $path_info['filename'] . '.htm');
+        $expected = file_get_contents(__DIR__ . '/../expected_rendering/testFile2.htm');
+        if ($result != $expected)
+        {
+            echo '|' . $result . '|' . PHP_EOL;
+            echo '|' . $expected . '|' . PHP_EOL;
+            throw new \Exception('The ' . $this->markdownFile . ' file was not rendered correctly');
         }
     }
 }

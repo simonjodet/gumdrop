@@ -4,8 +4,7 @@ Feature: Markdown files
   I want Markdown files to be converted to HTML
 
   Scenario: My Markdown file is converted
-#    Given I have my test site "test_site"
-#    And It has a CSS file at "style/default.css"
-#    When I generate my site in "destination_site"
-#    Then I should have the CSS file in the destination folder
-#    And Then delete the destination folder
+    Given I have my test site "test_site"
+    And It has a Markdown file at "testFile2.md"
+    When I generate my site
+    Then I should have the HTML version created

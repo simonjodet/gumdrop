@@ -5,10 +5,6 @@
 }
 ***
 
-{{ page.conf.layout }}
-
-{% for page in pages %}
-  {{ page.conf.layout }}-{{ page.conf.title }}
-{% endfor %}
+{{ page.layout }}
 
 # {{ page.conf.title }}
