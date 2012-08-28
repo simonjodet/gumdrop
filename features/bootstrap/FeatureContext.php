@@ -143,9 +143,36 @@ class FeatureContext extends BehatContext
         $expected = file_get_contents(__DIR__ . '/../expected_rendering/testFile2.htm');
         if ($result != $expected)
         {
-            echo '|' . $result . '|' . PHP_EOL;
-            echo '|' . $expected . '|' . PHP_EOL;
+            echo 'Actual: |' . $result . '|' . PHP_EOL;
+            echo 'Expected: |' . $expected . '|' . PHP_EOL;
             throw new \Exception('The ' . $this->markdownFile . ' file was not rendered correctly');
+        }
+    }
+
+    /**
+     * @Given /^It does not have a "([^"]*)" folder$/
+     */
+    public function itDoesNotHaveAFolder($folder)
+    {
+        $path = $this->source . '/' . $folder;
+        if (file_exists($path) && is_dir($path))
+        {
+            $this->source->deleteFolder($folder);
+        }
+    }
+
+    /**
+     * @Then /^the site should be rendered correctly$/
+     */
+    public function theSiteShouldBeRenderedCorrectly()
+    {
+        $result = file_get_contents($this->destination . '/testFile2.htm');
+        $expected = file_get_contents(__DIR__ . '/../expected_rendering/testFile2withoutLayout.htm');
+        if ($result != $expected)
+        {
+            echo 'Actual: |' . $result . '|' . PHP_EOL;
+            echo 'Expected: |' . $expected . '|' . PHP_EOL;
+            throw new \Exception('The testFile2.md file was not rendered correctly');
         }
     }
 }
