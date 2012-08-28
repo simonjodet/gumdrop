@@ -333,38 +333,6 @@ class FileHandler extends \Gumdrop\Tests\TestCase
         $this->assertEquals(array('.', '..'), scandir($location));
     }
 
-    public function testGetLatestFileDateReturnsTheDateOfTheYoungestFile()
-    {
-        $FSTestHelper = new \FSTestHelper\FSTestHelper();
-        $FSTestHelper->createTree(array(
-            'folders' => array(),
-            'files' => array(
-                array(
-                    'path' => 'file1',
-                    'content' => ''
-                ),
-                array(
-                    'path' => 'folder/file2',
-                    'content' => ''
-                ),
-                array(
-                    'path' => 'file3',
-                    'content' => ''
-                )
-            )
-        ));
-        file_put_contents($FSTestHelper->getTemporaryPath() . '/file1', 'something');
-        $app = $this->getApp();
-        $app->setSourceLocation($FSTestHelper->getTemporaryPath());
-
-        $FileHandler = new \Gumdrop\FileHandler($app);
-
-        $this->assertEquals(
-            filemtime($FSTestHelper->getTemporaryPath() . '/file1'),
-            $FileHandler->getLatestFileDate()
-        );
-    }
-
     public function testGetSourceFolderHashUpdatesTheReturnedHashWhenFileIsModified()
     {
         $FSTestHelper = new \FSTestHelper\FSTestHelper();

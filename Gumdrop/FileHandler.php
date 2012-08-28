@@ -195,6 +195,29 @@ class FileHandler
     }
 
     /**
+     * Returns the list of Twig files
+     *
+     * @param string $location Used for recursive purposes
+     *
+     * @return array The list of Twig files
+     */
+    public function listTwigFiles($location = '')
+    {
+        $app = $this->app;
+        $filter_callback = function($item) use($app)
+        {
+            $item = ltrim(str_replace(realpath($app->getSourceLocation()), '', realpath($item)), DIRECTORY_SEPARATOR);
+            $pathinfo = pathinfo($item);
+            if (strpos($item, '_layout') === false && (isset($pathinfo['extension']) && $pathinfo['extension'] == 'twig'))
+            {
+                return $item;
+            }
+            return false;
+        };
+        return $this->listFiles($filter_callback);
+    }
+
+    /**
      * Clears the destination location
      *
      * @param string $path Used for recursion, should not be set when using this method
