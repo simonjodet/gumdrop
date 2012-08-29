@@ -38,16 +38,20 @@ class FileHandler
         {
             foreach ($items as $item)
             {
-                if (is_dir($item))
+                $relative_path = ltrim(str_replace(realpath($location), '', realpath($item)), DIRECTORY_SEPARATOR);
+                if (strpos($relative_path, '_') !== 0)
                 {
-                    $files = array_merge($files, $this->listFiles($filter_callback, $item));
-                }
-                else
-                {
-                    $filter_callback_result = $filter_callback($item);
-                    if ($filter_callback_result !== false)
+                    if (is_dir($item))
                     {
-                        $files[] = $filter_callback_result;
+                        $files = array_merge($files, $this->listFiles($filter_callback, $item));
+                    }
+                    else
+                    {
+                        $filter_callback_result = $filter_callback($item);
+                        if ($filter_callback_result !== false)
+                        {
+                            $files[] = $filter_callback_result;
+                        }
                     }
                 }
             }
