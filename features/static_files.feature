@@ -20,3 +20,9 @@ Feature: static files
     And It has a layout folder
     When I generate my site
     Then I should not have the Layout folder in the destination folder
+
+#  Scenario: Folders starting with "_" are ignored
+#    Given I have my test site "test_site"
+#    And It has a static folder starting with "_"
+#    When I generate my site
+#    Then I should not have the folder starting with "_" in the destination folder
