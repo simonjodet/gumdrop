@@ -1,0 +1,1672 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project version="2.0.0a8" title="Gumdrop">
+  <file path="Application.php" hash="89e04894968c9793388b34ffc73061ed" package="Gumdrop">
+    <docblock line="2">
+      <description><![CDATA[Gumdrop dependency injector]]></description>
+      <long-description><![CDATA[]]></long-description>
+      <tag line="2" name="package" description="Gumdrop"/>
+    </docblock>
+    <class final="false" abstract="false" namespace="Gumdrop" line="12" package="Default">
+      <extends/>
+      <name>Application</name>
+      <full_name>\Gumdrop\Application</full_name>
+      <docblock line="9">
+        <description><![CDATA[Gumdrop application]]></description>
+        <long-description><![CDATA[]]></long-description>
+      </docblock>
+      <property final="false" static="false" visibility="private" line="18" namespace="Gumdrop" package="Default">
+        <name>$MarkdownParser</name>
+        <default><![CDATA[]]></default>
+        <docblock line="14">
+          <description><![CDATA[Application's Markdown parser]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="14" name="var" description="" type="\dflydev\markdown\MarkdownParser">
+            <type by_reference="false">\dflydev\markdown\MarkdownParser</type>
+          </tag>
+        </docblock>
+      </property>
+      <property final="false" static="false" visibility="private" line="24" namespace="Gumdrop" package="Default">
+        <name>$FileHandler</name>
+        <default><![CDATA[]]></default>
+        <docblock line="20">
+          <description><![CDATA[Application's file handler]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="20" name="var" description="" type="\Gumdrop\FileHandler">
+            <type by_reference="false">\Gumdrop\FileHandler</type>
+          </tag>
+        </docblock>
+      </property>
+      <property final="false" static="false" visibility="private" line="30" namespace="Gumdrop" package="Default">
+        <name>$Engine</name>
+        <default><![CDATA[]]></default>
+        <docblock line="26">
+          <description><![CDATA[Application's engine]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="26" name="var" description="" type="\Gumdrop\Engine">
+            <type by_reference="false">\Gumdrop\Engine</type>
+          </tag>
+        </docblock>
+      </property>
+      <property final="false" static="false" visibility="private" line="36" namespace="Gumdrop" package="Default">
+        <name>$TwigEnvironments</name>
+        <default><![CDATA[]]></default>
+        <docblock line="32">
+          <description><![CDATA[TwigEnvironments environment generator]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="32" name="var" description="" type="\Gumdrop\TwigEnvironments">
+            <type by_reference="false">\Gumdrop\TwigEnvironments</type>
+          </tag>
+        </docblock>
+      </property>
+      <property final="false" static="false" visibility="private" line="42" namespace="Gumdrop" package="Default">
+        <name>$PageCollection</name>
+        <default><![CDATA[]]></default>
+        <docblock line="38">
+          <description><![CDATA[Page collection]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="38" name="var" description="" type="\Gumdrop\PageCollection">
+            <type by_reference="false">\Gumdrop\PageCollection</type>
+          </tag>
+        </docblock>
+      </property>
+      <property final="false" static="false" visibility="private" line="48" namespace="Gumdrop" package="Default">
+        <name>$TwigFileHandler</name>
+        <default><![CDATA[]]></default>
+        <docblock line="44">
+          <description><![CDATA[Twig files handler]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="44" name="var" description="" type="\Gumdrop\TwigFileHandler">
+            <type by_reference="false">\Gumdrop\TwigFileHandler</type>
+          </tag>
+        </docblock>
+      </property>
+      <property final="false" static="false" visibility="private" line="54" namespace="Gumdrop" package="Default">
+        <name>$SiteConfiguration</name>
+        <default><![CDATA[]]></default>
+        <docblock line="50">
+          <description><![CDATA[Site configuration container]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="50" name="var" description="" type="\Gumdrop\SiteConfiguration">
+            <type by_reference="false">\Gumdrop\SiteConfiguration</type>
+          </tag>
+        </docblock>
+      </property>
+      <property final="false" static="false" visibility="private" line="60" namespace="Gumdrop" package="Default">
+        <name>$sourceLocation</name>
+        <default><![CDATA['']]></default>
+        <docblock line="56">
+          <description><![CDATA[Location of the markdown source files]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="56" name="var" description="" type="string">
+            <type by_reference="false">string</type>
+          </tag>
+        </docblock>
+      </property>
+      <property final="false" static="false" visibility="private" line="66" namespace="Gumdrop" package="Default">
+        <name>$destinationLocation</name>
+        <default><![CDATA['']]></default>
+        <docblock line="62">
+          <description><![CDATA[Location of the generated site]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="62" name="var" description="" type="string">
+            <type by_reference="false">string</type>
+          </tag>
+        </docblock>
+      </property>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="Gumdrop" line="76" package="Default">
+        <name>setMarkdownParser</name>
+        <full_name>setMarkdownParser</full_name>
+        <docblock line="69">
+          <description><![CDATA[Set Application's Markdown parser]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="69" name="param" description="" type="\dflydev\markdown\MarkdownParser" variable="$MarkdownParser">
+            <type by_reference="false">\dflydev\markdown\MarkdownParser</type>
+          </tag>
+          <tag line="69" name="codeCoverageIgnore" description=""/>
+        </docblock>
+        <argument line="76">
+          <name>$MarkdownParser</name>
+          <default><![CDATA[]]></default>
+          <type>\dflydev\markdown\MarkdownParser</type>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="Gumdrop" line="86" package="Default">
+        <name>getMarkdownParser</name>
+        <full_name>getMarkdownParser</full_name>
+        <docblock line="81">
+          <description><![CDATA[Get Application's Markdown parser]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="81" name="return" description="" type="\dflydev\markdown\MarkdownParser">
+            <type by_reference="false">\dflydev\markdown\MarkdownParser</type>
+          </tag>
+          <tag line="81" name="codeCoverageIgnore" description=""/>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="Gumdrop" line="98" package="Default">
+        <name>setFileHandler</name>
+        <full_name>setFileHandler</full_name>
+        <docblock line="91">
+          <description><![CDATA[Set Application's file handler]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="91" name="param" description="" type="\Gumdrop\FileHandler" variable="$FileHandler">
+            <type by_reference="false">\Gumdrop\FileHandler</type>
+          </tag>
+          <tag line="91" name="codeCoverageIgnore" description=""/>
+        </docblock>
+        <argument line="98">
+          <name>$FileHandler</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="Gumdrop" line="108" package="Default">
+        <name>getFileHandler</name>
+        <full_name>getFileHandler</full_name>
+        <docblock line="103">
+          <description><![CDATA[Get Application's file handler]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="103" name="return" description="" type="\Gumdrop\FileHandler">
+            <type by_reference="false">\Gumdrop\FileHandler</type>
+          </tag>
+          <tag line="103" name="codeCoverageIgnore" description=""/>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="Gumdrop" line="120" package="Default">
+        <name>setEngine</name>
+        <full_name>setEngine</full_name>
+        <docblock line="113">
+          <description><![CDATA[Set Application's engine]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="113" name="param" description="" type="\Gumdrop\Engine" variable="$Engine">
+            <type by_reference="false">\Gumdrop\Engine</type>
+          </tag>
+          <tag line="113" name="codeCoverageIgnore" description=""/>
+        </docblock>
+        <argument line="120">
+          <name>$Engine</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="Gumdrop" line="130" package="Default">
+        <name>getEngine</name>
+        <full_name>getEngine</full_name>
+        <docblock line="125">
+          <description><![CDATA[Get Application's engine]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="125" name="return" description="" type="\Gumdrop\Engine">
+            <type by_reference="false">\Gumdrop\Engine</type>
+          </tag>
+          <tag line="125" name="codeCoverageIgnore" description=""/>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="Gumdrop" line="142" package="Default">
+        <name>setSourceLocation</name>
+        <full_name>setSourceLocation</full_name>
+        <docblock line="135">
+          <description><![CDATA[Set location of the markdown source files]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="135" name="param" description="" type="string" variable="$sourceLocation">
+            <type by_reference="false">string</type>
+          </tag>
+          <tag line="135" name="codeCoverageIgnore" description=""/>
+        </docblock>
+        <argument line="142">
+          <name>$sourceLocation</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="Gumdrop" line="152" package="Default">
+        <name>getSourceLocation</name>
+        <full_name>getSourceLocation</full_name>
+        <docblock line="147">
+          <description><![CDATA[Get location of the markdown source files]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="147" name="return" description="" type="string">
+            <type by_reference="false">string</type>
+          </tag>
+          <tag line="147" name="codeCoverageIgnore" description=""/>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="Gumdrop" line="164" package="Default">
+        <name>setDestinationLocation</name>
+        <full_name>setDestinationLocation</full_name>
+        <docblock line="157">
+          <description><![CDATA[Set the location of the generated site]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="157" name="param" description="" type="string" variable="$destinationLocation">
+            <type by_reference="false">string</type>
+          </tag>
+          <tag line="157" name="codeCoverageIgnore" description=""/>
+        </docblock>
+        <argument line="164">
+          <name>$destinationLocation</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="Gumdrop" line="174" package="Default">
+        <name>getDestinationLocation</name>
+        <full_name>getDestinationLocation</full_name>
+        <docblock line="169">
+          <description><![CDATA[Get the location of the generated site]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="169" name="return" description="" type="string">
+            <type by_reference="false">string</type>
+          </tag>
+          <tag line="169" name="codeCoverageIgnore" description=""/>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="Gumdrop" line="186" package="Default">
+        <name>setTwigEnvironments</name>
+        <full_name>setTwigEnvironments</full_name>
+        <docblock line="179">
+          <description><![CDATA[Set the Twig environment generator]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="179" name="param" description="" type="\Gumdrop\TwigEnvironments" variable="$Twig">
+            <type by_reference="false">\Gumdrop\TwigEnvironments</type>
+          </tag>
+          <tag line="179" name="codeCoverageIgnore" description=""/>
+        </docblock>
+        <argument line="186">
+          <name>$Twig</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="Gumdrop" line="196" package="Default">
+        <name>getTwigEnvironments</name>
+        <full_name>getTwigEnvironments</full_name>
+        <docblock line="191">
+          <description><![CDATA[Get the Twig environment generator]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="191" name="return" description="" type="\Gumdrop\TwigEnvironments">
+            <type by_reference="false">\Gumdrop\TwigEnvironments</type>
+          </tag>
+          <tag line="191" name="codeCoverageIgnore" description=""/>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="Gumdrop" line="208" package="Default">
+        <name>setPageCollection</name>
+        <full_name>setPageCollection</full_name>
+        <docblock line="201">
+          <description><![CDATA[Set the Page collection]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="201" name="param" description="" type="\Gumdrop\PageCollection" variable="$PageCollection">
+            <type by_reference="false">\Gumdrop\PageCollection</type>
+          </tag>
+          <tag line="201" name="codeCoverageIgnore" description=""/>
+        </docblock>
+        <argument line="208">
+          <name>$PageCollection</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="Gumdrop" line="219" package="Default">
+        <name>getPageCollection</name>
+        <full_name>getPageCollection</full_name>
+        <docblock line="213">
+          <description><![CDATA[Get the Page collection]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="213" name="return" description="PageCollection" type="\Gumdrop\PageCollection">
+            <type by_reference="false">\Gumdrop\PageCollection</type>
+          </tag>
+          <tag line="213" name="codeCoverageIgnore" description=""/>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="Gumdrop" line="231" package="Default">
+        <name>setTwigFileHandler</name>
+        <full_name>setTwigFileHandler</full_name>
+        <docblock line="224">
+          <description><![CDATA[Set Twig files handler]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="224" name="param" description="" type="\Gumdrop\TwigFileHandler" variable="$TwigFileHandler">
+            <type by_reference="false">\Gumdrop\TwigFileHandler</type>
+          </tag>
+          <tag line="224" name="codeCoverageIgnore" description=""/>
+        </docblock>
+        <argument line="231">
+          <name>$TwigFileHandler</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="Gumdrop" line="241" package="Default">
+        <name>getTwigFileHandler</name>
+        <full_name>getTwigFileHandler</full_name>
+        <docblock line="236">
+          <description><![CDATA[Get Twig files handler]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="236" name="return" description="" type="\Gumdrop\TwigFileHandler">
+            <type by_reference="false">\Gumdrop\TwigFileHandler</type>
+          </tag>
+          <tag line="236" name="codeCoverageIgnore" description=""/>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="Gumdrop" line="250" package="Default">
+        <name>setSiteConfiguration</name>
+        <full_name>setSiteConfiguration</full_name>
+        <docblock line="246">
+          <description><![CDATA[Set the site configuration container]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="246" name="param" description="" type="\Gumdrop\SiteConfiguration" variable="$SiteConfiguration">
+            <type by_reference="false">\Gumdrop\SiteConfiguration</type>
+          </tag>
+        </docblock>
+        <argument line="250">
+          <name>$SiteConfiguration</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="Gumdrop" line="259" package="Default">
+        <name>getSiteConfiguration</name>
+        <full_name>getSiteConfiguration</full_name>
+        <docblock line="255">
+          <description><![CDATA[Get the site configuration container]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="255" name="return" description="" type="\Gumdrop\SiteConfiguration">
+            <type by_reference="false">\Gumdrop\SiteConfiguration</type>
+          </tag>
+        </docblock>
+      </method>
+    </class>
+  </file>
+  <file path="Configuration.php" hash="536e131b2c72d2149d6f07dc5ff9c2a8" package="Gumdrop">
+    <docblock line="2">
+      <description><![CDATA[Configuration container]]></description>
+      <long-description><![CDATA[]]></long-description>
+      <tag line="2" name="package" description="Gumdrop"/>
+    </docblock>
+    <class final="false" abstract="false" namespace="Gumdrop" line="11" package="Default">
+      <extends/>
+      <implements>\Iterator</implements>
+      <implements>\Countable</implements>
+      <implements>\ArrayAccess</implements>
+      <name>Configuration</name>
+      <full_name>\Gumdrop\Configuration</full_name>
+      <docblock line="8">
+        <description><![CDATA[Configuration container]]></description>
+        <long-description><![CDATA[]]></long-description>
+      </docblock>
+      <property final="false" static="false" visibility="protected" line="17" namespace="Gumdrop" package="Default">
+        <name>$configuration</name>
+        <default><![CDATA[array()]]></default>
+        <docblock line="13">
+          <description><![CDATA[Configuration data]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="13" name="var" description="" type="array">
+            <type by_reference="false">array</type>
+          </tag>
+        </docblock>
+      </property>
+      <property final="false" static="false" visibility="private" line="23" namespace="Gumdrop" package="Default">
+        <name>$position</name>
+        <default><![CDATA[0]]></default>
+        <docblock line="19">
+          <description><![CDATA[Current offset]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="19" name="var" description="" type="int">
+            <type by_reference="false">int</type>
+          </tag>
+        </docblock>
+      </property>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="Gumdrop" line="31" package="Default">
+        <name>__construct</name>
+        <full_name>__construct</full_name>
+        <docblock line="26">
+          <description><![CDATA[Constructor]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="26" name="param" description="" type="array" variable="$configuration">
+            <type by_reference="false">array</type>
+          </tag>
+        </docblock>
+        <argument line="31">
+          <name>$configuration</name>
+          <default><![CDATA[array()]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="Gumdrop" line="40" package="Default">
+        <name>extract</name>
+        <full_name>extract</full_name>
+        <docblock line="36">
+          <description><![CDATA[Extract the configuration as a pure array]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="36" name="return" description="" type="array">
+            <type by_reference="false">array</type>
+          </tag>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="Gumdrop" line="50" package="Default">
+        <name>current</name>
+        <full_name>current</full_name>
+        <docblock line="45">
+          <description><![CDATA[Return the current element]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="45" name="link" description="http://php.net/manual/en/iterator.current.php" link="http://php.net/manual/en/iterator.current.php"/>
+          <tag line="45" name="return" description="Can return any type." type="mixed">
+            <type by_reference="false">mixed</type>
+          </tag>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="Gumdrop" line="60" package="Default">
+        <name>next</name>
+        <full_name>next</full_name>
+        <docblock line="55">
+          <description><![CDATA[Move forward to next element]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="55" name="link" description="http://php.net/manual/en/iterator.next.php" link="http://php.net/manual/en/iterator.next.php"/>
+          <tag line="55" name="return" description="Any returned value is ignored." type="void">
+            <type by_reference="false">void</type>
+          </tag>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="Gumdrop" line="70" package="Default">
+        <name>key</name>
+        <full_name>key</full_name>
+        <docblock line="65">
+          <description><![CDATA[Return the key of the current element]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="65" name="link" description="http://php.net/manual/en/iterator.key.php" link="http://php.net/manual/en/iterator.key.php"/>
+          <tag line="65" name="return" description="scalar on success, or null on failure." type="mixed">
+            <type by_reference="false">mixed</type>
+          </tag>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="Gumdrop" line="82" package="Default">
+        <name>valid</name>
+        <full_name>valid</full_name>
+        <docblock line="75">
+          <description><![CDATA[Checks if current position is valid]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="75" name="link" description="http://php.net/manual/en/iterator.valid.php" link="http://php.net/manual/en/iterator.valid.php"/>
+          <tag line="75" name="return" description="The return value will be casted to boolean and then evaluated. Returns true on success or false on failure." type="boolean">
+            <type by_reference="false">boolean</type>
+          </tag>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="Gumdrop" line="92" package="Default">
+        <name>rewind</name>
+        <full_name>rewind</full_name>
+        <docblock line="87">
+          <description><![CDATA[Rewind the Iterator to the first element]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="87" name="link" description="http://php.net/manual/en/iterator.rewind.php" link="http://php.net/manual/en/iterator.rewind.php"/>
+          <tag line="87" name="return" description="Any returned value is ignored." type="void">
+            <type by_reference="false">void</type>
+          </tag>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="Gumdrop" line="106" package="Default">
+        <name>offsetExists</name>
+        <full_name>offsetExists</full_name>
+        <docblock line="97">
+          <description><![CDATA[Whether a offset exists]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="97" name="link" description="http://php.net/manual/en/arrayaccess.offsetexists.php" link="http://php.net/manual/en/arrayaccess.offsetexists.php"/>
+          <tag line="97" name="param" description="An offset to check for." type="mixed" variable="$offset">
+            <type by_reference="false">mixed</type>
+          </tag>
+          <tag line="97" name="return" description="true on success or false on failure. The return value will be casted to boolean if non-boolean was returned." type="boolean">
+            <type by_reference="false">boolean</type>
+          </tag>
+        </docblock>
+        <argument line="106">
+          <name>$offset</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="Gumdrop" line="120" package="Default">
+        <name>offsetGet</name>
+        <full_name>offsetGet</full_name>
+        <docblock line="111">
+          <description><![CDATA[Offset to retrieve]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="111" name="link" description="http://php.net/manual/en/arrayaccess.offsetget.php" link="http://php.net/manual/en/arrayaccess.offsetget.php"/>
+          <tag line="111" name="param" description="The offset to retrieve." type="mixed" variable="$offset">
+            <type by_reference="false">mixed</type>
+          </tag>
+          <tag line="111" name="return" description="Can return all value types." type="mixed">
+            <type by_reference="false">mixed</type>
+          </tag>
+        </docblock>
+        <argument line="120">
+          <name>$offset</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="Gumdrop" line="141" package="Default">
+        <name>offsetSet</name>
+        <full_name>offsetSet</full_name>
+        <docblock line="129">
+          <description><![CDATA[Offset to set]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="129" name="link" description="http://php.net/manual/en/arrayaccess.offsetset.php" link="http://php.net/manual/en/arrayaccess.offsetset.php"/>
+          <tag line="129" name="param" description="The offset to assign the value to." type="mixed" variable="$offset">
+            <type by_reference="false">mixed</type>
+          </tag>
+          <tag line="129" name="param" description="The value to set." type="mixed" variable="$value">
+            <type by_reference="false">mixed</type>
+          </tag>
+          <tag line="129" name="return" description="" type="void">
+            <type by_reference="false">void</type>
+          </tag>
+        </docblock>
+        <argument line="141">
+          <name>$offset</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+        <argument line="141">
+          <name>$value</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="Gumdrop" line="159" package="Default">
+        <name>offsetUnset</name>
+        <full_name>offsetUnset</full_name>
+        <docblock line="150">
+          <description><![CDATA[Offset to unset]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="150" name="link" description="http://php.net/manual/en/arrayaccess.offsetunset.php" link="http://php.net/manual/en/arrayaccess.offsetunset.php"/>
+          <tag line="150" name="param" description="The offset to unset." type="mixed" variable="$offset">
+            <type by_reference="false">mixed</type>
+          </tag>
+          <tag line="150" name="return" description="" type="void">
+            <type by_reference="false">void</type>
+          </tag>
+        </docblock>
+        <argument line="159">
+          <name>$offset</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="Gumdrop" line="170" package="Default">
+        <name>count</name>
+        <full_name>count</full_name>
+        <docblock line="164">
+          <description><![CDATA[Count elements of an object]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="164" name="link" description="http://php.net/manual/en/countable.count.php" link="http://php.net/manual/en/countable.count.php"/>
+          <tag line="164" name="return" description="The custom count as an integer. The return value is cast to an integer." type="int">
+            <type by_reference="false">int</type>
+          </tag>
+        </docblock>
+      </method>
+    </class>
+  </file>
+  <file path="Engine.php" hash="4bb5879ffeb334f7826e87c28c99c025" package="Gumdrop">
+    <docblock line="2">
+      <description><![CDATA[Engine - Class handling Markdown files including conversion to HTML]]></description>
+      <long-description><![CDATA[]]></long-description>
+      <tag line="2" name="package" description="Gumdrop"/>
+    </docblock>
+    <class final="false" abstract="false" namespace="Gumdrop" line="12" package="Default">
+      <extends/>
+      <name>Engine</name>
+      <full_name>\Gumdrop\Engine</full_name>
+      <docblock line="9">
+        <description><![CDATA[Class handling Markdown files including conversion to HTML]]></description>
+        <long-description><![CDATA[]]></long-description>
+      </docblock>
+      <property final="false" static="false" visibility="private" line="18" namespace="Gumdrop" package="Default">
+        <name>$app</name>
+        <default><![CDATA[]]></default>
+        <docblock line="14">
+          <description><![CDATA[Dependency injector]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="14" name="var" description="" type="\Gumdrop\Application">
+            <type by_reference="false">\Gumdrop\Application</type>
+          </tag>
+        </docblock>
+      </property>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="Gumdrop" line="25" package="Default">
+        <name>__construct</name>
+        <full_name>__construct</full_name>
+        <docblock line="20">
+          <description><![CDATA[Constructor]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="20" name="param" description="" type="\Gumdrop\Application" variable="$app">
+            <type by_reference="false">\Gumdrop\Application</type>
+          </tag>
+        </docblock>
+        <argument line="25">
+          <name>$app</name>
+          <default><![CDATA[]]></default>
+          <type>\Gumdrop\Application</type>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="Gumdrop" line="33" package="Default">
+        <name>run</name>
+        <full_name>run</full_name>
+        <docblock line="30">
+          <description><![CDATA[Runs the PageCollection through all the steps of the process]]></description>
+          <long-description><![CDATA[]]></long-description>
+        </docblock>
+      </method>
+    </class>
+  </file>
+  <file path="Exception.php" hash="63efc5cfaa9f86a2d478780a80c10382" package="Gumdrop">
+    <docblock line="2">
+      <description><![CDATA[Gumdrop Exception]]></description>
+      <long-description><![CDATA[]]></long-description>
+      <tag line="2" name="package" description="Gumdrop"/>
+    </docblock>
+    <class final="false" abstract="false" namespace="Gumdrop" line="11" package="Default">
+      <extends>\Exception</extends>
+      <name>Exception</name>
+      <full_name>\Gumdrop\Exception</full_name>
+      <docblock line="8">
+        <description><![CDATA[Gumdrop Exception - mainly here because of PHPUnit restrictions]]></description>
+        <long-description><![CDATA[]]></long-description>
+      </docblock>
+    </class>
+  </file>
+  <file path="FileHandler.php" hash="fa91e0b3aed7cc19916531aee7ce74d0" package="Gumdrop">
+    <docblock line="2">
+      <description><![CDATA[Gumdrop-specific file system operations]]></description>
+      <long-description><![CDATA[]]></long-description>
+      <tag line="2" name="package" description="Gumdrop"/>
+    </docblock>
+    <class final="false" abstract="false" namespace="Gumdrop" line="11" package="Default">
+      <extends/>
+      <name>FileHandler</name>
+      <full_name>\Gumdrop\FileHandler</full_name>
+      <docblock line="8">
+        <description><![CDATA[Gumdrop-specific file system operations]]></description>
+        <long-description><![CDATA[]]></long-description>
+      </docblock>
+      <property final="false" static="false" visibility="private" line="17" namespace="Gumdrop" package="Default">
+        <name>$app</name>
+        <default><![CDATA[]]></default>
+        <docblock line="13">
+          <description><![CDATA[Dependency injector]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="13" name="var" description="" type="\Gumdrop\Application">
+            <type by_reference="false">\Gumdrop\Application</type>
+          </tag>
+        </docblock>
+      </property>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="Gumdrop" line="24" package="Default">
+        <name>__construct</name>
+        <full_name>__construct</full_name>
+        <docblock line="19">
+          <description><![CDATA[Constructor]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="19" name="param" description="" type="\Gumdrop\Application" variable="$app">
+            <type by_reference="false">\Gumdrop\Application</type>
+          </tag>
+        </docblock>
+        <argument line="24">
+          <name>$app</name>
+          <default><![CDATA[]]></default>
+          <type>\Gumdrop\Application</type>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="private" namespace="Gumdrop" line="37" package="Default">
+        <name>listFiles</name>
+        <full_name>listFiles</full_name>
+        <docblock line="29">
+          <description><![CDATA[General purpose recursive listing method with filtering support]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="29" name="param" description="Filtering function" type="\Gumdrop\callable" variable="$filter_callback">
+            <type by_reference="false">\Gumdrop\callable</type>
+          </tag>
+          <tag line="29" name="param" description="Used for recursion only" type="string" variable="$location">
+            <type by_reference="false">string</type>
+          </tag>
+          <tag line="29" name="return" description="" type="array">
+            <type by_reference="false">array</type>
+          </tag>
+        </docblock>
+        <argument line="37">
+          <name>$filter_callback</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+        <argument line="37">
+          <name>$location</name>
+          <default><![CDATA['']]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="Gumdrop" line="76" package="Default">
+        <name>listMarkdownFiles</name>
+        <full_name>listMarkdownFiles</full_name>
+        <docblock line="71">
+          <description><![CDATA[Builds a list of Markdown files recursively]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="71" name="return" description="" type="array">
+            <type by_reference="false">array</type>
+          </tag>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="Gumdrop" line="109" package="Default">
+        <name>getMarkdownFiles</name>
+        <full_name>getMarkdownFiles</full_name>
+        <docblock line="102">
+          <description><![CDATA[Builds a PageCollection out of a list of Markdown files]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="102" name="param" description="" type="" variable="$files"/>
+          <tag line="102" name="return" description="" type="\Gumdrop\PageCollection">
+            <type by_reference="false">\Gumdrop\PageCollection</type>
+          </tag>
+        </docblock>
+        <argument line="109">
+          <name>$files</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="Gumdrop" line="127" package="Default">
+        <name>findPageTwigFile</name>
+        <full_name>findPageTwigFile</full_name>
+        <docblock line="122">
+          <description><![CDATA[Checks if the page.twig file exists at the given location]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="122" name="return" description="" type="bool">
+            <type by_reference="false">bool</type>
+          </tag>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="Gumdrop" line="137" package="Default">
+        <name>listStaticFiles</name>
+        <full_name>listStaticFiles</full_name>
+        <docblock line="132">
+          <description><![CDATA[Returns the recursive list of static files that need to be copied to the destination]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="132" name="return" description="" type="array">
+            <type by_reference="false">array</type>
+          </tag>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="Gumdrop" line="156" package="Default">
+        <name>copyStaticFiles</name>
+        <full_name>copyStaticFiles</full_name>
+        <docblock line="153">
+          <description><![CDATA[Copies static files to the destination folder]]></description>
+          <long-description><![CDATA[]]></long-description>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="Gumdrop" line="179" package="Default">
+        <name>listTwigFiles</name>
+        <full_name>listTwigFiles</full_name>
+        <docblock line="174">
+          <description><![CDATA[Returns the list of Twig files]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="174" name="return" description="The list of Twig files" type="array">
+            <type by_reference="false">array</type>
+          </tag>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="Gumdrop" line="200" package="Default">
+        <name>clearDestinationLocation</name>
+        <full_name>clearDestinationLocation</full_name>
+        <docblock line="195">
+          <description><![CDATA[Clears the destination location]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="195" name="param" description="Used for recursion, should not be set when using this method" type="string" variable="$path">
+            <type by_reference="false">string</type>
+          </tag>
+        </docblock>
+        <argument line="200">
+          <name>$path</name>
+          <default><![CDATA['']]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="Gumdrop" line="231" package="Default">
+        <name>getSourceFolderHash</name>
+        <full_name>getSourceFolderHash</full_name>
+        <docblock line="224">
+          <description><![CDATA[Computes a hash of the given folder content to detect changes]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="224" name="param" description="Used only for recursion" type="string" variable="$location">
+            <type by_reference="false">string</type>
+          </tag>
+          <tag line="224" name="return" description="" type="array|int|string">
+            <type by_reference="false">array</type>
+            <type by_reference="false">int</type>
+            <type by_reference="false">string</type>
+          </tag>
+        </docblock>
+        <argument line="231">
+          <name>$location</name>
+          <default><![CDATA['']]></default>
+          <type/>
+        </argument>
+      </method>
+    </class>
+  </file>
+  <file path="Page.php" hash="fbb07fc291867cc58271cc2863192095" package="Gumdrop">
+    <docblock line="2">
+      <description><![CDATA[Page object representing a page of the website]]></description>
+      <long-description><![CDATA[]]></long-description>
+      <tag line="2" name="package" description="Gumdrop"/>
+    </docblock>
+    <class final="false" abstract="false" namespace="Gumdrop" line="12" package="Default">
+      <extends/>
+      <name>Page</name>
+      <full_name>\Gumdrop\Page</full_name>
+      <docblock line="9">
+        <description><![CDATA[Page object representing a page of the website]]></description>
+        <long-description><![CDATA[]]></long-description>
+      </docblock>
+      <property final="false" static="false" visibility="private" line="18" namespace="Gumdrop" package="Default">
+        <name>$app</name>
+        <default><![CDATA[]]></default>
+        <docblock line="14">
+          <description><![CDATA[Dependency injector]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="14" name="var" description="" type="\Gumdrop\Application">
+            <type by_reference="false">\Gumdrop\Application</type>
+          </tag>
+        </docblock>
+      </property>
+      <property final="false" static="false" visibility="private" line="24" namespace="Gumdrop" package="Default">
+        <name>$location</name>
+        <default><![CDATA[]]></default>
+        <docblock line="20">
+          <description><![CDATA[Page location - relative to the root of the source files]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="20" name="var" description="" type="string">
+            <type by_reference="false">string</type>
+          </tag>
+        </docblock>
+      </property>
+      <property final="false" static="false" visibility="private" line="49" namespace="Gumdrop" package="Default">
+        <name>$markdownContent</name>
+        <default><![CDATA[]]></default>
+        <docblock line="45">
+          <description><![CDATA[Page's Markdown content]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="45" name="var" description="" type="string">
+            <type by_reference="false">string</type>
+          </tag>
+        </docblock>
+      </property>
+      <property final="false" static="false" visibility="private" line="74" namespace="Gumdrop" package="Default">
+        <name>$htmlContent</name>
+        <default><![CDATA[]]></default>
+        <docblock line="70">
+          <description><![CDATA[Page's HTML content]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="70" name="var" description="" type="string">
+            <type by_reference="false">string</type>
+          </tag>
+        </docblock>
+      </property>
+      <property final="false" static="false" visibility="private" line="99" namespace="Gumdrop" package="Default">
+        <name>$pageContent</name>
+        <default><![CDATA[]]></default>
+        <docblock line="95">
+          <description><![CDATA[Page's final content]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="95" name="var" description="" type="string">
+            <type by_reference="false">string</type>
+          </tag>
+        </docblock>
+      </property>
+      <property final="false" static="false" visibility="private" line="124" namespace="Gumdrop" package="Default">
+        <name>$configuration</name>
+        <default><![CDATA[]]></default>
+        <docblock line="120">
+          <description><![CDATA[Page's configuration]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="120" name="var" description="" type="\Gumdrop\PageConfiguration">
+            <type by_reference="false">\Gumdrop\PageConfiguration</type>
+          </tag>
+        </docblock>
+      </property>
+      <property final="false" static="false" visibility="private" line="150" namespace="Gumdrop" package="Default">
+        <name>$layoutTwigEnvironment</name>
+        <default><![CDATA[]]></default>
+        <docblock line="146">
+          <description><![CDATA[Page's layout Twig environment]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="146" name="var" description="" type="\Twig_Environment">
+            <type by_reference="false">\Twig_Environment</type>
+          </tag>
+        </docblock>
+      </property>
+      <property final="false" static="false" visibility="private" line="175" namespace="Gumdrop" package="Default">
+        <name>$pageTwigEnvironment</name>
+        <default><![CDATA[]]></default>
+        <docblock line="171">
+          <description><![CDATA[Page's page Twig environment]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="171" name="var" description="" type="\Twig_Environment">
+            <type by_reference="false">\Twig_Environment</type>
+          </tag>
+        </docblock>
+      </property>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="Gumdrop" line="31" package="Default">
+        <name>setLocation</name>
+        <full_name>setLocation</full_name>
+        <docblock line="26">
+          <description><![CDATA[Set page location]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="26" name="param" description="string $location" type="string" variable="$location">
+            <type by_reference="false">string</type>
+          </tag>
+        </docblock>
+        <argument line="31">
+          <name>$location</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="Gumdrop" line="40" package="Default">
+        <name>getLocation</name>
+        <full_name>getLocation</full_name>
+        <docblock line="36">
+          <description><![CDATA[Get page location]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="36" name="return" description="" type="string">
+            <type by_reference="false">string</type>
+          </tag>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="Gumdrop" line="56" package="Default">
+        <name>setMarkdownContent</name>
+        <full_name>setMarkdownContent</full_name>
+        <docblock line="51">
+          <description><![CDATA[Set Page's Markdown content]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="51" name="param" description="" type="string" variable="$markdownContent">
+            <type by_reference="false">string</type>
+          </tag>
+        </docblock>
+        <argument line="56">
+          <name>$markdownContent</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="Gumdrop" line="65" package="Default">
+        <name>getMarkdownContent</name>
+        <full_name>getMarkdownContent</full_name>
+        <docblock line="61">
+          <description><![CDATA[Get Page's Markdown content]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="61" name="return" description="" type="string">
+            <type by_reference="false">string</type>
+          </tag>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="Gumdrop" line="81" package="Default">
+        <name>setHtmlContent</name>
+        <full_name>setHtmlContent</full_name>
+        <docblock line="76">
+          <description><![CDATA[Set Page's HTML content]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="76" name="param" description="" type="string" variable="$htmlContent">
+            <type by_reference="false">string</type>
+          </tag>
+        </docblock>
+        <argument line="81">
+          <name>$htmlContent</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="Gumdrop" line="90" package="Default">
+        <name>getHtmlContent</name>
+        <full_name>getHtmlContent</full_name>
+        <docblock line="86">
+          <description><![CDATA[Get Page's HTML content]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="86" name="return" description="" type="string">
+            <type by_reference="false">string</type>
+          </tag>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="Gumdrop" line="106" package="Default">
+        <name>setPageContent</name>
+        <full_name>setPageContent</full_name>
+        <docblock line="101">
+          <description><![CDATA[Set Page's content]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="101" name="param" description="" type="string" variable="$pageContent">
+            <type by_reference="false">string</type>
+          </tag>
+        </docblock>
+        <argument line="106">
+          <name>$pageContent</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="Gumdrop" line="115" package="Default">
+        <name>getPageContent</name>
+        <full_name>getPageContent</full_name>
+        <docblock line="111">
+          <description><![CDATA[Get Page's content]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="111" name="return" description="" type="string">
+            <type by_reference="false">string</type>
+          </tag>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="Gumdrop" line="131" package="Default">
+        <name>setConfiguration</name>
+        <full_name>setConfiguration</full_name>
+        <docblock line="126">
+          <description><![CDATA[Set Page's configuration]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="126" name="param" description="" type="\Gumdrop\PageConfiguration" variable="$configuration">
+            <type by_reference="false">\Gumdrop\PageConfiguration</type>
+          </tag>
+        </docblock>
+        <argument line="131">
+          <name>$configuration</name>
+          <default><![CDATA[]]></default>
+          <type>\Gumdrop\PageConfiguration</type>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="Gumdrop" line="141" package="Default">
+        <name>getConfiguration</name>
+        <full_name>getConfiguration</full_name>
+        <docblock line="137">
+          <description><![CDATA[Get Page's configuration]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="137" name="return" description="" type="\Gumdrop\PageConfiguration">
+            <type by_reference="false">\Gumdrop\PageConfiguration</type>
+          </tag>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="Gumdrop" line="157" package="Default">
+        <name>setLayoutTwigEnvironment</name>
+        <full_name>setLayoutTwigEnvironment</full_name>
+        <docblock line="152">
+          <description><![CDATA[Set Page's layout Twig environment]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="152" name="param" description="" type="\Twig_Environment" variable="$layoutTwigEnvironment">
+            <type by_reference="false">\Twig_Environment</type>
+          </tag>
+        </docblock>
+        <argument line="157">
+          <name>$layoutTwigEnvironment</name>
+          <default><![CDATA[]]></default>
+          <type>\Twig_Environment</type>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="Gumdrop" line="166" package="Default">
+        <name>getLayoutTwigEnvironment</name>
+        <full_name>getLayoutTwigEnvironment</full_name>
+        <docblock line="162">
+          <description><![CDATA[Get Page's layout Twig environment]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="162" name="return" description="" type="\Twig_Environment">
+            <type by_reference="false">\Twig_Environment</type>
+          </tag>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="Gumdrop" line="182" package="Default">
+        <name>setPageTwigEnvironment</name>
+        <full_name>setPageTwigEnvironment</full_name>
+        <docblock line="177">
+          <description><![CDATA[Set Page's page Twig environment]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="177" name="param" description="" type="\Twig_Environment" variable="$pageTwigEnvironment">
+            <type by_reference="false">\Twig_Environment</type>
+          </tag>
+        </docblock>
+        <argument line="182">
+          <name>$pageTwigEnvironment</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="Gumdrop" line="191" package="Default">
+        <name>getPageTwigEnvironment</name>
+        <full_name>getPageTwigEnvironment</full_name>
+        <docblock line="187">
+          <description><![CDATA[Get Page's page Twig environment]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="187" name="return" description="" type="\Twig_Environment">
+            <type by_reference="false">\Twig_Environment</type>
+          </tag>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="Gumdrop" line="202" package="Default">
+        <name>__construct</name>
+        <full_name>__construct</full_name>
+        <docblock line="197">
+          <description><![CDATA[Constructor]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="197" name="param" description="" type="\Gumdrop\Application" variable="$app">
+            <type by_reference="false">\Gumdrop\Application</type>
+          </tag>
+        </docblock>
+        <argument line="202">
+          <name>$app</name>
+          <default><![CDATA[]]></default>
+          <type>\Gumdrop\Application</type>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="Gumdrop" line="210" package="Default">
+        <name>convertMarkdownToHtml</name>
+        <full_name>convertMarkdownToHtml</full_name>
+        <docblock line="207">
+          <description><![CDATA[Converts the Markdown code to HTML]]></description>
+          <long-description><![CDATA[]]></long-description>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="Gumdrop" line="218" package="Default">
+        <name>renderLayoutTwigEnvironment</name>
+        <full_name>renderLayoutTwigEnvironment</full_name>
+        <docblock line="215">
+          <description><![CDATA[Renders the layout Twig environment of the page]]></description>
+          <long-description><![CDATA[]]></long-description>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="Gumdrop" line="245" package="Default">
+        <name>renderPageTwigEnvironment</name>
+        <full_name>renderPageTwigEnvironment</full_name>
+        <docblock line="242">
+          <description><![CDATA[Renders the page Twig environment of the page]]></description>
+          <long-description><![CDATA[]]></long-description>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="Gumdrop" line="258" package="Default">
+        <name>writeHtmFiles</name>
+        <full_name>writeHtmFiles</full_name>
+        <docblock line="253">
+          <description><![CDATA[Writes the final HTML content to file]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="253" name="param" description="" type="string" variable="$destination">
+            <type by_reference="false">string</type>
+          </tag>
+        </docblock>
+        <argument line="258">
+          <name>$destination</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="Gumdrop" line="281" package="Default">
+        <name>exportForTwig</name>
+        <full_name>exportForTwig</full_name>
+        <docblock line="277">
+          <description><![CDATA[Return the Page's data for use in Twig rendering phase]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="277" name="return" description="" type="array">
+            <type by_reference="false">array</type>
+          </tag>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="private" namespace="Gumdrop" line="297" package="Default">
+        <name>generateTwigData</name>
+        <full_name>generateTwigData</full_name>
+        <docblock line="293">
+          <description><![CDATA[Returns an array containing the data to pass to Twig renderer]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="293" name="return" description="" type="array">
+            <type by_reference="false">array</type>
+          </tag>
+        </docblock>
+      </method>
+    </class>
+  </file>
+  <file path="PageCollection.php" hash="a2a3601b00e7acdc1f4ad4800601de1a" package="Gumdrop">
+    <docblock line="2">
+      <description><![CDATA[Page-level configuration container]]></description>
+      <long-description><![CDATA[]]></long-description>
+      <tag line="2" name="package" description="Gumdrop"/>
+    </docblock>
+    <class final="false" abstract="false" namespace="Gumdrop" line="12" package="Default">
+      <extends/>
+      <implements>\Iterator</implements>
+      <implements>\Countable</implements>
+      <implements>\ArrayAccess</implements>
+      <name>PageCollection</name>
+      <full_name>\Gumdrop\PageCollection</full_name>
+      <docblock line="9">
+        <description><![CDATA[Page-level configuration container]]></description>
+        <long-description><![CDATA[]]></long-description>
+      </docblock>
+      <property final="false" static="false" visibility="private" line="18" namespace="Gumdrop" package="Default">
+        <name>$Pages</name>
+        <default><![CDATA[array()]]></default>
+        <docblock line="14">
+          <description><![CDATA[Array of the Pages]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="14" name="var" description="" type="array">
+            <type by_reference="false">array</type>
+          </tag>
+        </docblock>
+      </property>
+      <property final="false" static="false" visibility="private" line="24" namespace="Gumdrop" package="Default">
+        <name>$position</name>
+        <default><![CDATA[0]]></default>
+        <docblock line="20">
+          <description><![CDATA[Current offset]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="20" name="var" description="" type="int">
+            <type by_reference="false">int</type>
+          </tag>
+        </docblock>
+      </property>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="Gumdrop" line="31" package="Default">
+        <name>__construct</name>
+        <full_name>__construct</full_name>
+        <docblock line="26">
+          <description><![CDATA[Constructor]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="26" name="param" description="" type="array" variable="$Pages">
+            <type by_reference="false">array</type>
+          </tag>
+        </docblock>
+        <argument line="31">
+          <name>$Pages</name>
+          <default><![CDATA[array()]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="Gumdrop" line="46" package="Default">
+        <name>exportForTwig</name>
+        <full_name>exportForTwig</full_name>
+        <docblock line="42">
+          <description><![CDATA[Returns an array of Pages' data for use in Twig rendering phase]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="42" name="return" description="" type="array">
+            <type by_reference="false">array</type>
+          </tag>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="Gumdrop" line="61" package="Default">
+        <name>add</name>
+        <full_name>add</full_name>
+        <docblock line="56">
+          <description><![CDATA[Appends a Page to the collection]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="56" name="param" description="" type="\Gumdrop\Page" variable="$Page">
+            <type by_reference="false">\Gumdrop\Page</type>
+          </tag>
+        </docblock>
+        <argument line="61">
+          <name>$Page</name>
+          <default><![CDATA[]]></default>
+          <type>\Gumdrop\Page</type>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="Gumdrop" line="71" package="Default">
+        <name>current</name>
+        <full_name>current</full_name>
+        <docblock line="66">
+          <description><![CDATA[Return the current element]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="66" name="link" description="http://php.net/manual/en/iterator.current.php" link="http://php.net/manual/en/iterator.current.php"/>
+          <tag line="66" name="return" description="Can return any type." type="mixed">
+            <type by_reference="false">mixed</type>
+          </tag>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="Gumdrop" line="81" package="Default">
+        <name>next</name>
+        <full_name>next</full_name>
+        <docblock line="76">
+          <description><![CDATA[Move forward to next element]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="76" name="link" description="http://php.net/manual/en/iterator.next.php" link="http://php.net/manual/en/iterator.next.php"/>
+          <tag line="76" name="return" description="Any returned value is ignored." type="void">
+            <type by_reference="false">void</type>
+          </tag>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="Gumdrop" line="91" package="Default">
+        <name>key</name>
+        <full_name>key</full_name>
+        <docblock line="86">
+          <description><![CDATA[Return the key of the current element]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="86" name="link" description="http://php.net/manual/en/iterator.key.php" link="http://php.net/manual/en/iterator.key.php"/>
+          <tag line="86" name="return" description="scalar on success, or null on failure." type="mixed">
+            <type by_reference="false">mixed</type>
+          </tag>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="Gumdrop" line="103" package="Default">
+        <name>valid</name>
+        <full_name>valid</full_name>
+        <docblock line="96">
+          <description><![CDATA[Checks if current position is valid]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="96" name="link" description="http://php.net/manual/en/iterator.valid.php" link="http://php.net/manual/en/iterator.valid.php"/>
+          <tag line="96" name="return" description="The return value will be casted to boolean and then evaluated. Returns true on success or false on failure." type="boolean">
+            <type by_reference="false">boolean</type>
+          </tag>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="Gumdrop" line="113" package="Default">
+        <name>rewind</name>
+        <full_name>rewind</full_name>
+        <docblock line="108">
+          <description><![CDATA[Rewind the Iterator to the first element]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="108" name="link" description="http://php.net/manual/en/iterator.rewind.php" link="http://php.net/manual/en/iterator.rewind.php"/>
+          <tag line="108" name="return" description="Any returned value is ignored." type="void">
+            <type by_reference="false">void</type>
+          </tag>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="Gumdrop" line="127" package="Default">
+        <name>offsetExists</name>
+        <full_name>offsetExists</full_name>
+        <docblock line="118">
+          <description><![CDATA[Whether a offset exists]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="118" name="link" description="http://php.net/manual/en/arrayaccess.offsetexists.php" link="http://php.net/manual/en/arrayaccess.offsetexists.php"/>
+          <tag line="118" name="param" description="An offset to check for." type="mixed" variable="$offset">
+            <type by_reference="false">mixed</type>
+          </tag>
+          <tag line="118" name="return" description="true on success or false on failure. The return value will be casted to boolean if non-boolean was returned." type="boolean">
+            <type by_reference="false">boolean</type>
+          </tag>
+        </docblock>
+        <argument line="127">
+          <name>$offset</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="Gumdrop" line="141" package="Default">
+        <name>offsetGet</name>
+        <full_name>offsetGet</full_name>
+        <docblock line="132">
+          <description><![CDATA[Offset to retrieve]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="132" name="link" description="http://php.net/manual/en/arrayaccess.offsetget.php" link="http://php.net/manual/en/arrayaccess.offsetget.php"/>
+          <tag line="132" name="param" description="The offset to retrieve." type="mixed" variable="$offset">
+            <type by_reference="false">mixed</type>
+          </tag>
+          <tag line="132" name="return" description="Can return all value types." type="mixed">
+            <type by_reference="false">mixed</type>
+          </tag>
+        </docblock>
+        <argument line="141">
+          <name>$offset</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="Gumdrop" line="164" package="Default">
+        <name>offsetSet</name>
+        <full_name>offsetSet</full_name>
+        <docblock line="150">
+          <description><![CDATA[Offset to set]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="150" name="link" description="http://php.net/manual/en/arrayaccess.offsetset.php" link="http://php.net/manual/en/arrayaccess.offsetset.php"/>
+          <tag line="150" name="param" description="The offset to assign the value to." type="mixed" variable="$offset">
+            <type by_reference="false">mixed</type>
+          </tag>
+          <tag line="150" name="param" description="The Page to set." type="\Gumdrop\Page" variable="$Page">
+            <type by_reference="false">\Gumdrop\Page</type>
+          </tag>
+          <tag line="150" name="return" description="" type="void">
+            <type by_reference="false">void</type>
+          </tag>
+          <tag line="150" name="throws" description="Message: Expecting an instance of \Gumdrop\Page" type="\Gumdrop\Exception">
+            <type by_reference="false">\Gumdrop\Exception</type>
+          </tag>
+        </docblock>
+        <argument line="164">
+          <name>$offset</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+        <argument line="164">
+          <name>$Page</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="Gumdrop" line="188" package="Default">
+        <name>offsetUnset</name>
+        <full_name>offsetUnset</full_name>
+        <docblock line="179">
+          <description><![CDATA[Offset to unset]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="179" name="link" description="http://php.net/manual/en/arrayaccess.offsetunset.php" link="http://php.net/manual/en/arrayaccess.offsetunset.php"/>
+          <tag line="179" name="param" description="The offset to unset." type="mixed" variable="$offset">
+            <type by_reference="false">mixed</type>
+          </tag>
+          <tag line="179" name="return" description="" type="void">
+            <type by_reference="false">void</type>
+          </tag>
+        </docblock>
+        <argument line="188">
+          <name>$offset</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="Gumdrop" line="199" package="Default">
+        <name>count</name>
+        <full_name>count</full_name>
+        <docblock line="193">
+          <description><![CDATA[Count elements of an object]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="193" name="link" description="http://php.net/manual/en/countable.count.php" link="http://php.net/manual/en/countable.count.php"/>
+          <tag line="193" name="return" description="The custom count as an integer. The return value is cast to an integer." type="int">
+            <type by_reference="false">int</type>
+          </tag>
+        </docblock>
+      </method>
+    </class>
+  </file>
+  <file path="PageConfiguration.php" hash="bb83762d764b501be9b3b34546d83507" package="Gumdrop">
+    <docblock line="3">
+      <description><![CDATA[Page configuration container]]></description>
+      <long-description><![CDATA[]]></long-description>
+      <tag line="3" name="package" description="Gumdrop"/>
+    </docblock>
+    <class final="false" abstract="false" namespace="Gumdrop" line="12" package="Default">
+      <extends>\Gumdrop\Configuration</extends>
+      <name>PageConfiguration</name>
+      <full_name>\Gumdrop\PageConfiguration</full_name>
+      <docblock line="9">
+        <description><![CDATA[Page configuration container]]></description>
+        <long-description><![CDATA[]]></long-description>
+      </docblock>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="Gumdrop" line="22" package="Default">
+        <name>extractHeader</name>
+        <full_name>extractHeader</full_name>
+        <docblock line="14">
+          <description><![CDATA[Extracts configuration header from Markdown content]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="14" name="param" description="" type="string" variable="$content">
+            <type by_reference="false">string</type>
+          </tag>
+          <tag line="14" name="return" description="Markdown content stripped of the configuration header" type="string">
+            <type by_reference="false">string</type>
+          </tag>
+          <tag line="14" name="throws" description="" type="\Gumdrop\Exception">
+            <type by_reference="false">\Gumdrop\Exception</type>
+          </tag>
+        </docblock>
+        <argument line="22">
+          <name>$content</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+      </method>
+    </class>
+  </file>
+  <file path="SiteConfiguration.php" hash="7d0cd84234dc1bc0daf3e21a9dc18fc5" package="Gumdrop">
+    <docblock line="3">
+      <description><![CDATA[Application-level configuration container]]></description>
+      <long-description><![CDATA[]]></long-description>
+      <tag line="3" name="package" description="Gumdrop"/>
+    </docblock>
+    <class final="false" abstract="false" namespace="Gumdrop" line="12" package="Default">
+      <extends>\Gumdrop\Configuration</extends>
+      <name>SiteConfiguration</name>
+      <full_name>\Gumdrop\SiteConfiguration</full_name>
+      <docblock line="9">
+        <description><![CDATA[Application-level configuration container]]></description>
+        <long-description><![CDATA[]]></long-description>
+      </docblock>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="Gumdrop" line="21" package="Default">
+        <name>__construct</name>
+        <full_name>__construct</full_name>
+        <docblock line="14">
+          <description><![CDATA[Constructor]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="14" name="param" description="" type="string" variable="$location">
+            <type by_reference="false">string</type>
+          </tag>
+          <tag line="14" name="throws" description="" type="\Gumdrop\Exception">
+            <type by_reference="false">\Gumdrop\Exception</type>
+          </tag>
+        </docblock>
+        <argument line="21">
+          <name>$location</name>
+          <default><![CDATA[]]></default>
+          <type/>
+        </argument>
+      </method>
+    </class>
+  </file>
+  <file path="TwigEnvironments.php" hash="d8b0bcbfeb00cde4d1f83d58c1bd0af7" package="Gumdrop">
+    <docblock line="2">
+      <description><![CDATA[Twig Environment provider]]></description>
+      <long-description><![CDATA[]]></long-description>
+      <tag line="2" name="package" description="Gumdrop"/>
+    </docblock>
+    <class final="false" abstract="false" namespace="Gumdrop" line="12" package="Default">
+      <extends/>
+      <name>TwigEnvironments</name>
+      <full_name>\Gumdrop\TwigEnvironments</full_name>
+      <docblock line="9">
+        <description><![CDATA[TwigEnvironments Environment provider]]></description>
+        <long-description><![CDATA[]]></long-description>
+      </docblock>
+      <property final="false" static="false" visibility="private" line="18" namespace="Gumdrop" package="Default">
+        <name>$app</name>
+        <default><![CDATA[]]></default>
+        <docblock line="14">
+          <description><![CDATA[Dependency injector]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="14" name="var" description="" type="\Gumdrop\Application">
+            <type by_reference="false">\Gumdrop\Application</type>
+          </tag>
+        </docblock>
+      </property>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="Gumdrop" line="25" package="Default">
+        <name>__construct</name>
+        <full_name>__construct</full_name>
+        <docblock line="20">
+          <description><![CDATA[Constructor]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="20" name="param" description="Dependency injector" type="\Gumdrop\Application" variable="$app">
+            <type by_reference="false">\Gumdrop\Application</type>
+          </tag>
+        </docblock>
+        <argument line="25">
+          <name>$app</name>
+          <default><![CDATA[]]></default>
+          <type>\Gumdrop\Application</type>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="Gumdrop" line="34" package="Default">
+        <name>getLayoutEnvironment</name>
+        <full_name>getLayoutEnvironment</full_name>
+        <docblock line="30">
+          <description><![CDATA[Get Twig layout environment]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="30" name="return" description="Twig layout environment" type="\Twig_Environment">
+            <type by_reference="false">\Twig_Environment</type>
+          </tag>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="Gumdrop" line="56" package="Default">
+        <name>getPageEnvironment</name>
+        <full_name>getPageEnvironment</full_name>
+        <docblock line="52">
+          <description><![CDATA[Get the Twig page environment]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="52" name="return" description="Twig page environment" type="\Twig_Environment">
+            <type by_reference="false">\Twig_Environment</type>
+          </tag>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="Gumdrop" line="71" package="Default">
+        <name>getSiteEnvironment</name>
+        <full_name>getSiteEnvironment</full_name>
+        <docblock line="67">
+          <description><![CDATA[Get Twig site environment]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="67" name="return" description="Twig site environment" type="\Twig_Environment">
+            <type by_reference="false">\Twig_Environment</type>
+          </tag>
+        </docblock>
+      </method>
+    </class>
+  </file>
+  <file path="TwigFileHandler.php" hash="48ee36fbe82777d5d959ca92111c49ea" package="Gumdrop">
+    <docblock line="2">
+      <description><![CDATA[Twig files handler]]></description>
+      <long-description><![CDATA[]]></long-description>
+      <tag line="2" name="package" description="Gumdrop"/>
+    </docblock>
+    <class final="false" abstract="false" namespace="Gumdrop" line="13" package="Default">
+      <extends/>
+      <name>TwigFileHandler</name>
+      <full_name>\Gumdrop\TwigFileHandler</full_name>
+      <docblock line="10">
+        <description><![CDATA[Twig files handler]]></description>
+        <long-description><![CDATA[]]></long-description>
+      </docblock>
+      <property final="false" static="false" visibility="private" line="19" namespace="Gumdrop" package="Default">
+        <name>$app</name>
+        <default><![CDATA[]]></default>
+        <docblock line="15">
+          <description><![CDATA[Dependency injector]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="15" name="var" description="" type="\Gumdrop\Application">
+            <type by_reference="false">\Gumdrop\Application</type>
+          </tag>
+        </docblock>
+      </property>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="Gumdrop" line="26" package="Default">
+        <name>__construct</name>
+        <full_name>__construct</full_name>
+        <docblock line="21">
+          <description><![CDATA[Constructor]]></description>
+          <long-description><![CDATA[]]></long-description>
+          <tag line="21" name="param" description="" type="\Gumdrop\Application" variable="$app">
+            <type by_reference="false">\Gumdrop\Application</type>
+          </tag>
+        </docblock>
+        <argument line="26">
+          <name>$app</name>
+          <default><![CDATA[]]></default>
+          <type>\Gumdrop\Application</type>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="Gumdrop" line="34" package="Default">
+        <name>renderTwigFiles</name>
+        <full_name>renderTwigFiles</full_name>
+        <docblock line="31">
+          <description><![CDATA[Renders Twig files and write them to the destination folder]]></description>
+          <long-description><![CDATA[]]></long-description>
+        </docblock>
+      </method>
+    </class>
+  </file>
+  <package name="Default" full_name="Default"/>
+  <package name="Gumdrop" full_name="Gumdrop"/>
+  <namespace name="Gumdrop" full_name="Gumdrop"/>
+  <marker count="0">todo</marker>
+  <marker count="0">fixme</marker>
+  <deprecated count="0"/>
+</project>

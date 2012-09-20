@@ -1,8 +1,8 @@
 composer.lock
 gumdrop.iml
 vendor/
-doc/
-!doc/empty
+#doc/
+#!doc/empty
 
 /.idea/
 .DS_Store
