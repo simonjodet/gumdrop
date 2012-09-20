@@ -302,7 +302,8 @@ class Page extends \Gumdrop\Tests\TestCase
                 )
             )
         ));
-        $destination = $FSTestHelper->getTemporaryPath();
+        $destinationFSTestHelper = new \FSTestHelper\FSTestHelper();
+        $destination = $destinationFSTestHelper->getTemporaryPath();
 
         $Page->writeHtmFiles($destination);
 
