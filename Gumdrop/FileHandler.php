@@ -26,6 +26,14 @@ class FileHandler
         $this->app = $app;
     }
 
+    /**
+     * General purpose recursive listing method with filtering support
+     *
+     * @param callable $filter_callback Filtering function
+     * @param string $location Used for recursion only
+     *
+     * @return array
+     */
     private function listFiles($filter_callback, $location = '')
     {
         if ($location == '')
@@ -166,11 +174,9 @@ class FileHandler
     /**
      * Returns the list of Twig files
      *
-     * @param string $location Used for recursive purposes
-     *
      * @return array The list of Twig files
      */
-    public function listTwigFiles($location = '')
+    public function listTwigFiles()
     {
         $app = $this->app;
         $filter_callback = function($item) use($app)
@@ -215,6 +221,13 @@ class FileHandler
         }
     }
 
+    /**
+     * Computes a hash of the given folder content to detect changes
+     *
+     * @param string $location Used only for recursion
+     *
+     * @return array|int|string
+     */
     public function getSourceFolderHash($location = '')
     {
         if ($location == '')
