@@ -2,110 +2,48 @@
 namespace Gumdrop\Tests;
 
 require_once __DIR__ . '/../TestCase.php';
-require_once __DIR__ . '/../../Gumdrop/PageConfiguration.php';
+require_once __DIR__ . '/../../Gumdrop/SiteConfiguration.php';
 
 class SiteConfiguration extends \Gumdrop\Tests\TestCase
 {
-    public function testExtractHeaderCanExtractConfigurationHeaderFromMarkdownContent()
+    public function testSiteConfigurationThrowsExceptionOnMissingConfigurationFile()
     {
-        $PageConfiguration = new \Gumdrop\PageConfiguration();
-        $PageConfiguration->extractHeader($this->getValidPageContent());
-
-        $this->assertEquals('value1', $PageConfiguration['conf1']);
-    }
-
-    public function testExtractHeaderReturnsMarkdownContentWithoutHeader()
-    {
-        $PageConfiguration = new \Gumdrop\PageConfiguration();
-        $markdownContent = $PageConfiguration->extractHeader($this->getValidPageContent());
-
-        $this->assertEquals($this->getStrippedPageContent(), $markdownContent);
-    }
-
-    public function testExtractHeaderThrowsAnExceptionIfCouldNotReadConfiguration()
-    {
+        $FSTestHelper = new \FSTestHelper\FSTestHelper();
+        $FSTestHelper->createTree(array(
+            'folders' => array(),
+            'files' => array(
+                array(
+                    'path' => 'file.md',
+                    'content' => ''
+                )
+            )
+        ));
         $this->setExpectedException(
-            'Gumdrop\Exception', 'Invalid configuration'
+            'Gumdrop\Exception', 'Could not find the configuration file at ' . $FSTestHelper->getTemporaryPath() . '/conf.json'
         );
-        $PageConfiguration = new \Gumdrop\PageConfiguration();
-        $PageConfiguration->extractHeader($this->getInvalidPageContent());
+
+        new \Gumdrop\SiteConfiguration($FSTestHelper->getTemporaryPath());
     }
-
-    public function testExtractHeaderSilentlyIgnoresNonExistingConfiguration()
+    public function testSiteConfigurationThrowsExceptionOnInvalidConfiguration()
     {
-        $PageConfiguration = new \Gumdrop\PageConfiguration();
-        $PageConfiguration->extractHeader($this->getNonExistingPageContent());
-        $this->assertNull($PageConfiguration['conf1']);
-    }
+        $FSTestHelper = new \FSTestHelper\FSTestHelper();
+        $FSTestHelper->createTree(array(
+            'folders' => array(),
+            'files' => array(
+                array(
+                    'path' => 'file.md',
+                    'content' => ''
+                ),
+                array(
+                    'path' => 'conf.json',
+                    'content' => 'invalid_json'
+                )
+            )
+        ));
+        $this->setExpectedException(
+            'Gumdrop\Exception', 'Invalid configuration in ' . $FSTestHelper->getTemporaryPath() . '/conf.json'
+        );
 
-    public function testExtractHeaderReturnsContentWhenNoHeaderIsPresent()
-    {
-        $PageConfiguration = new \Gumdrop\PageConfiguration();
-        $markdownContent = $PageConfiguration->extractHeader($this->getNonExistingPageContent());
-
-        $this->assertEquals($this->getNonExistingPageContent(), $markdownContent);
-    }
-
-    public function testExtractHeaderIgnoresSuperfluousConfigurationHeaders()
-    {
-        $PageConfiguration = new \Gumdrop\PageConfiguration();
-        $PageConfiguration->extractHeader($this->getDuplicatedPageContent());
-        $this->assertEquals('value1', $PageConfiguration['conf1']);
-    }
-
-
-    private function getValidPageContent()
-    {
-        return <<<CONTENT
-***
-{
-    "conf1":"value1"
-}
-***
-Some page content
-Some other content
-CONTENT;
-    }
-
-    private function getStrippedPageContent()
-    {
-        return <<<CONTENT
-Some page content
-Some other content
-CONTENT;
-    }
-
-    private function getInvalidPageContent()
-    {
-        return <<<CONTENT
-***
-invalid JSON
-***
-Some page content
-CONTENT;
-    }
-
-    private function getNonExistingPageContent()
-    {
-        return <<<CONTENT
-Some page content
-CONTENT;
-    }
-
-    private function getDuplicatedPageContent()
-    {
-        return <<<CONTENT
-***
-{
-    "conf1":"value1"
-}
-***
-Some page content
-***
-{
-    "conf1":"value2"
-}
-***
-CONTENT;
+        new \Gumdrop\SiteConfiguration($FSTestHelper->getTemporaryPath());
     }
 }
