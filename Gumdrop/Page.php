@@ -93,6 +93,31 @@ class Page
     }
 
     /**
+     * Page's final content
+     * @var string
+     */
+    private $pageContent;
+
+    /**
+     * Set Page's content
+     *
+     * @param string $pageContent
+     */
+    public function setPageContent($pageContent)
+    {
+        $this->pageContent = $pageContent;
+    }
+
+    /**
+     * Get Page's content
+     * @return string
+     */
+    public function getPageContent()
+    {
+        return $this->pageContent;
+    }
+
+    /**
      * Page's configuration
      * @var \Gumdrop\PageConfiguration
      */
@@ -116,31 +141,6 @@ class Page
     public function getConfiguration()
     {
         return $this->configuration;
-    }
-
-    /**
-     * Collection the Page belongs to - Mean to access the other pages
-     * @var \Gumdrop\PageCollection
-     */
-    private $collection;
-
-    /**
-     * Set Page's collection
-     *
-     * @param \Gumdrop\PageCollection $collection
-     */
-    public function setCollection(\Gumdrop\PageCollection $collection)
-    {
-        $this->collection = $collection;
-    }
-
-    /**
-     * Get Page's collection
-     * @return \Gumdrop\PageCollection
-     */
-    public function getCollection()
-    {
-        return $this->collection;
     }
 
     /**
@@ -217,21 +217,25 @@ class Page
      */
     public function renderLayoutTwigEnvironment()
     {
-        $twig_layout = null;
-        if (isset($this->configuration['layout']) && !is_null($this->configuration['layout']))
+        $this->setPageContent($this->getHtmlContent());
+        if (!is_null($this->getLayoutTwigEnvironment()))
         {
-            $twig_layout = $this->configuration['layout'];
-        }
-        elseif ($this->app->getFileHandler()->findPageTwigFile())
-        {
-            $twig_layout = 'page.twig';
-        }
-        if (!is_null($twig_layout))
-        {
-            $this->setHtmlContent($this->getLayoutTwigEnvironment()->render(
-                $twig_layout,
-                $this->generateTwigData()
-            ));
+            $twig_layout = null;
+            if (isset($this->configuration['layout']) && !is_null($this->configuration['layout']))
+            {
+                $twig_layout = $this->configuration['layout'];
+            }
+            elseif ($this->app->getFileHandler()->findPageTwigFile())
+            {
+                $twig_layout = 'page.twig';
+            }
+            if (!is_null($twig_layout))
+            {
+                $this->setPageContent($this->getLayoutTwigEnvironment()->render(
+                    $twig_layout,
+                    $this->generateTwigData()
+                ));
+            }
         }
     }
 
@@ -258,8 +262,16 @@ class Page
         {
             mkdir($destination . '/' . $pathinfo['dirname'], 0777, true);
         }
-        $destination_file = $destination . '/' . $pathinfo['dirname'] . '/' . $pathinfo['filename'] . '.htm';
-        file_put_contents($destination_file, $this->getHtmlContent());
+        $conf = $this->getConfiguration();
+        if (isset($conf['target_name']) && !empty($conf['target_name']))
+        {
+            $destination_file = $destination . '/' . $pathinfo['dirname'] . '/' . $conf['target_name'];
+        }
+        else
+        {
+            $destination_file = $destination . '/' . $pathinfo['dirname'] . '/' . $pathinfo['filename'] . '.htm';
+        }
+        file_put_contents($destination_file, $this->getPageContent());
     }
 
     /**
@@ -268,12 +280,14 @@ class Page
      */
     public function exportForTwig()
     {
-        return array(
-            'conf' => $this->getConfiguration()->extract(),
-            'location' => $this->getLocation(),
-            'html' => $this->getHtmlContent(),
-            'markdown' => $this->getMarkdownContent()
-        );
+        $path_info = pathinfo($this->getLocation());
+        return array_merge(
+            $this->getConfiguration()->extract(),
+            array(
+                'location' => str_replace($path_info['basename'], $path_info['filename'] . '.htm', $this->getLocation()),
+                'html' => $this->getHtmlContent(),
+                'markdown' => $this->getMarkdownContent()
+            ));
     }
 
     /**
@@ -285,7 +299,7 @@ class Page
         return array(
             'content' => $this->getHtmlContent(),
             'page' => $this->exportForTwig(),
-            'pages' => $this->getCollection()->exportForTwig()
+            'pages' => $this->app->getPageCollection()->exportForTwig()
         );
     }
 }

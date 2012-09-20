@@ -1,0 +1,274 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title></title>
+    <!--<link rel="stylesheet/less" type="text/css" href="bootstrap/less/bootstrap.less">-->
+    <!--<script src="less-1.3.0.min.js" type="text/javascript"></script>-->
+    <link rel="stylesheet" type="text/css" href="style/bootstrap.css"/>
+</head>
+<body>
+<div class="container" style="margin-top: 30px;">
+<div class="row">
+    <div class="span12">
+        <div class="hero-unit">
+            <h1>Gumdrop</h1>
+
+            <p>Gumdrop is a static website generator converting Markdown files and using the Twig templating engine.</p>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="span12">
+        <div class="well">
+            <h1>Download</h1>
+
+<p>Download the <a href="https://github.com/simonjodet/gumdrop/zipball/master">latest stable version</a>.</p>
+
+<h1>Install</h1>
+
+<p>Gumdrop requires PHP 5.3 with CLI support. However PHP 5.4 is recommended in order to get the built-in web server option.<br />
+If you're using Linux, your distribution most likely has a PHP CLI package for you to install.<br />
+If you're using Mac OS 10.7.x (Lion), PHP 5.3 is already installed. PHP 5.4 may require more work to get.<br />
+Gumdrop has not been tested on Windows.</p>
+
+<p>You'll then need the latest version of <a href="http://getcomposer.org/">Composer</a>.</p>
+
+<p>Once Composer is installed, unzip the ZIP archive you've downloaded and run the following in a terminal:</p>
+
+<pre><code>cd /path/to/gumdrop
+composer install
+</code></pre>
+
+<p>Composer will download Gumdrop's dependencies for you.</p>
+
+<h1>Usage</h1>
+
+<p>Gumdrop is intended to build any kind of web site. I use it to build this help page but also my <a href="http://blog.jodet.com/">blog</a>.</p>
+
+<h2>Command</h2>
+
+<p>You give Gumdrop the folder where your site's source files are, the target folder where to write the generated site and Gumdrop will do the rest.</p>
+
+<p>While I work on this documentation, I use this command line:</p>
+
+<pre><code>bin/gumdrop -s doc_sources/ -t doc/ -r -w
+</code></pre>
+
+<ul>
+<li><code>bin/gumdrop</code> is the command line script to call,</li>
+<li><code>-s doc_sources/</code> tells Gumdrop where to find the source files,</li>
+<li><code>-t doc/</code> tells Gumdrop where to write the generated site,</li>
+<li><code>-r</code> tells Gumdrop to regenerate the site when there is a change in the source folder,</li>
+<li><code>-w</code> tells Gumdrop to launch the local web server (only available with PHP 5.4).</li>
+</ul>
+
+<h2>Configuration</h2>
+
+<p>The first thing Gumdrop is looking for in the source folder is a <code>conf.json</code> file. It will complain if it can't find it.<br />
+So make sure it exists and it contains valid <a href="http://www.json.org/">JSON</a> syntax.</p>
+
+<p>The available configuration options are:</p>
+
+<ul>
+<li><code>timezone</code> Sets the time zone for all date operations in Gumdrop, including Twig date functions (more on Twig below). Refer to <a href="http://php.net/manual/en/timezones.php">this page</a> for the supported timezones.</li>
+<li><code>blacklist</code> A JSON array of files Gumdrop should ignore when looking for Markdown files (more on Markdown files below).</li>
+</ul>
+
+<p>You're free to had other site-wide configuration entries in this file. They will be available in your Twig templates in the <code>{{ site }}</code> variable.</p>
+
+<h3>Example</h3>
+
+<p><code>conf.json</code></p>
+
+<pre><code>{
+  "timezone":"Europe/Paris",
+  "blacklist":["not_converterted_file.twig"],
+  "site_title":"Gumdrop-generated site"
+}
+</code></pre>
+
+<h2>Pages</h2>
+
+<p>At its root, Gumdrop is a Markdown converter. Gumdrop identifies any file with a <code>.md</code> or <code>.markdown</code> extension as one of your site's <strong>page</strong>.</p>
+
+<p>Please refer to the <a href="http://daringfireball.net/projects/markdown/syntax">Markdown's documentation</a> for more information on how to write Markdown files.</p>
+
+<p>Gumdrop will look for Markdown files in any subfolder of the source folder. The generated HTML files will be saved with the same relative path in the target folder.<br />
+The only Markdown files Gumdrop will ignore are:</p>
+
+<ul>
+<li>the files declared in the <code>conf.json</code> file (<code>blacklist</code>),</li>
+<li>if the "root" folder containing the file starts with the <code>_</code> character:<br />
+<code>_folder/subfolder/file.md</code> will be ignored, <code>folder/_subfolder/file.md</code> will not.</li>
+</ul>
+
+<h3>Page configuration</h3>
+
+<p>Every page can contain a <strong>configuration header</strong>. A configuration header should be at the top of the file, start with a line containing <code>***</code> and end with another line containing <code>***</code>.
+Inside the header, the configuration is set in a JSON object. The header will be removed automatically before the page is converted to HTML.</p>
+
+<p>Here's an example from my blog:</p>
+
+<pre><code>***
+{
+    "title":"Mixing up TDD, PHPUnit, Namespaces and Jenkins",
+    "date":"2011-02-22",
+    "category":"development",
+    "layout":"post.twig",
+    "tags":["TDD", "PHPUnit", "namespace", "Jenkins", "PHP"]
+}
+***
+# Heading
+Some Markdown content
+</code></pre>
+
+<p>Some configuration keys are used by Gumdrop:</p>
+
+<ul>
+<li><code>layout</code> tells Gumdrop to use this Twig template instead of the default one for this page (more on page layout below).</li>
+</ul>
+
+<p><strong>Note:</strong> More configuration keys may be used by Gumdrop in the future.</p>
+
+<p>Similarly to the site configuration, you're free to had other page-wide configuration entries in the header. They will be available in your Twig templates in the <code>{{ page }}</code> variable. However some keys are reserved as Gumdrop set them automatically: </p>
+
+<ul>
+<li><code>page.location</code> the page's relative path (and relative URL),</li>
+<li><code>page.html</code> the page's converted HTML content (with the applied layout),</li>
+<li><code>page.markdown</code> the page's original Markdown content.</li>
+</ul>
+
+<p>If you set a configuration value with those reserved keys, they will be overwritten. You've been warned ;)</p>
+
+<h3>Page layout</h3>
+
+<p>Markdown conversion to HTML is nice but you end up with pretty sad-looking web pages.</p>
+
+<p>As you probably guessed by now, Gumdrop uses the <a href="http://twig.sensiolabs.org/">Twig</a> template engine to help you customize and design your pages.</p>
+
+<p>By default, Gumdrop is looking in the <code>_layout</code> folder in the source folder for a <code>page.twig</code> template to apply to your pages. As seen above, you can use the page's configuration header to set a different layout file.</p>
+
+<p>At the bare minimum, your layout file should contain the following code:</p>
+
+<pre><code>{{ content }}
+</code></pre>
+
+<p><code>{{ content }}</code> is the Twig variable containing the HTML conversion of your page. You're free to surround it with HTML, JS, CSS and Twig as much as you wish.</p>
+
+<p>I've put in <a href="https://gist.github.com/3749184">a Gist</a> a simplified version of my blog's layout files. All post pages have a <code>layout</code> configuration set to <code>post.twig</code>.<br />
+And Twig template inclusion works like a charm - note the <code>{% extends "default.twig" %}</code> in <code>post.twig</code> and <code></code> in <code>default.twig</code>. So my posts are included in the <code>default.twig</code> template as the index page (I'll come back later on how I build the index page).</p>
+
+<p>For more information about what Twig is capable of, please refer to <a href="http://twig.sensiolabs.org/documentation">its documentation</a>.</p>
+
+<h2>Static files</h2>
+
+<p>HTML files are nice but you'll probably want to put your styles in a <code>.css</code> file, your JavaScript code in a <code>.js</code> file and maybe add some images.</p>
+
+<p>By default, Gumdrop will copy over any file that is not a Markdown file at the same relative path in the target folder.<br />
+You want to put your JavaScript code in <code>js/script.js</code>? Create the file in source folder, Gumdrop will copy it as it is in the target folder.</p>
+
+<p>The only exception is common to the Markdown files listing. "Root" folders starting with <code>_</code> are ignored. Files in <code>_layout/</code> or <code>_private/</code> and their subfolders will be ignored.</p>
+
+<h2>Twig files</h2>
+
+<p>We saw before how to use Twig files as layout for your pages. That's nice but sometimes not sufficient.<br />
+In some cases, you want to create pages where the content comes from your Markdown files. The best example: your blog's index page. It contains posts written in the Markdown files but no redactional content on its own. Same for your RSS feed.</p>
+
+<p>To solve this, Gumdrop will look for Twig files (files having a <code>.twig</code> extension) outside of the <code>_layout</code> folder and render them.</p>
+
+<p>But that's not be enough to create your index page. Gumdrop passes also most of your site's content to your Twig pages through variables:</p>
+
+<ul>
+<li><code>site</code> an object containing the site's configuration,</li>
+<li><code>pages</code> an array of objects of your site's pages:
+
+<ul>
+<li><code>page.location</code> the page's relative path (and relative URL),</li>
+<li><code>page.html</code> the page's converted HTML content (with the applied layout),</li>
+<li><code>page.markdown</code> the page's original Markdown content,</li>
+<li>every configuration values you set in the page's configuration header (like date, tags, title in the "Page configuration" example above).</li>
+</ul></li>
+</ul>
+
+<p>So, by <a href="http://twig.sensiolabs.org/doc/tags/for.html">looping</a> on the <code>pages</code> variable, you can easily build <a href="https://gist.github.com/3749322">an index page</a>.</p>
+
+<p>Similar to Markdown files and static files, Twig files are converted at the same relative path in the target folder. Twig files can't contain a configuration header. However, the Twig file will be rendered to a file with the same name but without the <code>.twig</code> extension.<br />
+So the <code>index.htm.twig</code> file will be rendered to <code>index.htm</code> and the <code>rss/atom.xml.twig</code> files will be rendered to <code>rss/atom.xml</code>.</p>
+
+<h1>Contributing</h1>
+
+<h2>Forking</h2>
+
+<p>You can of course fork <a href="https://github.com/simonjodet/gumdrop/tree/develop">this project</a> at your leisure.<br />
+Any PR should be done with a dedicated branch originating from the <code>develop</code> branch.<br />
+I will <strong>not</strong> merge the latest commits on the <code>develop</code> branch for you so please make sure you're up-to-date before issuing a PR.<br />
+Anyone willing to test and fix Windows issues is welcome to do so ^^</p>
+
+<h2>Coding</h2>
+
+<p>My coding style is pretty obvious. Please try to respect it as much as possible.</p>
+
+<p>All code should be unit tested - <em>TDD FTW!</em><br />
+There is an additional dependency for developers, <a href="https://github.com/padraic/mockery">Mockery</a>. You should run your composer commands with the <code>--dev</code> options:</p>
+
+<pre><code>composer install --dev
+composer update --dev
+</code></pre>
+
+<p>Unit tests are written for <a href="http://www.phpunit.de/manual/3.6/en/index.html">PHPUnit 3.6</a> and the test coverage report is available <a href="coverage/index.html">here</a>:</p>
+
+<pre><code>cd /path/to/gumdrop/tests/
+phpunit -c phpunit.xml
+</code></pre>
+
+<p>PHPDoc is available <a href="phpdoc/index.html">here</a>.</p>
+
+<pre><code>cd /path/to/gumdrop/tests/
+phpdoc
+</code></pre>
+
+<p>You should use <a href="http://www.phpdoc.org/">PHPDocumentor 2</a>.</p>
+
+<h1>License</h1>
+
+<blockquote>
+  <p>Copyright &copy;2012 Simon Jodet</p>
+  
+  <p>Permission is hereby granted, free of charge, to any person obtaining a copy of
+  this software and associated documentation files (the "Software"), to deal in
+  the Software without restriction, including without limitation the rights to
+  use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies
+  of the Software, and to permit persons to whom the Software is furnished to do
+  so, subject to the following conditions:</p>
+  
+  <p>The above copyright notice and this permission notice shall be included in all
+  copies or substantial portions of the Software.</p>
+  
+  <p>THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+  SOFTWARE.</p>
+</blockquote>
+
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="span12">
+        <div class="well">
+            <footer style="text-align:center;">Gumdrop &copy; Simon Jodet 2012</footer>
+        </div>
+    </div>
+</div>
+
+</div>
+<!-- /container -->
+
+</body>
+</html>

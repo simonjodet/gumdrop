@@ -4,12 +4,32 @@
     "version":"0.0.5-beta",
     "type":"library",
     "license":"MIT",
+    "repositories":[
+        {
+            "type":"vcs",
+            "url":"https://github.com/simonjodet/dflydev-markdown"
+        },
+        {
+            "type":"vcs",
+            "url":"https://github.com/simonjodet/Twig"
+        },
+        {
+            "type":"vcs",
+            "url":"https://github.com/simonjodet/mockery"
+        },
+        {
+            "type":"vcs",
+            "url":"https://github.com/simonjodet/FSTestHelper"
+        }
+    ],
     "require":{
-        "dflydev/markdown":"dev-master",
-        "twig/twig":"dev-master"
+        "simonjodet/markdown":"dev-master",
+        "simonjodet/Twig":"dev-master"
     },
     "require-dev":{
-        "mockery/mockery":"0.7.2"
+        "simonjodet/mockery":"0.7.2",
+        "behat/behat":"2.4.*@stable",
+        "simonjodet/fstesthelper":"dev-master"
     },
     "autoload":{
         "psr-0":{

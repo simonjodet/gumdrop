@@ -4,9 +4,9 @@ namespace Gumdrop\Tests;
 require_once __DIR__ . '/../TestCase.php';
 require_once __DIR__ . '/../../Gumdrop/Page.php';
 require_once __DIR__ . '/../../Gumdrop/PageConfiguration.php';
-require_once __DIR__ . '/../../vendor/twig/twig/lib/Twig/Environment.php';
-require_once __DIR__ . '/../../vendor/dflydev/markdown/src/dflydev/markdown/IMarkdownParser.php';
-require_once __DIR__ . '/../../vendor/dflydev/markdown/src/dflydev/markdown/MarkdownParser.php';
+require_once __DIR__ . '/../../vendor/simonjodet/twig/lib/Twig/Environment.php';
+require_once __DIR__ . '/../../vendor/simonjodet/markdown/src/dflydev/markdown/IMarkdownParser.php';
+require_once __DIR__ . '/../../vendor/simonjodet/markdown/src/dflydev/markdown/MarkdownParser.php';
 
 class Page extends \Gumdrop\Tests\TestCase
 {
@@ -47,6 +47,20 @@ class Page extends \Gumdrop\Tests\TestCase
         $this->assertEquals($Page->getHtmlContent(), 'html content 1');
     }
 
+    public function testRenderLayoutTwigEnvironmentDoesNothingIfEnvironmentIsNull()
+    {
+        $app = new \Gumdrop\Application();
+
+        $LayoutTwigEnvironment = null;
+
+        $Page = new \Gumdrop\Page($app);
+        $Page->setHtmlContent('html content 1');
+
+        $Page->renderLayoutTwigEnvironment();
+
+        $this->assertEquals($Page->getPageContent(), 'html content 1');
+    }
+
     public function testRenderLayoutTwigEnvironmentAppliesTheLayoutToPages()
     {
         $app = new \Gumdrop\Application();
@@ -76,11 +90,11 @@ class Page extends \Gumdrop\Tests\TestCase
             ->andReturn('twig content 1');
 
         $Page->setLayoutTwigEnvironment($LayoutTwigEnvironment);
-        $Page->setCollection($PageCollection);
+        $app->setPageCollection($PageCollection);
 
         $Page->renderLayoutTwigEnvironment();
 
-        $this->assertEquals($Page->getHtmlContent(), 'twig content 1');
+        $this->assertEquals($Page->getPageContent(), 'twig content 1');
     }
 
     public function testRenderLayoutTwigEnvironmentDoesNotApplyTheLayoutToPagesIfItDoesNotExist()
@@ -98,7 +112,7 @@ class Page extends \Gumdrop\Tests\TestCase
 
         $Page->renderLayoutTwigEnvironment();
 
-        $this->assertEquals($Page->getHtmlContent(), 'html content 1');
+        $this->assertEquals($Page->getPageContent(), 'html content 1');
     }
 
     public function testRenderLayoutTwigEnvironmentPreferablyUsesLayoutSetInPageConfiguration()
@@ -125,7 +139,7 @@ class Page extends \Gumdrop\Tests\TestCase
             ->andReturn('twig content 1');
 
         $Page->setLayoutTwigEnvironment($LayoutTwigEnvironment);
-        $Page->setCollection($PageCollection);
+        $app->setPageCollection($PageCollection);
 
         $Page->renderLayoutTwigEnvironment();
     }
@@ -151,7 +165,7 @@ class Page extends \Gumdrop\Tests\TestCase
             ->andReturn('new html content');
 
         $Page->setPageTwigEnvironment($PageTwigEnvironment);
-        $Page->setCollection($PageCollection);
+        $app->setPageCollection($PageCollection);
 
         $Page->renderPageTwigEnvironment();
 
@@ -174,7 +188,7 @@ class Page extends \Gumdrop\Tests\TestCase
         $Page = new \Gumdrop\Page($app);
         $Page->setConfiguration($PageConfiguration);
         $Page->setHtmlContent('initial html content');
-        $Page->setLocation('my_folder/my_file');
+        $Page->setLocation('my_folder/my_file.md');
         $Page->setMarkdownContent('markdown content');
 
 
@@ -186,11 +200,9 @@ class Page extends \Gumdrop\Tests\TestCase
             array(
                 'content' => 'initial html content',
                 'page' => array(
-                    'conf' => array(
-                        'layout' => 'my_layout',
-                        'title' => 'my_title'
-                    ),
-                    'location' => 'my_folder/my_file',
+                    'layout' => 'my_layout',
+                    'title' => 'my_title',
+                    'location' => 'my_folder/my_file.htm',
                     'html' => 'initial html content',
                     'markdown' => 'markdown content'
                 ),
@@ -198,7 +210,7 @@ class Page extends \Gumdrop\Tests\TestCase
             ));
 
         $Page->setPageTwigEnvironment($PageTwigEnvironment);
-        $Page->setCollection($PageCollection);
+        $app->setPageCollection($PageCollection);
         $Page->renderPageTwigEnvironment();
     }
 
@@ -209,21 +221,20 @@ class Page extends \Gumdrop\Tests\TestCase
         $PageConfiguration = new \Gumdrop\PageConfiguration();
         $PageConfiguration['layout'] = 'my_layout';
         $PageConfiguration['title'] = 'my_title';
+        $PageConfiguration['html'] = 'this should be overwritten by the page html content';
 
 
         $Page = new \Gumdrop\Page($app);
         $Page->setConfiguration($PageConfiguration);
         $Page->setHtmlContent('html content');
-        $Page->setLocation('my_folder/my_file');
+        $Page->setLocation('my_folder/my_file.markdown');
         $Page->setMarkdownContent('markdown content');
 
         $this->assertEquals(
             array(
-                'conf' => array(
-                    'layout' => 'my_layout',
-                    'title' => 'my_title'
-                ),
-                'location' => 'my_folder/my_file',
+                'layout' => 'my_layout',
+                'title' => 'my_title',
+                'location' => 'my_folder/my_file.htm',
                 'html' => 'html content',
                 'markdown' => 'markdown content'
             ),
@@ -231,23 +242,71 @@ class Page extends \Gumdrop\Tests\TestCase
         );
     }
 
-        public function testWriteHtmlFilesWritePagesToHtmFiles()
+    public function testWriteHtmFilesWritePagesToHtmFiles()
     {
         $app = new \Gumdrop\Application();
 
         $Page = new \Gumdrop\Page($app);
         $Page->setLocation('folder/file_1_path.md');
-        $Page->setHtmlContent('twig content 1');
+        $Page->setPageContent('twig content 1');
 
-        $destination = TMP_FOLDER . $this->getUniqueId();
-        mkdir($destination);
+        $FSTestHelper = new \FSTestHelper\FSTestHelper();
+        $FSTestHelper->createTree(array(
+            'folders' => array(),
+            'files' => array(
+                array(
+                    'path' => 'folder/file1.md',
+                    'content' => ''
+                ),
+                array(
+                    'path' => 'file2.markdown',
+                    'content' => ''
+                ),
+                array(
+                    'path' => 'file3.txt',
+                    'content' => ''
+                )
+            )
+        ));
+        $destination = $FSTestHelper->getTemporaryPath();
 
         $Page->writeHtmFiles($destination);
 
         $this->assertStringEqualsFile($destination . '/folder/file_1_path.htm', 'twig content 1');
+    }
 
-        unlink($destination . '/folder/file_1_path.htm');
-        rmdir($destination . '/folder');
-        rmdir($destination);
+    public function testWriteHtmFilesWritePagesToSpecifiedFilename()
+    {
+        $app = new \Gumdrop\Application();
+
+        $Page = new \Gumdrop\Page($app);
+        $Page->setLocation('folder/file_1_path.md');
+        $Page->setPageContent('twig content 1');
+        $Page->setConfiguration(new \Gumdrop\PageConfiguration(array('target_name' => 'file.ext')));
+
+        $FSTestHelper = new \FSTestHelper\FSTestHelper();
+        $FSTestHelper->createTree(array(
+            'folders' => array(),
+            'files' => array(
+                array(
+                    'path' => 'folder/file1.md',
+                    'content' => ''
+                ),
+                array(
+                    'path' => 'file2.markdown',
+                    'content' => ''
+                ),
+                array(
+                    'path' => 'file3.txt',
+                    'content' => ''
+                )
+            )
+        ));
+        $destinationFSTestHelper = new \FSTestHelper\FSTestHelper();
+        $destination = $destinationFSTestHelper->getTemporaryPath();
+
+        $Page->writeHtmFiles($destination);
+
+        $this->assertStringEqualsFile($destination . '/folder/file.ext', 'twig content 1');
     }
 }

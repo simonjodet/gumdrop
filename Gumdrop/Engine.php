@@ -19,6 +19,7 @@ class Engine
 
     /**
      * Constructor
+     *
      * @param \Gumdrop\Application $app
      */
     public function __construct(\Gumdrop\Application $app)
@@ -28,26 +29,46 @@ class Engine
 
     /**
      * Runs the PageCollection through all the steps of the process
-     *
-     * @param PageCollection $PageCollection
      */
-    public function run(\Gumdrop\PageCollection $PageCollection)
+    public function run()
     {
-        $LayoutTwigEnvironment = $this->app->getTwig()->getLayoutEnvironment();
-        $PageTwigEnvironment = $this->app->getTwig()->getPageEnvironment();
+        $this->app->setSiteConfiguration(new \Gumdrop\SiteConfiguration($this->app->getSourceLocation()));
+        if ($this->app->getSiteConfiguration()->offsetExists('timezone'))
+        {
+            date_default_timezone_set($this->app->getSiteConfiguration()->offsetGet('timezone'));
+        }
+        $PageCollection = $this->app->getFileHandler()->listMarkdownFiles();
+        $PageCollection = $this->app->getFileHandler()->getMarkdownFiles($PageCollection);
+        $LayoutTwigEnvironment = $this->app->getTwigEnvironments()->getLayoutEnvironment();
+        $PageTwigEnvironment = $this->app->getTwigEnvironments()->getPageEnvironment();
         foreach ($PageCollection as $key => $Page)
         {
             $PageCollection[$key]->setConfiguration(new \Gumdrop\PageConfiguration());
             $PageCollection[$key]->convertMarkdownToHtml();
-            $PageCollection[$key]->setCollection($PageCollection);
         }
+
+        $this->app->setPageCollection($PageCollection);
+
         foreach ($PageCollection as $key => $Page)
         {
-            $PageCollection[$key]->setLayoutTwigEnvironment($LayoutTwigEnvironment);
+            if (!is_null($LayoutTwigEnvironment))
+            {
+                $PageCollection[$key]->setLayoutTwigEnvironment($LayoutTwigEnvironment);
+            }
             $PageCollection[$key]->setPageTwigEnvironment($PageTwigEnvironment);
             $PageCollection[$key]->renderPageTwigEnvironment();
             $PageCollection[$key]->renderLayoutTwigEnvironment();
+        }
+
+        $this->app->getFileHandler()->clearDestinationLocation();
+
+        foreach ($PageCollection as $key => $Page)
+        {
             $PageCollection[$key]->writeHtmFiles($this->app->getDestinationLocation());
         }
+
+        $this->app->setPageCollection($PageCollection);
+        $this->app->getFileHandler()->copyStaticFiles();
+        $this->app->getTwigFileHandler()->renderTwigFiles($this->app->getFileHandler()->listTwigFiles());
     }
 }
