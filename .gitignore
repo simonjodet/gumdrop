@@ -1,10 +1,8 @@
 composer.lock
 gumdrop.iml
 vendor/
-doc/phpdoc/
-!doc/phpdoc/empty
-doc/coverage/
-!doc/coverage/empty
+doc/
+!doc/empty
 
 /.idea/
 .DS_Store
