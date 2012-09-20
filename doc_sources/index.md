@@ -177,8 +177,6 @@ PHPDoc is available [here](phpdoc/index.html).
 
 You should use [PHPDocumentor 2](http://www.phpdoc.org/).
 
-Here's a [pre-commit](pre-commit) hook (to copy to `.git/hooks/`) that will generate the documentation including the test coverage report and phpdoc.
-
 # License
 
 > Copyright &copy;2012 Simon Jodet
