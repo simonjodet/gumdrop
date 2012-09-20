@@ -31,7 +31,14 @@ if (isset($_SERVER['argv'][3]) && $_SERVER['argv'][3] == '-c')
 }
 else
 {
-    $Application->getEngine()->run();
-    echo 'Gumdrop converted your MarkDown files to ' . $destination . PHP_EOL;
+    try
+    {
+        $Application->getEngine()->run();
+        echo 'Gumdrop converted your MarkDown files to ' . $destination . PHP_EOL;
+    }
+    catch (\Exception $e)
+    {
+        echo 'Gumdrop could not generate your site for the following reason: "' . $e->getMessage() . '"' . PHP_EOL;
+    }
 }
 exit(0);
