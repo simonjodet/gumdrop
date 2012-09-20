@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
 <meta charset="utf-8">
-<title>Gumdrop » \Gumdrop\Exception</title>
+<title>Gumdrop » \Gumdrop\TwigEnvironments</title>
 <meta name="author" content="Mike van Riel">
 <meta name="description" content="">
 <link href="../css/template.css" rel="stylesheet" media="all">
@@ -55,158 +55,84 @@
 <ul class="side-nav nav nav-list">
 <li class="nav-header">
 <i class="icon-custom icon-method"></i> Methods</li>
-<li class="method public "><a href="#__construct" title="__construct :: "><span class="description">__construct()
-        </span><pre>__construct()</pre></a></li>
-<li class="method public "><a href="#__toString" title="__toString :: "><span class="description">__toString()
-        </span><pre>__toString()</pre></a></li>
-<li class="method public "><a href="#getCode" title="getCode :: "><span class="description">getCode()
-        </span><pre>getCode()</pre></a></li>
-<li class="method public "><a href="#getFile" title="getFile :: "><span class="description">getFile()
-        </span><pre>getFile()</pre></a></li>
-<li class="method public "><a href="#getLine" title="getLine :: "><span class="description">getLine()
-        </span><pre>getLine()</pre></a></li>
-<li class="method public "><a href="#getMessage" title="getMessage :: "><span class="description">getMessage()
-        </span><pre>getMessage()</pre></a></li>
-<li class="method public "><a href="#getPrevious" title="getPrevious :: "><span class="description">getPrevious()
-        </span><pre>getPrevious()</pre></a></li>
-<li class="method public "><a href="#getTrace" title="getTrace :: "><span class="description">getTrace()
-        </span><pre>getTrace()</pre></a></li>
-<li class="method public "><a href="#getTraceAsString" title="getTraceAsString :: "><span class="description">getTraceAsString()
-        </span><pre>getTraceAsString()</pre></a></li>
+<li class="method public "><a href="#__construct" title="__construct :: Constructor"><span class="description">Constructor</span><pre>__construct()</pre></a></li>
+<li class="method public "><a href="#getLayoutEnvironment" title="getLayoutEnvironment :: Get Twig layout environment"><span class="description">Get Twig layout environment</span><pre>getLayoutEnvironment()</pre></a></li>
+<li class="method public "><a href="#getPageEnvironment" title="getPageEnvironment :: Get the Twig page environment"><span class="description">Get the Twig page environment</span><pre>getPageEnvironment()</pre></a></li>
+<li class="method public "><a href="#getSiteEnvironment" title="getSiteEnvironment :: Get Twig site environment"><span class="description">Get Twig site environment</span><pre>getSiteEnvironment()</pre></a></li>
+<li class="nav-header">
+<i class="icon-custom icon-property"></i> Properties</li>
+<li class="nav-header private">» Private</li>
+<li class="property private "><a href="#%24app" title="$app :: Dependency injector"><span class="description">Dependency injector</span><pre>$app</pre></a></li>
 </ul>
 </div>
 <div class="span8">
-<a name="%5CGumdrop%5CException" id="\Gumdrop\Exception"></a><ul class="breadcrumb">
+<a name="%5CGumdrop%5CTwigEnvironments" id="\Gumdrop\TwigEnvironments"></a><ul class="breadcrumb">
 <li>
 <a href="../index.html"><i class="icon-custom icon-class"></i></a><span class="divider">\</span>
 </li>
 <li><a href="../namespaces/Gumdrop.html">Gumdrop</a></li>
 <li class="active">
-<span class="divider">\</span><a href="../classes/Gumdrop.Exception.html">Exception</a>
+<span class="divider">\</span><a href="../classes/Gumdrop.TwigEnvironments.html">TwigEnvironments</a>
 </li>
 </ul>
-<div href="../classes/Gumdrop.Exception.html" class="element class">
-<p class="short_description">Gumdrop Exception - mainly here because of PHPUnit restrictions</p>
+<div href="../classes/Gumdrop.TwigEnvironments.html" class="element class">
+<p class="short_description">TwigEnvironments Environment provider</p>
 <div class="details">
 <p class="long_description"></p>
 <h3>
 <i class="icon-custom icon-method"></i> Methods</h3>
 <a name="__construct" id="__construct"></a><div class="element clickable method public __construct" data-toggle="collapse" data-target=".__construct .collapse">
-<h2>__construct()
-        </h2>
-<pre>__construct() </pre>
+<h2>Constructor</h2>
+<pre>__construct(\Gumdrop\Application $app) </pre>
 <div class="labels"></div>
 <div class="row collapse"><div class="detail-description">
 <p class="long_description"></p>
-<table class="table table-bordered"><tr>
-<th>inherited_from</th>
-<td>Exception::__construct()</td>
-</tr></table>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$app</h4>
+<code><a href="../classes/Gumdrop.Application.html">\Gumdrop\Application</a></code><p>Dependency injector</p></div>
 </div></div>
 </div>
-<a name="__toString" id="__toString"></a><div class="element clickable method public __toString" data-toggle="collapse" data-target=".__toString .collapse">
-<h2>__toString()
-        </h2>
-<pre>__toString() </pre>
+<a name="getLayoutEnvironment" id="getLayoutEnvironment"></a><div class="element clickable method public getLayoutEnvironment" data-toggle="collapse" data-target=".getLayoutEnvironment .collapse">
+<h2>Get Twig layout environment</h2>
+<pre>getLayoutEnvironment() : \Twig_Environment</pre>
 <div class="labels"></div>
 <div class="row collapse"><div class="detail-description">
 <p class="long_description"></p>
-<table class="table table-bordered"><tr>
-<th>inherited_from</th>
-<td>Exception::__toString()</td>
-</tr></table>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>\Twig_Environment</code>Twig layout environment</div>
 </div></div>
 </div>
-<a name="getCode" id="getCode"></a><div class="element clickable method public getCode" data-toggle="collapse" data-target=".getCode .collapse">
-<h2>getCode()
-        </h2>
-<pre>getCode() </pre>
+<a name="getPageEnvironment" id="getPageEnvironment"></a><div class="element clickable method public getPageEnvironment" data-toggle="collapse" data-target=".getPageEnvironment .collapse">
+<h2>Get the Twig page environment</h2>
+<pre>getPageEnvironment() : \Twig_Environment</pre>
 <div class="labels"></div>
 <div class="row collapse"><div class="detail-description">
 <p class="long_description"></p>
-<table class="table table-bordered"><tr>
-<th>inherited_from</th>
-<td>Exception::getCode()</td>
-</tr></table>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>\Twig_Environment</code>Twig page environment</div>
 </div></div>
 </div>
-<a name="getFile" id="getFile"></a><div class="element clickable method public getFile" data-toggle="collapse" data-target=".getFile .collapse">
-<h2>getFile()
-        </h2>
-<pre>getFile() </pre>
+<a name="getSiteEnvironment" id="getSiteEnvironment"></a><div class="element clickable method public getSiteEnvironment" data-toggle="collapse" data-target=".getSiteEnvironment .collapse">
+<h2>Get Twig site environment</h2>
+<pre>getSiteEnvironment() : \Twig_Environment</pre>
 <div class="labels"></div>
 <div class="row collapse"><div class="detail-description">
 <p class="long_description"></p>
-<table class="table table-bordered"><tr>
-<th>inherited_from</th>
-<td>Exception::getFile()</td>
-</tr></table>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>\Twig_Environment</code>Twig site environment</div>
 </div></div>
 </div>
-<a name="getLine" id="getLine"></a><div class="element clickable method public getLine" data-toggle="collapse" data-target=".getLine .collapse">
-<h2>getLine()
-        </h2>
-<pre>getLine() </pre>
+<h3>
+<i class="icon-custom icon-property"></i> Properties</h3>
+<a name="%24app" id="$app"> </a><div class="element clickable property private $app" data-toggle="collapse" data-target=".$app .collapse">
+<h2>Dependency injector</h2>
+<pre>$app : <a href="../classes/Gumdrop.Application.html">\Gumdrop\Application</a></pre>
 <div class="labels"></div>
-<div class="row collapse"><div class="detail-description">
-<p class="long_description"></p>
-<table class="table table-bordered"><tr>
-<th>inherited_from</th>
-<td>Exception::getLine()</td>
-</tr></table>
-</div></div>
-</div>
-<a name="getMessage" id="getMessage"></a><div class="element clickable method public getMessage" data-toggle="collapse" data-target=".getMessage .collapse">
-<h2>getMessage()
-        </h2>
-<pre>getMessage() </pre>
-<div class="labels"></div>
-<div class="row collapse"><div class="detail-description">
-<p class="long_description"></p>
-<table class="table table-bordered"><tr>
-<th>inherited_from</th>
-<td>Exception::getMessage()</td>
-</tr></table>
-</div></div>
-</div>
-<a name="getPrevious" id="getPrevious"></a><div class="element clickable method public getPrevious" data-toggle="collapse" data-target=".getPrevious .collapse">
-<h2>getPrevious()
-        </h2>
-<pre>getPrevious() </pre>
-<div class="labels"></div>
-<div class="row collapse"><div class="detail-description">
-<p class="long_description"></p>
-<table class="table table-bordered"><tr>
-<th>inherited_from</th>
-<td>Exception::getPrevious()</td>
-</tr></table>
-</div></div>
-</div>
-<a name="getTrace" id="getTrace"></a><div class="element clickable method public getTrace" data-toggle="collapse" data-target=".getTrace .collapse">
-<h2>getTrace()
-        </h2>
-<pre>getTrace() </pre>
-<div class="labels"></div>
-<div class="row collapse"><div class="detail-description">
-<p class="long_description"></p>
-<table class="table table-bordered"><tr>
-<th>inherited_from</th>
-<td>Exception::getTrace()</td>
-</tr></table>
-</div></div>
-</div>
-<a name="getTraceAsString" id="getTraceAsString"></a><div class="element clickable method public getTraceAsString" data-toggle="collapse" data-target=".getTraceAsString .collapse">
-<h2>getTraceAsString()
-        </h2>
-<pre>getTraceAsString() </pre>
-<div class="labels"></div>
-<div class="row collapse"><div class="detail-description">
-<p class="long_description"></p>
-<table class="table table-bordered"><tr>
-<th>inherited_from</th>
-<td>Exception::getTraceAsString()</td>
-</tr></table>
-</div></div>
+<div class="row collapse"><div class="detail-description"><p class="long_description"></p></div></div>
 </div>
 </div>
 </div>

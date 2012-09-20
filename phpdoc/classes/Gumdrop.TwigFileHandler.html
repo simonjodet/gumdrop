@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
 <meta charset="utf-8">
-<title>Gumdrop » \Gumdrop\Twig</title>
+<title>Gumdrop » \Gumdrop\TwigFileHandler</title>
 <meta name="author" content="Mike van Riel">
 <meta name="description" content="">
 <link href="../css/template.css" rel="stylesheet" media="all">
@@ -56,8 +56,7 @@
 <li class="nav-header">
 <i class="icon-custom icon-method"></i> Methods</li>
 <li class="method public "><a href="#__construct" title="__construct :: Constructor"><span class="description">Constructor</span><pre>__construct()</pre></a></li>
-<li class="method public "><a href="#getLayoutEnvironment" title="getLayoutEnvironment :: Get Twig layout environment"><span class="description">Get Twig layout environment</span><pre>getLayoutEnvironment()</pre></a></li>
-<li class="method public "><a href="#getPageEnvironment" title="getPageEnvironment :: Get the Twig page environment"><span class="description">Get the Twig page environment</span><pre>getPageEnvironment()</pre></a></li>
+<li class="method public "><a href="#renderTwigFiles" title="renderTwigFiles :: Renders Twig files and write them to the destination folder"><span class="description">Renders Twig files and write them to the destination folder</span><pre>renderTwigFiles()</pre></a></li>
 <li class="nav-header">
 <i class="icon-custom icon-property"></i> Properties</li>
 <li class="nav-header private">» Private</li>
@@ -65,17 +64,17 @@
 </ul>
 </div>
 <div class="span8">
-<a name="%5CGumdrop%5CTwig" id="\Gumdrop\Twig"></a><ul class="breadcrumb">
+<a name="%5CGumdrop%5CTwigFileHandler" id="\Gumdrop\TwigFileHandler"></a><ul class="breadcrumb">
 <li>
 <a href="../index.html"><i class="icon-custom icon-class"></i></a><span class="divider">\</span>
 </li>
 <li><a href="../namespaces/Gumdrop.html">Gumdrop</a></li>
 <li class="active">
-<span class="divider">\</span><a href="../classes/Gumdrop.Twig.html">Twig</a>
+<span class="divider">\</span><a href="../classes/Gumdrop.TwigFileHandler.html">TwigFileHandler</a>
 </li>
 </ul>
-<div href="../classes/Gumdrop.Twig.html" class="element class">
-<p class="short_description">Twig Environment provider</p>
+<div href="../classes/Gumdrop.TwigFileHandler.html" class="element class">
+<p class="short_description">Twig files handler</p>
 <div class="details">
 <p class="long_description"></p>
 <h3>
@@ -89,30 +88,15 @@
 <h3>Parameters</h3>
 <div class="subelement argument">
 <h4>$app</h4>
-<code><a href="../classes/Gumdrop.Application.html">\Gumdrop\Application</a></code><p>Dependency injector</p></div>
+<code><a href="../classes/Gumdrop.Application.html">\Gumdrop\Application</a></code>
+</div>
 </div></div>
 </div>
-<a name="getLayoutEnvironment" id="getLayoutEnvironment"></a><div class="element clickable method public getLayoutEnvironment" data-toggle="collapse" data-target=".getLayoutEnvironment .collapse">
-<h2>Get Twig layout environment</h2>
-<pre>getLayoutEnvironment() : \Twig_Environment</pre>
+<a name="renderTwigFiles" id="renderTwigFiles"></a><div class="element clickable method public renderTwigFiles" data-toggle="collapse" data-target=".renderTwigFiles .collapse">
+<h2>Renders Twig files and write them to the destination folder</h2>
+<pre>renderTwigFiles() </pre>
 <div class="labels"></div>
-<div class="row collapse"><div class="detail-description">
-<p class="long_description"></p>
-<h3>Returns</h3>
-<div class="subelement response">
-<code>\Twig_Environment</code>Twig layout environment</div>
-</div></div>
-</div>
-<a name="getPageEnvironment" id="getPageEnvironment"></a><div class="element clickable method public getPageEnvironment" data-toggle="collapse" data-target=".getPageEnvironment .collapse">
-<h2>Get the Twig page environment</h2>
-<pre>getPageEnvironment() : \Twig_Environment</pre>
-<div class="labels"></div>
-<div class="row collapse"><div class="detail-description">
-<p class="long_description"></p>
-<h3>Returns</h3>
-<div class="subelement response">
-<code>\Twig_Environment</code>Twig page environment</div>
-</div></div>
+<div class="row collapse"><div class="detail-description"><p class="long_description"></p></div></div>
 </div>
 <h3>
 <i class="icon-custom icon-property"></i> Properties</h3>
@@ -129,7 +113,7 @@
 <div class="row"><footer class="span12">
             Template is built using <a href="http://twitter.github.com/bootstrap/">Twitter Bootstrap 2</a> and icons provided by <a href="http://glyphicons.com/">Glyphicons</a>.<br>
             Documentation is powered by <a href="http://www.phpdoc.org/">phpDocumentor 2.0.0a8</a> and<br>
-            generated on 2012-08-09T16:12:51+02:00.<br></footer></div>
+            generated on 2012-09-20T09:46:47+02:00.<br></footer></div>
 </div>
 </body>
 </html>

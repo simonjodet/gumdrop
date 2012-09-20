@@ -58,21 +58,21 @@
 <li class="method public "><a href="#__construct" title="__construct :: Constructor"><span class="description">Constructor</span><pre>__construct()</pre></a></li>
 <li class="method public "><a href="#convertMarkdownToHtml" title="convertMarkdownToHtml :: Converts the Markdown code to HTML"><span class="description">Converts the Markdown code to HTML</span><pre>convertMarkdownToHtml()</pre></a></li>
 <li class="method public "><a href="#exportForTwig" title="exportForTwig :: Return the Page's data for use in Twig rendering phase"><span class="description">Return the Page's data for use in Twig rendering phase</span><pre>exportForTwig()</pre></a></li>
-<li class="method public "><a href="#getCollection" title="getCollection :: Get Page's collection"><span class="description">Get Page's collection</span><pre>getCollection()</pre></a></li>
 <li class="method public "><a href="#getConfiguration" title="getConfiguration :: Get Page's configuration"><span class="description">Get Page's configuration</span><pre>getConfiguration()</pre></a></li>
 <li class="method public "><a href="#getHtmlContent" title="getHtmlContent :: Get Page's HTML content"><span class="description">Get Page's HTML content</span><pre>getHtmlContent()</pre></a></li>
 <li class="method public "><a href="#getLayoutTwigEnvironment" title="getLayoutTwigEnvironment :: Get Page's layout Twig environment"><span class="description">Get Page's layout Twig environment</span><pre>getLayoutTwigEnvironment()</pre></a></li>
 <li class="method public "><a href="#getLocation" title="getLocation :: Get page location"><span class="description">Get page location</span><pre>getLocation()</pre></a></li>
 <li class="method public "><a href="#getMarkdownContent" title="getMarkdownContent :: Get Page's Markdown content"><span class="description">Get Page's Markdown content</span><pre>getMarkdownContent()</pre></a></li>
+<li class="method public "><a href="#getPageContent" title="getPageContent :: Get Page's content"><span class="description">Get Page's content</span><pre>getPageContent()</pre></a></li>
 <li class="method public "><a href="#getPageTwigEnvironment" title="getPageTwigEnvironment :: Get Page's page Twig environment"><span class="description">Get Page's page Twig environment</span><pre>getPageTwigEnvironment()</pre></a></li>
 <li class="method public "><a href="#renderLayoutTwigEnvironment" title="renderLayoutTwigEnvironment :: Renders the layout Twig environment of the page"><span class="description">Renders the layout Twig environment of the page</span><pre>renderLayoutTwigEnvironment()</pre></a></li>
 <li class="method public "><a href="#renderPageTwigEnvironment" title="renderPageTwigEnvironment :: Renders the page Twig environment of the page"><span class="description">Renders the page Twig environment of the page</span><pre>renderPageTwigEnvironment()</pre></a></li>
-<li class="method public "><a href="#setCollection" title="setCollection :: Set Page's collection"><span class="description">Set Page's collection</span><pre>setCollection()</pre></a></li>
 <li class="method public "><a href="#setConfiguration" title="setConfiguration :: Set Page's configuration"><span class="description">Set Page's configuration</span><pre>setConfiguration()</pre></a></li>
 <li class="method public "><a href="#setHtmlContent" title="setHtmlContent :: Set Page's HTML content"><span class="description">Set Page's HTML content</span><pre>setHtmlContent()</pre></a></li>
 <li class="method public "><a href="#setLayoutTwigEnvironment" title="setLayoutTwigEnvironment :: Set Page's layout Twig environment"><span class="description">Set Page's layout Twig environment</span><pre>setLayoutTwigEnvironment()</pre></a></li>
 <li class="method public "><a href="#setLocation" title="setLocation :: Set page location"><span class="description">Set page location</span><pre>setLocation()</pre></a></li>
 <li class="method public "><a href="#setMarkdownContent" title="setMarkdownContent :: Set Page's Markdown content"><span class="description">Set Page's Markdown content</span><pre>setMarkdownContent()</pre></a></li>
+<li class="method public "><a href="#setPageContent" title="setPageContent :: Set Page's content"><span class="description">Set Page's content</span><pre>setPageContent()</pre></a></li>
 <li class="method public "><a href="#setPageTwigEnvironment" title="setPageTwigEnvironment :: Set Page's page Twig environment"><span class="description">Set Page's page Twig environment</span><pre>setPageTwigEnvironment()</pre></a></li>
 <li class="method public "><a href="#writeHtmFiles" title="writeHtmFiles :: Writes the final HTML content to file"><span class="description">Writes the final HTML content to file</span><pre>writeHtmFiles()</pre></a></li>
 <li class="nav-header private">» Private</li>
@@ -81,12 +81,12 @@
 <i class="icon-custom icon-property"></i> Properties</li>
 <li class="nav-header private">» Private</li>
 <li class="property private "><a href="#%24app" title="$app :: Dependency injector"><span class="description">Dependency injector</span><pre>$app</pre></a></li>
-<li class="property private "><a href="#%24collection" title="$collection :: Collection the Page belongs to - Mean to access the other pages"><span class="description">Collection the Page belongs to - Mean to access the other pages</span><pre>$collection</pre></a></li>
 <li class="property private "><a href="#%24configuration" title="$configuration :: Page's configuration"><span class="description">Page's configuration</span><pre>$configuration</pre></a></li>
 <li class="property private "><a href="#%24htmlContent" title="$htmlContent :: Page's HTML content"><span class="description">Page's HTML content</span><pre>$htmlContent</pre></a></li>
 <li class="property private "><a href="#%24layoutTwigEnvironment" title="$layoutTwigEnvironment :: Page's layout Twig environment"><span class="description">Page's layout Twig environment</span><pre>$layoutTwigEnvironment</pre></a></li>
 <li class="property private "><a href="#%24location" title="$location :: Page location - relative to the root of the source files"><span class="description">Page location - relative to the root of the source files</span><pre>$location</pre></a></li>
 <li class="property private "><a href="#%24markdownContent" title="$markdownContent :: Page's Markdown content"><span class="description">Page's Markdown content</span><pre>$markdownContent</pre></a></li>
+<li class="property private "><a href="#%24pageContent" title="$pageContent :: Page's final content"><span class="description">Page's final content</span><pre>$pageContent</pre></a></li>
 <li class="property private "><a href="#%24pageTwigEnvironment" title="$pageTwigEnvironment :: Page's page Twig environment"><span class="description">Page's page Twig environment</span><pre>$pageTwigEnvironment</pre></a></li>
 </ul>
 </div>
@@ -133,16 +133,6 @@
 <p class="long_description"></p>
 <h3>Returns</h3>
 <div class="subelement response"><code>array</code></div>
-</div></div>
-</div>
-<a name="getCollection" id="getCollection"></a><div class="element clickable method public getCollection" data-toggle="collapse" data-target=".getCollection .collapse">
-<h2>Get Page's collection</h2>
-<pre>getCollection() : <a href="../classes/Gumdrop.PageCollection.html">\Gumdrop\PageCollection</a></pre>
-<div class="labels"></div>
-<div class="row collapse"><div class="detail-description">
-<p class="long_description"></p>
-<h3>Returns</h3>
-<div class="subelement response"><code><a href="../classes/Gumdrop.PageCollection.html">\Gumdrop\PageCollection</a></code></div>
 </div></div>
 </div>
 <a name="getConfiguration" id="getConfiguration"></a><div class="element clickable method public getConfiguration" data-toggle="collapse" data-target=".getConfiguration .collapse">
@@ -195,6 +185,16 @@
 <div class="subelement response"><code>string</code></div>
 </div></div>
 </div>
+<a name="getPageContent" id="getPageContent"></a><div class="element clickable method public getPageContent" data-toggle="collapse" data-target=".getPageContent .collapse">
+<h2>Get Page's content</h2>
+<pre>getPageContent() : string</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Returns</h3>
+<div class="subelement response"><code>string</code></div>
+</div></div>
+</div>
 <a name="getPageTwigEnvironment" id="getPageTwigEnvironment"></a><div class="element clickable method public getPageTwigEnvironment" data-toggle="collapse" data-target=".getPageTwigEnvironment .collapse">
 <h2>Get Page's page Twig environment</h2>
 <pre>getPageTwigEnvironment() : \Twig_Environment</pre>
@@ -216,19 +216,6 @@
 <pre>renderPageTwigEnvironment() </pre>
 <div class="labels"></div>
 <div class="row collapse"><div class="detail-description"><p class="long_description"></p></div></div>
-</div>
-<a name="setCollection" id="setCollection"></a><div class="element clickable method public setCollection" data-toggle="collapse" data-target=".setCollection .collapse">
-<h2>Set Page's collection</h2>
-<pre>setCollection(\Gumdrop\PageCollection $collection) </pre>
-<div class="labels"></div>
-<div class="row collapse"><div class="detail-description">
-<p class="long_description"></p>
-<h3>Parameters</h3>
-<div class="subelement argument">
-<h4>$collection</h4>
-<code><a href="../classes/Gumdrop.PageCollection.html">\Gumdrop\PageCollection</a></code>
-</div>
-</div></div>
 </div>
 <a name="setConfiguration" id="setConfiguration"></a><div class="element clickable method public setConfiguration" data-toggle="collapse" data-target=".setConfiguration .collapse">
 <h2>Set Page's configuration</h2>
@@ -295,6 +282,19 @@
 </div>
 </div></div>
 </div>
+<a name="setPageContent" id="setPageContent"></a><div class="element clickable method public setPageContent" data-toggle="collapse" data-target=".setPageContent .collapse">
+<h2>Set Page's content</h2>
+<pre>setPageContent(string $pageContent) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$pageContent</h4>
+<code>string</code>
+</div>
+</div></div>
+</div>
 <a name="setPageTwigEnvironment" id="setPageTwigEnvironment"></a><div class="element clickable method public setPageTwigEnvironment" data-toggle="collapse" data-target=".setPageTwigEnvironment .collapse">
 <h2>Set Page's page Twig environment</h2>
 <pre>setPageTwigEnvironment(\Twig_Environment $pageTwigEnvironment) </pre>
@@ -339,12 +339,6 @@
 <div class="labels"></div>
 <div class="row collapse"><div class="detail-description"><p class="long_description"></p></div></div>
 </div>
-<a name="%24collection" id="$collection"> </a><div class="element clickable property private $collection" data-toggle="collapse" data-target=".$collection .collapse">
-<h2>Collection the Page belongs to - Mean to access the other pages</h2>
-<pre>$collection : <a href="../classes/Gumdrop.PageCollection.html">\Gumdrop\PageCollection</a></pre>
-<div class="labels"></div>
-<div class="row collapse"><div class="detail-description"><p class="long_description"></p></div></div>
-</div>
 <a name="%24configuration" id="$configuration"> </a><div class="element clickable property private $configuration" data-toggle="collapse" data-target=".$configuration .collapse">
 <h2>Page's configuration</h2>
 <pre>$configuration : <a href="../classes/Gumdrop.PageConfiguration.html">\Gumdrop\PageConfiguration</a></pre>
@@ -375,6 +369,12 @@
 <div class="labels"></div>
 <div class="row collapse"><div class="detail-description"><p class="long_description"></p></div></div>
 </div>
+<a name="%24pageContent" id="$pageContent"> </a><div class="element clickable property private $pageContent" data-toggle="collapse" data-target=".$pageContent .collapse">
+<h2>Page's final content</h2>
+<pre>$pageContent : string</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><p class="long_description"></p></div></div>
+</div>
 <a name="%24pageTwigEnvironment" id="$pageTwigEnvironment"> </a><div class="element clickable property private $pageTwigEnvironment" data-toggle="collapse" data-target=".$pageTwigEnvironment .collapse">
 <h2>Page's page Twig environment</h2>
 <pre>$pageTwigEnvironment : \Twig_Environment</pre>
@@ -388,7 +388,7 @@
 <div class="row"><footer class="span12">
             Template is built using <a href="http://twitter.github.com/bootstrap/">Twitter Bootstrap 2</a> and icons provided by <a href="http://glyphicons.com/">Glyphicons</a>.<br>
             Documentation is powered by <a href="http://www.phpdoc.org/">phpDocumentor 2.0.0a8</a> and<br>
-            generated on 2012-08-09T16:12:51+02:00.<br></footer></div>
+            generated on 2012-09-20T09:46:47+02:00.<br></footer></div>
 </div>
 </body>
 </html>

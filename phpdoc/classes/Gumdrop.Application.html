@@ -55,26 +55,34 @@
 <ul class="side-nav nav nav-list">
 <li class="nav-header">
 <i class="icon-custom icon-method"></i> Methods</li>
-<li class="method public "><a href="#generate" title="generate :: Generates the site"><span class="description">Generates the site</span><pre>generate()</pre></a></li>
 <li class="method public "><a href="#getDestinationLocation" title="getDestinationLocation :: Get the location of the generated site"><span class="description">Get the location of the generated site</span><pre>getDestinationLocation()</pre></a></li>
 <li class="method public "><a href="#getEngine" title="getEngine :: Get Application's engine"><span class="description">Get Application's engine</span><pre>getEngine()</pre></a></li>
 <li class="method public "><a href="#getFileHandler" title="getFileHandler :: Get Application's file handler"><span class="description">Get Application's file handler</span><pre>getFileHandler()</pre></a></li>
 <li class="method public "><a href="#getMarkdownParser" title="getMarkdownParser :: Get Application's Markdown parser"><span class="description">Get Application's Markdown parser</span><pre>getMarkdownParser()</pre></a></li>
+<li class="method public "><a href="#getPageCollection" title="getPageCollection :: Get the Page collection"><span class="description">Get the Page collection</span><pre>getPageCollection()</pre></a></li>
+<li class="method public "><a href="#getSiteConfiguration" title="getSiteConfiguration :: Get the site configuration container"><span class="description">Get the site configuration container</span><pre>getSiteConfiguration()</pre></a></li>
 <li class="method public "><a href="#getSourceLocation" title="getSourceLocation :: Get location of the markdown source files"><span class="description">Get location of the markdown source files</span><pre>getSourceLocation()</pre></a></li>
-<li class="method public "><a href="#getTwig" title="getTwig :: Get the Twig environment generator"><span class="description">Get the Twig environment generator</span><pre>getTwig()</pre></a></li>
+<li class="method public "><a href="#getTwigEnvironments" title="getTwigEnvironments :: Get the Twig environment generator"><span class="description">Get the Twig environment generator</span><pre>getTwigEnvironments()</pre></a></li>
+<li class="method public "><a href="#getTwigFileHandler" title="getTwigFileHandler :: Get Twig files handler"><span class="description">Get Twig files handler</span><pre>getTwigFileHandler()</pre></a></li>
 <li class="method public "><a href="#setDestinationLocation" title="setDestinationLocation :: Set the location of the generated site"><span class="description">Set the location of the generated site</span><pre>setDestinationLocation()</pre></a></li>
 <li class="method public "><a href="#setEngine" title="setEngine :: Set Application's engine"><span class="description">Set Application's engine</span><pre>setEngine()</pre></a></li>
 <li class="method public "><a href="#setFileHandler" title="setFileHandler :: Set Application's file handler"><span class="description">Set Application's file handler</span><pre>setFileHandler()</pre></a></li>
 <li class="method public "><a href="#setMarkdownParser" title="setMarkdownParser :: Set Application's Markdown parser"><span class="description">Set Application's Markdown parser</span><pre>setMarkdownParser()</pre></a></li>
+<li class="method public "><a href="#setPageCollection" title="setPageCollection :: Set the Page collection"><span class="description">Set the Page collection</span><pre>setPageCollection()</pre></a></li>
+<li class="method public "><a href="#setSiteConfiguration" title="setSiteConfiguration :: Set the site configuration container"><span class="description">Set the site configuration container</span><pre>setSiteConfiguration()</pre></a></li>
 <li class="method public "><a href="#setSourceLocation" title="setSourceLocation :: Set location of the markdown source files"><span class="description">Set location of the markdown source files</span><pre>setSourceLocation()</pre></a></li>
-<li class="method public "><a href="#setTwig" title="setTwig :: Set the Twig environment generator"><span class="description">Set the Twig environment generator</span><pre>setTwig()</pre></a></li>
+<li class="method public "><a href="#setTwigEnvironments" title="setTwigEnvironments :: Set the Twig environment generator"><span class="description">Set the Twig environment generator</span><pre>setTwigEnvironments()</pre></a></li>
+<li class="method public "><a href="#setTwigFileHandler" title="setTwigFileHandler :: Set Twig files handler"><span class="description">Set Twig files handler</span><pre>setTwigFileHandler()</pre></a></li>
 <li class="nav-header">
 <i class="icon-custom icon-property"></i> Properties</li>
 <li class="nav-header private">» Private</li>
 <li class="property private "><a href="#%24Engine" title="$Engine :: Application's engine"><span class="description">Application's engine</span><pre>$Engine</pre></a></li>
 <li class="property private "><a href="#%24FileHandler" title="$FileHandler :: Application's file handler"><span class="description">Application's file handler</span><pre>$FileHandler</pre></a></li>
 <li class="property private "><a href="#%24MarkdownParser" title="$MarkdownParser :: Application's Markdown parser"><span class="description">Application's Markdown parser</span><pre>$MarkdownParser</pre></a></li>
-<li class="property private "><a href="#%24Twig" title="$Twig :: Twig environment generator"><span class="description">Twig environment generator</span><pre>$Twig</pre></a></li>
+<li class="property private "><a href="#%24PageCollection" title="$PageCollection :: Page collection"><span class="description">Page collection</span><pre>$PageCollection</pre></a></li>
+<li class="property private "><a href="#%24SiteConfiguration" title="$SiteConfiguration :: Site configuration container"><span class="description">Site configuration container</span><pre>$SiteConfiguration</pre></a></li>
+<li class="property private "><a href="#%24TwigEnvironments" title="$TwigEnvironments :: TwigEnvironments environment generator"><span class="description">TwigEnvironments environment generator</span><pre>$TwigEnvironments</pre></a></li>
+<li class="property private "><a href="#%24TwigFileHandler" title="$TwigFileHandler :: Twig files handler"><span class="description">Twig files handler</span><pre>$TwigFileHandler</pre></a></li>
 <li class="property private "><a href="#%24destinationLocation" title="$destinationLocation :: Location of the generated site"><span class="description">Location of the generated site</span><pre>$destinationLocation</pre></a></li>
 <li class="property private "><a href="#%24sourceLocation" title="$sourceLocation :: Location of the markdown source files"><span class="description">Location of the markdown source files</span><pre>$sourceLocation</pre></a></li>
 </ul>
@@ -95,18 +103,16 @@
 <p class="long_description"></p>
 <h3>
 <i class="icon-custom icon-method"></i> Methods</h3>
-<a name="generate" id="generate"></a><div class="element clickable method public generate" data-toggle="collapse" data-target=".generate .collapse">
-<h2>Generates the site</h2>
-<pre>generate() </pre>
-<div class="labels"></div>
-<div class="row collapse"><div class="detail-description"><p class="long_description"></p></div></div>
-</div>
 <a name="getDestinationLocation" id="getDestinationLocation"></a><div class="element clickable method public getDestinationLocation" data-toggle="collapse" data-target=".getDestinationLocation .collapse">
 <h2>Get the location of the generated site</h2>
 <pre>getDestinationLocation() : string</pre>
 <div class="labels"></div>
 <div class="row collapse"><div class="detail-description">
 <p class="long_description"></p>
+<table class="table table-bordered"><tr>
+<th>codeCoverageIgnore</th>
+<td></td>
+</tr></table>
 <h3>Returns</h3>
 <div class="subelement response"><code>string</code></div>
 </div></div>
@@ -153,24 +159,71 @@
 <div class="subelement response"><code>\dflydev\markdown\MarkdownParser</code></div>
 </div></div>
 </div>
+<a name="getPageCollection" id="getPageCollection"></a><div class="element clickable method public getPageCollection" data-toggle="collapse" data-target=".getPageCollection .collapse">
+<h2>Get the Page collection</h2>
+<pre>getPageCollection() : <a href="../classes/Gumdrop.PageCollection.html">\Gumdrop\PageCollection</a></pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<table class="table table-bordered"><tr>
+<th>codeCoverageIgnore</th>
+<td></td>
+</tr></table>
+<h3>Returns</h3>
+<div class="subelement response">
+<code><a href="../classes/Gumdrop.PageCollection.html">\Gumdrop\PageCollection</a></code>PageCollection</div>
+</div></div>
+</div>
+<a name="getSiteConfiguration" id="getSiteConfiguration"></a><div class="element clickable method public getSiteConfiguration" data-toggle="collapse" data-target=".getSiteConfiguration .collapse">
+<h2>Get the site configuration container</h2>
+<pre>getSiteConfiguration() : <a href="../classes/Gumdrop.SiteConfiguration.html">\Gumdrop\SiteConfiguration</a></pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Returns</h3>
+<div class="subelement response"><code><a href="../classes/Gumdrop.SiteConfiguration.html">\Gumdrop\SiteConfiguration</a></code></div>
+</div></div>
+</div>
 <a name="getSourceLocation" id="getSourceLocation"></a><div class="element clickable method public getSourceLocation" data-toggle="collapse" data-target=".getSourceLocation .collapse">
 <h2>Get location of the markdown source files</h2>
 <pre>getSourceLocation() : string</pre>
 <div class="labels"></div>
 <div class="row collapse"><div class="detail-description">
 <p class="long_description"></p>
+<table class="table table-bordered"><tr>
+<th>codeCoverageIgnore</th>
+<td></td>
+</tr></table>
 <h3>Returns</h3>
 <div class="subelement response"><code>string</code></div>
 </div></div>
 </div>
-<a name="getTwig" id="getTwig"></a><div class="element clickable method public getTwig" data-toggle="collapse" data-target=".getTwig .collapse">
+<a name="getTwigEnvironments" id="getTwigEnvironments"></a><div class="element clickable method public getTwigEnvironments" data-toggle="collapse" data-target=".getTwigEnvironments .collapse">
 <h2>Get the Twig environment generator</h2>
-<pre>getTwig() : <a href="../classes/Gumdrop.Twig.html">\Gumdrop\Twig</a></pre>
+<pre>getTwigEnvironments() : <a href="../classes/Gumdrop.TwigEnvironments.html">\Gumdrop\TwigEnvironments</a></pre>
 <div class="labels"></div>
 <div class="row collapse"><div class="detail-description">
 <p class="long_description"></p>
+<table class="table table-bordered"><tr>
+<th>codeCoverageIgnore</th>
+<td></td>
+</tr></table>
 <h3>Returns</h3>
-<div class="subelement response"><code><a href="../classes/Gumdrop.Twig.html">\Gumdrop\Twig</a></code></div>
+<div class="subelement response"><code><a href="../classes/Gumdrop.TwigEnvironments.html">\Gumdrop\TwigEnvironments</a></code></div>
+</div></div>
+</div>
+<a name="getTwigFileHandler" id="getTwigFileHandler"></a><div class="element clickable method public getTwigFileHandler" data-toggle="collapse" data-target=".getTwigFileHandler .collapse">
+<h2>Get Twig files handler</h2>
+<pre>getTwigFileHandler() : <a href="../classes/Gumdrop.TwigFileHandler.html">\Gumdrop\TwigFileHandler</a></pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<table class="table table-bordered"><tr>
+<th>codeCoverageIgnore</th>
+<td></td>
+</tr></table>
+<h3>Returns</h3>
+<div class="subelement response"><code><a href="../classes/Gumdrop.TwigFileHandler.html">\Gumdrop\TwigFileHandler</a></code></div>
 </div></div>
 </div>
 <a name="setDestinationLocation" id="setDestinationLocation"></a><div class="element clickable method public setDestinationLocation" data-toggle="collapse" data-target=".setDestinationLocation .collapse">
@@ -179,6 +232,10 @@
 <div class="labels"></div>
 <div class="row collapse"><div class="detail-description">
 <p class="long_description"></p>
+<table class="table table-bordered"><tr>
+<th>codeCoverageIgnore</th>
+<td></td>
+</tr></table>
 <h3>Parameters</h3>
 <div class="subelement argument">
 <h4>$destinationLocation</h4>
@@ -237,12 +294,46 @@
 </div>
 </div></div>
 </div>
+<a name="setPageCollection" id="setPageCollection"></a><div class="element clickable method public setPageCollection" data-toggle="collapse" data-target=".setPageCollection .collapse">
+<h2>Set the Page collection</h2>
+<pre>setPageCollection(<a href="../classes/Gumdrop.PageCollection.html">\Gumdrop\PageCollection</a> $PageCollection) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<table class="table table-bordered"><tr>
+<th>codeCoverageIgnore</th>
+<td></td>
+</tr></table>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$PageCollection</h4>
+<code><a href="../classes/Gumdrop.PageCollection.html">\Gumdrop\PageCollection</a></code>
+</div>
+</div></div>
+</div>
+<a name="setSiteConfiguration" id="setSiteConfiguration"></a><div class="element clickable method public setSiteConfiguration" data-toggle="collapse" data-target=".setSiteConfiguration .collapse">
+<h2>Set the site configuration container</h2>
+<pre>setSiteConfiguration(<a href="../classes/Gumdrop.SiteConfiguration.html">\Gumdrop\SiteConfiguration</a> $SiteConfiguration) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$SiteConfiguration</h4>
+<code><a href="../classes/Gumdrop.SiteConfiguration.html">\Gumdrop\SiteConfiguration</a></code>
+</div>
+</div></div>
+</div>
 <a name="setSourceLocation" id="setSourceLocation"></a><div class="element clickable method public setSourceLocation" data-toggle="collapse" data-target=".setSourceLocation .collapse">
 <h2>Set location of the markdown source files</h2>
 <pre>setSourceLocation(string $sourceLocation) </pre>
 <div class="labels"></div>
 <div class="row collapse"><div class="detail-description">
 <p class="long_description"></p>
+<table class="table table-bordered"><tr>
+<th>codeCoverageIgnore</th>
+<td></td>
+</tr></table>
 <h3>Parameters</h3>
 <div class="subelement argument">
 <h4>$sourceLocation</h4>
@@ -250,16 +341,37 @@
 </div>
 </div></div>
 </div>
-<a name="setTwig" id="setTwig"></a><div class="element clickable method public setTwig" data-toggle="collapse" data-target=".setTwig .collapse">
+<a name="setTwigEnvironments" id="setTwigEnvironments"></a><div class="element clickable method public setTwigEnvironments" data-toggle="collapse" data-target=".setTwigEnvironments .collapse">
 <h2>Set the Twig environment generator</h2>
-<pre>setTwig(<a href="../classes/Gumdrop.Twig.html">\Gumdrop\Twig</a> $Twig) </pre>
+<pre>setTwigEnvironments(<a href="../classes/Gumdrop.TwigEnvironments.html">\Gumdrop\TwigEnvironments</a> $Twig) </pre>
 <div class="labels"></div>
 <div class="row collapse"><div class="detail-description">
 <p class="long_description"></p>
+<table class="table table-bordered"><tr>
+<th>codeCoverageIgnore</th>
+<td></td>
+</tr></table>
 <h3>Parameters</h3>
 <div class="subelement argument">
 <h4>$Twig</h4>
-<code><a href="../classes/Gumdrop.Twig.html">\Gumdrop\Twig</a></code>
+<code><a href="../classes/Gumdrop.TwigEnvironments.html">\Gumdrop\TwigEnvironments</a></code>
+</div>
+</div></div>
+</div>
+<a name="setTwigFileHandler" id="setTwigFileHandler"></a><div class="element clickable method public setTwigFileHandler" data-toggle="collapse" data-target=".setTwigFileHandler .collapse">
+<h2>Set Twig files handler</h2>
+<pre>setTwigFileHandler(<a href="../classes/Gumdrop.TwigFileHandler.html">\Gumdrop\TwigFileHandler</a> $TwigFileHandler) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<table class="table table-bordered"><tr>
+<th>codeCoverageIgnore</th>
+<td></td>
+</tr></table>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$TwigFileHandler</h4>
+<code><a href="../classes/Gumdrop.TwigFileHandler.html">\Gumdrop\TwigFileHandler</a></code>
 </div>
 </div></div>
 </div>
@@ -283,9 +395,27 @@
 <div class="labels"></div>
 <div class="row collapse"><div class="detail-description"><p class="long_description"></p></div></div>
 </div>
-<a name="%24Twig" id="$Twig"> </a><div class="element clickable property private $Twig" data-toggle="collapse" data-target=".$Twig .collapse">
-<h2>Twig environment generator</h2>
-<pre>$Twig : <a href="../classes/Gumdrop.Twig.html">\Gumdrop\Twig</a></pre>
+<a name="%24PageCollection" id="$PageCollection"> </a><div class="element clickable property private $PageCollection" data-toggle="collapse" data-target=".$PageCollection .collapse">
+<h2>Page collection</h2>
+<pre>$PageCollection : <a href="../classes/Gumdrop.PageCollection.html">\Gumdrop\PageCollection</a></pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><p class="long_description"></p></div></div>
+</div>
+<a name="%24SiteConfiguration" id="$SiteConfiguration"> </a><div class="element clickable property private $SiteConfiguration" data-toggle="collapse" data-target=".$SiteConfiguration .collapse">
+<h2>Site configuration container</h2>
+<pre>$SiteConfiguration : <a href="../classes/Gumdrop.SiteConfiguration.html">\Gumdrop\SiteConfiguration</a></pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><p class="long_description"></p></div></div>
+</div>
+<a name="%24TwigEnvironments" id="$TwigEnvironments"> </a><div class="element clickable property private $TwigEnvironments" data-toggle="collapse" data-target=".$TwigEnvironments .collapse">
+<h2>TwigEnvironments environment generator</h2>
+<pre>$TwigEnvironments : <a href="../classes/Gumdrop.TwigEnvironments.html">\Gumdrop\TwigEnvironments</a></pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><p class="long_description"></p></div></div>
+</div>
+<a name="%24TwigFileHandler" id="$TwigFileHandler"> </a><div class="element clickable property private $TwigFileHandler" data-toggle="collapse" data-target=".$TwigFileHandler .collapse">
+<h2>Twig files handler</h2>
+<pre>$TwigFileHandler : <a href="../classes/Gumdrop.TwigFileHandler.html">\Gumdrop\TwigFileHandler</a></pre>
 <div class="labels"></div>
 <div class="row collapse"><div class="detail-description"><p class="long_description"></p></div></div>
 </div>
@@ -308,7 +438,7 @@
 <div class="row"><footer class="span12">
             Template is built using <a href="http://twitter.github.com/bootstrap/">Twitter Bootstrap 2</a> and icons provided by <a href="http://glyphicons.com/">Glyphicons</a>.<br>
             Documentation is powered by <a href="http://www.phpdoc.org/">phpDocumentor 2.0.0a8</a> and<br>
-            generated on 2012-08-09T16:12:51+02:00.<br></footer></div>
+            generated on 2012-09-20T09:46:47+02:00.<br></footer></div>
 </div>
 </body>
 </html>

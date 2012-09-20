@@ -56,11 +56,16 @@
 <li class="nav-header">
 <i class="icon-custom icon-method"></i> Methods</li>
 <li class="method public "><a href="#__construct" title="__construct :: Constructor"><span class="description">Constructor</span><pre>__construct()</pre></a></li>
+<li class="method public "><a href="#clearDestinationLocation" title="clearDestinationLocation :: Clears the destination location"><span class="description">Clears the destination location</span><pre>clearDestinationLocation()</pre></a></li>
 <li class="method public "><a href="#copyStaticFiles" title="copyStaticFiles :: Copies static files to the destination folder"><span class="description">Copies static files to the destination folder</span><pre>copyStaticFiles()</pre></a></li>
 <li class="method public "><a href="#findPageTwigFile" title="findPageTwigFile :: Checks if the page.twig file exists at the given location"><span class="description">Checks if the page.twig file exists at the given location</span><pre>findPageTwigFile()</pre></a></li>
 <li class="method public "><a href="#getMarkdownFiles" title="getMarkdownFiles :: Builds a PageCollection out of a list of Markdown files"><span class="description">Builds a PageCollection out of a list of Markdown files</span><pre>getMarkdownFiles()</pre></a></li>
+<li class="method public "><a href="#getSourceFolderHash" title="getSourceFolderHash :: Computes a hash of the given folder content to detect changes"><span class="description">Computes a hash of the given folder content to detect changes</span><pre>getSourceFolderHash()</pre></a></li>
 <li class="method public "><a href="#listMarkdownFiles" title="listMarkdownFiles :: Builds a list of Markdown files recursively"><span class="description">Builds a list of Markdown files recursively</span><pre>listMarkdownFiles()</pre></a></li>
 <li class="method public "><a href="#listStaticFiles" title="listStaticFiles :: Returns the recursive list of static files that need to be copied to the destination"><span class="description">Returns the recursive list of static files that need to be copied to the destination</span><pre>listStaticFiles()</pre></a></li>
+<li class="method public "><a href="#listTwigFiles" title="listTwigFiles :: Returns the list of Twig files"><span class="description">Returns the list of Twig files</span><pre>listTwigFiles()</pre></a></li>
+<li class="nav-header private">» Private</li>
+<li class="method private "><a href="#listFiles" title="listFiles :: General purpose recursive listing method with filtering support"><span class="description">General purpose recursive listing method with filtering support</span><pre>listFiles()</pre></a></li>
 <li class="nav-header">
 <i class="icon-custom icon-property"></i> Properties</li>
 <li class="nav-header private">» Private</li>
@@ -96,6 +101,18 @@
 </div>
 </div></div>
 </div>
+<a name="clearDestinationLocation" id="clearDestinationLocation"></a><div class="element clickable method public clearDestinationLocation" data-toggle="collapse" data-target=".clearDestinationLocation .collapse">
+<h2>Clears the destination location</h2>
+<pre>clearDestinationLocation(string $path) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$path</h4>
+<code>string</code><p>Used for recursion, should not be set when using this method</p></div>
+</div></div>
+</div>
 <a name="copyStaticFiles" id="copyStaticFiles"></a><div class="element clickable method public copyStaticFiles" data-toggle="collapse" data-target=".copyStaticFiles .collapse">
 <h2>Copies static files to the destination folder</h2>
 <pre>copyStaticFiles() </pre>
@@ -127,32 +144,66 @@
 <div class="subelement response"><code><a href="../classes/Gumdrop.PageCollection.html">\Gumdrop\PageCollection</a></code></div>
 </div></div>
 </div>
-<a name="listMarkdownFiles" id="listMarkdownFiles"></a><div class="element clickable method public listMarkdownFiles" data-toggle="collapse" data-target=".listMarkdownFiles .collapse">
-<h2>Builds a list of Markdown files recursively</h2>
-<pre>listMarkdownFiles($location) : array</pre>
+<a name="getSourceFolderHash" id="getSourceFolderHash"></a><div class="element clickable method public getSourceFolderHash" data-toggle="collapse" data-target=".getSourceFolderHash .collapse">
+<h2>Computes a hash of the given folder content to detect changes</h2>
+<pre>getSourceFolderHash(string $location) : array | int | string</pre>
 <div class="labels"></div>
 <div class="row collapse"><div class="detail-description">
 <p class="long_description"></p>
 <h3>Parameters</h3>
 <div class="subelement argument">
 <h4>$location</h4>
-<code></code>
+<code>string</code><p>Used only for recursion</p></div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>array</code><code>int</code><code>string</code>
 </div>
+</div></div>
+</div>
+<a name="listMarkdownFiles" id="listMarkdownFiles"></a><div class="element clickable method public listMarkdownFiles" data-toggle="collapse" data-target=".listMarkdownFiles .collapse">
+<h2>Builds a list of Markdown files recursively</h2>
+<pre>listMarkdownFiles() : array</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
 <h3>Returns</h3>
 <div class="subelement response"><code>array</code></div>
 </div></div>
 </div>
 <a name="listStaticFiles" id="listStaticFiles"></a><div class="element clickable method public listStaticFiles" data-toggle="collapse" data-target=".listStaticFiles .collapse">
 <h2>Returns the recursive list of static files that need to be copied to the destination</h2>
-<pre>listStaticFiles(string $location) : array</pre>
+<pre>listStaticFiles() : array</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Returns</h3>
+<div class="subelement response"><code>array</code></div>
+</div></div>
+</div>
+<a name="listTwigFiles" id="listTwigFiles"></a><div class="element clickable method public listTwigFiles" data-toggle="collapse" data-target=".listTwigFiles .collapse">
+<h2>Returns the list of Twig files</h2>
+<pre>listTwigFiles() : array</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<p class="long_description"></p>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>array</code>The list of Twig files</div>
+</div></div>
+</div>
+<a name="listFiles" id="listFiles"></a><div class="element clickable method private listFiles" data-toggle="collapse" data-target=".listFiles .collapse">
+<h2>General purpose recursive listing method with filtering support</h2>
+<pre>listFiles(\Gumdrop\callable $filter_callback, string $location) : array</pre>
 <div class="labels"></div>
 <div class="row collapse"><div class="detail-description">
 <p class="long_description"></p>
 <h3>Parameters</h3>
 <div class="subelement argument">
+<h4>$filter_callback</h4>
+<code>\Gumdrop\callable</code><p>Filtering function</p></div>
+<div class="subelement argument">
 <h4>$location</h4>
-<code>string</code>
-</div>
+<code>string</code><p>Used for recursion only</p></div>
 <h3>Returns</h3>
 <div class="subelement response"><code>array</code></div>
 </div></div>
@@ -172,7 +223,7 @@
 <div class="row"><footer class="span12">
             Template is built using <a href="http://twitter.github.com/bootstrap/">Twitter Bootstrap 2</a> and icons provided by <a href="http://glyphicons.com/">Glyphicons</a>.<br>
             Documentation is powered by <a href="http://www.phpdoc.org/">phpDocumentor 2.0.0a8</a> and<br>
-            generated on 2012-08-09T16:12:51+02:00.<br></footer></div>
+            generated on 2012-09-20T09:46:47+02:00.<br></footer></div>
 </div>
 </body>
 </html>
