@@ -3,7 +3,7 @@
     <title>Gumdrop</title>
     <parser>
         <default-package-name>Gumdrop</default-package-name>
-        <target>doc/phpdoc</target>
+        <target>doc_sources/phpdoc</target>
         <markers>
             <item>TODO</item>
             <item>FIXME</item>
@@ -18,7 +18,7 @@
         <ignore-symlinks>on</ignore-symlinks>
     </files>
     <transformer>
-        <target>doc/phpdoc</target>
+        <target>doc_sources/phpdoc</target>
     </transformer>
     <logging>
         <level>debug</level>
