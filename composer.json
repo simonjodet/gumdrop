@@ -1,33 +1,15 @@
 {
     "name":"simonjodet/gumdrop",
     "description":"Gumdrop is a static website generator converting Markdown files and using the Twig templating engine.",
-    "version":"1.0.1",
+    "version":"1.0.2",
     "type":"library",
     "license":"MIT",
-    "repositories":[
-        {
-            "type":"vcs",
-            "url":"https://github.com/simonjodet/dflydev-markdown"
-        },
-        {
-            "type":"vcs",
-            "url":"https://github.com/simonjodet/Twig"
-        },
-        {
-            "type":"vcs",
-            "url":"https://github.com/simonjodet/mockery"
-        },
-        {
-            "type":"vcs",
-            "url":"https://github.com/simonjodet/FSTestHelper"
-        }
-    ],
     "require":{
         "simonjodet/markdown":"1.0.2",
         "simonjodet/Twig":"1.9.2"
     },
     "require-dev":{
-        "simonjodet/mockery":"0.7.2",
+        "mockery/mockery":"0.7.2",
         "behat/behat":"2.4.*@stable",
         "simonjodet/fstesthelper":"1.0.0"
     },
