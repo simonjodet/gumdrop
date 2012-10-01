@@ -23,7 +23,7 @@
         }
     ],
     "require":{
-        "simonjodet/dflydev-markdown":"1.0.2",
+        "simonjodet/markdown":"1.0.2",
         "simonjodet/Twig":"1.9.2"
     },
     "require-dev":{
