@@ -4,7 +4,6 @@
     "version":"1.0.1",
     "type":"library",
     "license":"MIT",
-    "minimum-stability":"dev",
     "repositories":[
         {
             "type":"vcs",
@@ -24,13 +23,13 @@
         }
     ],
     "require":{
-        "simonjodet/markdown":"dev-master",
-        "simonjodet/Twig":"dev-master"
+        "simonjodet/markdown":"1.0.2",
+        "simonjodet/Twig":"1.9.2"
     },
     "require-dev":{
         "simonjodet/mockery":"0.7.2",
         "behat/behat":"2.4.*@stable",
-        "simonjodet/fstesthelper":"dev-master"
+        "simonjodet/fstesthelper":"1.0.0"
     },
     "autoload":{
         "psr-0":{
