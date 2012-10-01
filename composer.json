@@ -23,7 +23,7 @@
         }
     ],
     "require":{
-        "simonjodet/dflydev-markdown":"dev-master",
+        "simonjodet/markdown":"dev-master",
         "simonjodet/Twig":"dev-master"
     },
     "require-dev":{
