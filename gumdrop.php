@@ -1,4 +1,4 @@
-#!/usr/bin/php
+#!/usr/bin/env php
 <?php
 $source = realpath($_SERVER['argv'][1]) . '/';
 $destination = realpath($_SERVER['argv'][2]) . '/';
