@@ -69,9 +69,11 @@ class FeatureContext extends BehatContext
     public function iGenerateMySite()
     {
         $this->destination = new \FSTestHelper\FSTestHelper();
-        exec(__DIR__ . '/../../gumdrop.php ' . $this->source->getTemporaryPath() . ' ' . $this->destination->getTemporaryPath(), $output, $return_var);
+        exec(__DIR__ . '/../../bin/gumdrop -s ' . $this->source->getTemporaryPath() . ' -t ' . $this->destination->getTemporaryPath(), $output, $return_var);
         if ($return_var != 0)
         {
+            print_r(scandir(__DIR__ . '/../../'));
+            print_r(scandir(__DIR__ . '/../../bin'));
             print_r($output);
             throw new \Exception('Something went wrong during site generation');
         }
