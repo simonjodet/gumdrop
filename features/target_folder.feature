@@ -6,4 +6,4 @@ Feature: target folder
   Scenario: Target folder is in the the source folder
     Given I have my test site "test_site"
     When I generate my site in a sub-folder "_site" of the source
-    Then the site should be rendered correctly
+    Then the site should be rendered like "expected_rendering"

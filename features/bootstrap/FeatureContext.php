@@ -164,12 +164,12 @@ class FeatureContext extends BehatContext
     }
 
     /**
-     * @Then /^the site should be rendered correctly$/
+     * @Then /^the site should be rendered like "([^"]*)"$/
      */
-    public function theSiteShouldBeRenderedCorrectly()
+    public function theSiteShouldBeRenderedLike($expected_result)
     {
         $result = file_get_contents($this->destination . '/testFile2.htm');
-        $expected = file_get_contents(__DIR__ . '/../expected_rendering/testFile2.htm');
+        $expected = file_get_contents(__DIR__ . '/../' . $expected_result . '/testFile2.htm');
         if ($result != $expected)
         {
             echo 'Actual: |' . $result . '|' . PHP_EOL;
@@ -198,7 +198,7 @@ class FeatureContext extends BehatContext
      */
     public function iGenerateMySiteInASubFolderOfTheSource($target)
     {
-        $this->destination = $this->source->getTemporaryPath().'/'.$target;
+        $this->destination = $this->source->getTemporaryPath() . '/' . $target;
         exec(__DIR__ . '/../../bin/gumdrop -s ' . $this->source->getTemporaryPath() . ' -t ' . $this->destination, $output, $return_var);
         if ($return_var != 0)
         {
