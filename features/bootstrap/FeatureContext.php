@@ -169,12 +169,43 @@ class FeatureContext extends BehatContext
     public function theSiteShouldBeRenderedCorrectly()
     {
         $result = file_get_contents($this->destination . '/testFile2.htm');
+        $expected = file_get_contents(__DIR__ . '/../expected_rendering/testFile2.htm');
+        if ($result != $expected)
+        {
+            echo 'Actual: |' . $result . '|' . PHP_EOL;
+            echo 'Expected: |' . $expected . '|' . PHP_EOL;
+            throw new \Exception('The testFile2.md file was not rendered correctly');
+        }
+    }
+
+    /**
+     * @Then /^the site should be rendered without layout$/
+     */
+    public function theSiteShouldBeRenderedWithoutLayout()
+    {
+        $result = file_get_contents($this->destination . '/testFile2.htm');
         $expected = file_get_contents(__DIR__ . '/../expected_rendering/testFile2withoutLayout.htm');
         if ($result != $expected)
         {
             echo 'Actual: |' . $result . '|' . PHP_EOL;
             echo 'Expected: |' . $expected . '|' . PHP_EOL;
             throw new \Exception('The testFile2.md file was not rendered correctly');
+        }
+    }
+
+    /**
+     * @When /^I generate my site in a sub-folder "([^"]*)" of the source$/
+     */
+    public function iGenerateMySiteInASubFolderOfTheSource($target)
+    {
+        $this->destination = $this->source->getTemporaryPath().'/'.$target;
+        exec(__DIR__ . '/../../bin/gumdrop -s ' . $this->source->getTemporaryPath() . ' -t ' . $this->destination, $output, $return_var);
+        if ($return_var != 0)
+        {
+            print_r(scandir(__DIR__ . '/../../'));
+            print_r(scandir(__DIR__ . '/../../bin'));
+            print_r($output);
+            throw new \Exception('Something went wrong during site generation');
         }
     }
 }

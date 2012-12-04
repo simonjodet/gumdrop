@@ -7,5 +7,5 @@ Feature: layout rendering
     Given I have my test site "test_site"
     And It does not have a "_layout" folder
     When I generate my site
-    Then the site should be rendered correctly
+    Then the site should be rendered without layout
 
