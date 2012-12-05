@@ -19,11 +19,15 @@
     "require-dev":{
         "mockery/mockery":"0.7.2",
         "behat/behat":"2.4.*@stable",
-        "simonjodet/fstesthelper":"1.0.0"
+        "simonjodet/fstesthelper":"2.*"
     },
     "autoload":{
         "psr-0":{
             "Gumdrop":"."
         }
+    },
+    "scripts":{
+        "post-update-cmd":"chmod +x bin/gumdrop gumdrop.php",
+        "post-install-cmd":"chmod +x bin/gumdrop gumdrop.php"
     }
 }
