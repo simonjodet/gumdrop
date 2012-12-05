@@ -15,7 +15,7 @@ class TwigEnvironments extends \Gumdrop\Tests\TestCase
     public function testGetLayoutEnvironmentReturnsTheExpectedEnvironment()
     {
         $FSTestHelper = new \FSTestHelper\FSTestHelper();
-        $FSTestHelper->createTree(array(
+        $FSTestHelper->create(array(
             'folders' => array(),
             'files' => array(
                 array(
@@ -33,7 +33,7 @@ class TwigEnvironments extends \Gumdrop\Tests\TestCase
         ));
 
         $app = $this->getApp();
-        $app->setSourceLocation($FSTestHelper->getTemporaryPath());
+        $app->setSourceLocation($FSTestHelper);
 
         $Twig = new \Gumdrop\TwigEnvironments($app);
         $LayoutEnvironment = $Twig->getLayoutEnvironment();
@@ -42,13 +42,13 @@ class TwigEnvironments extends \Gumdrop\Tests\TestCase
 
         $this->assertInstanceOf('\Twig_Environment', $LayoutEnvironment);
         $this->assertInstanceOf('\Twig_Loader_Filesystem', $Loader);
-        $this->assertEquals($FSTestHelper->getTemporaryPath() . '/_layout', $paths[0]);
+        $this->assertEquals($FSTestHelper . '/_layout', $paths[0]);
     }
 
     public function testGetLayoutEnvironmentReturnsNullWhenLayoutFolderDoesNotExist()
     {
         $FSTestHelper = new \FSTestHelper\FSTestHelper();
-        $FSTestHelper->createTree(array(
+        $FSTestHelper->create(array(
             'folders' => array(),
             'files' => array(
                 array(
@@ -59,7 +59,7 @@ class TwigEnvironments extends \Gumdrop\Tests\TestCase
         ));
 
         $app = $this->getApp();
-        $app->setSourceLocation($FSTestHelper->getTemporaryPath());
+        $app->setSourceLocation($FSTestHelper);
 
         $Twig = new \Gumdrop\TwigEnvironments($app);
         $this->assertNull($Twig->getLayoutEnvironment());
@@ -80,7 +80,7 @@ class TwigEnvironments extends \Gumdrop\Tests\TestCase
     public function testGetSiteEnvironmentReturnsTheExpectedEnvironment()
     {
         $FSTestHelper = new \FSTestHelper\FSTestHelper();
-        $FSTestHelper->createTree(array(
+        $FSTestHelper->create(array(
             'folders' => array(),
             'files' => array(
                 array(
@@ -98,7 +98,7 @@ class TwigEnvironments extends \Gumdrop\Tests\TestCase
         ));
 
         $app = $this->getApp();
-        $app->setSourceLocation($FSTestHelper->getTemporaryPath());
+        $app->setSourceLocation($FSTestHelper);
 
         $Twig = new \Gumdrop\TwigEnvironments($app);
         $LayoutEnvironment = $Twig->getSiteEnvironment();
@@ -107,7 +107,7 @@ class TwigEnvironments extends \Gumdrop\Tests\TestCase
 
         $this->assertInstanceOf('\Twig_Environment', $LayoutEnvironment);
         $this->assertInstanceOf('\Twig_Loader_Filesystem', $Loader);
-        $this->assertEquals($FSTestHelper->getTemporaryPath(), $paths[0]);
+        $this->assertEquals($FSTestHelper, $paths[0]);
 
     }
 }

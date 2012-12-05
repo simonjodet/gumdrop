@@ -22,7 +22,7 @@ class Engine extends \Gumdrop\Tests\TestCase
     protected function setUp()
     {
         $this->FSTestHelper = new \FSTestHelper\FSTestHelper();
-        $this->FSTestHelper->createTree(array(
+        $this->FSTestHelper->create(array(
             'folders' => array(),
             'files' => array(
                 array(
@@ -193,7 +193,7 @@ class Engine extends \Gumdrop\Tests\TestCase
 
         $app->setFileHandler($FileHandlerMock);
 
-        $app->setSourceLocation($this->FSTestHelper->getTemporaryPath() . '/');
+        $app->setSourceLocation($this->FSTestHelper . '/');
 
         $Engine = new \Gumdrop\Engine($app);
         $Engine->run();
@@ -256,7 +256,7 @@ class Engine extends \Gumdrop\Tests\TestCase
             ->once();
 
         $app->setTwigEnvironments($TwigEnvironmentsMock);
-        $app->setSourceLocation($this->FSTestHelper->getTemporaryPath() . '/');
+        $app->setSourceLocation($this->FSTestHelper . '/');
 
         $Engine = new \Gumdrop\Engine($app);
         $Engine->run();

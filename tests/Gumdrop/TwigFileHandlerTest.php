@@ -9,10 +9,10 @@ class TwigFileHandler extends \Gumdrop\Tests\TestCase
     public function testRenderTwigFilesRendersTheTwigFiles()
     {
         $FSTestHelper = $this->createTestFSForStaticAndHtmlFiles();
-        $location = $FSTestHelper->getTemporaryPath();
+        $location = $FSTestHelper;
 
         $FSTestHelperForDestination = new \FSTestHelper\FSTestHelper();
-        $destination = realpath($FSTestHelperForDestination->getTemporaryPath());
+        $destination = realpath($FSTestHelperForDestination);
 
         $PageCollectionMock = \Mockery::mock('\Gumdrop\PageCollection');
         $PageCollectionMock

@@ -43,7 +43,7 @@ class TestCase extends \PHPUnit_Framework_TestCase
     protected function createTestFSForStaticAndHtmlFiles()
     {
         $FSTestHelper = new \FSTestHelper\FSTestHelper();
-        $FSTestHelper->createTree(array(
+        $FSTestHelper->create(array(
             'folders' => array(),
             'files' => array(
                 array(

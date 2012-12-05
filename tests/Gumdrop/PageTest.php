@@ -251,7 +251,7 @@ class Page extends \Gumdrop\Tests\TestCase
         $Page->setPageContent('twig content 1');
 
         $FSTestHelper = new \FSTestHelper\FSTestHelper();
-        $FSTestHelper->createTree(array(
+        $FSTestHelper->create(array(
             'folders' => array(),
             'files' => array(
                 array(
@@ -268,7 +268,7 @@ class Page extends \Gumdrop\Tests\TestCase
                 )
             )
         ));
-        $destination = $FSTestHelper->getTemporaryPath();
+        $destination = $FSTestHelper;
 
         $Page->writeHtmFiles($destination);
 
@@ -285,7 +285,7 @@ class Page extends \Gumdrop\Tests\TestCase
         $Page->setConfiguration(new \Gumdrop\PageConfiguration(array('target_name' => 'file.ext')));
 
         $FSTestHelper = new \FSTestHelper\FSTestHelper();
-        $FSTestHelper->createTree(array(
+        $FSTestHelper->create(array(
             'folders' => array(),
             'files' => array(
                 array(
@@ -303,7 +303,7 @@ class Page extends \Gumdrop\Tests\TestCase
             )
         ));
         $destinationFSTestHelper = new \FSTestHelper\FSTestHelper();
-        $destination = $destinationFSTestHelper->getTemporaryPath();
+        $destination = $destinationFSTestHelper;
 
         $Page->writeHtmFiles($destination);
 
