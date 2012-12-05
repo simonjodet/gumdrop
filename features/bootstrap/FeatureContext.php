@@ -47,7 +47,7 @@ class FeatureContext extends BehatContext
     public function iHaveMyTestSite($source)
     {
         $FSTestHelper = new \FSTestHelper\FSTestHelper();
-        $FSTestHelper->cloneTree(__DIR__ . '/../' . $source);
+        $FSTestHelper->copy(__DIR__ . '/../' . $source, $FSTestHelper);
         $this->source = $FSTestHelper;
     }
 
@@ -56,7 +56,7 @@ class FeatureContext extends BehatContext
      */
     public function itHasACssFileAt($path)
     {
-        if (!file_exists($this->source->getTemporaryPath() . '/' . $path))
+        if (!file_exists($this->source . '/' . $path))
         {
             throw new \Exception('Missing CSS file');
         }
@@ -69,7 +69,7 @@ class FeatureContext extends BehatContext
     public function iGenerateMySite()
     {
         $this->destination = new \FSTestHelper\FSTestHelper();
-        exec(__DIR__ . '/../../bin/gumdrop -s ' . $this->source->getTemporaryPath() . ' -t ' . $this->destination->getTemporaryPath(), $output, $return_var);
+        exec(__DIR__ . '/../../bin/gumdrop -s ' . $this->source . ' -t ' . $this->destination, $output, $return_var);
         if ($return_var != 0)
         {
             print_r(scandir(__DIR__ . '/../../'));
@@ -84,7 +84,7 @@ class FeatureContext extends BehatContext
      */
     public function iShouldHaveTheCssFileInTheDestinationFolder()
     {
-        if (!file_exists($this->destination->getTemporaryPath() . '/' . $this->cssFile))
+        if (!file_exists($this->destination . '/' . $this->cssFile))
         {
             throw new \Exception('The CSS file was not copied');
         }
@@ -95,7 +95,7 @@ class FeatureContext extends BehatContext
      */
     public function itHasAMarkdownFileAt($path)
     {
-        if (!file_exists($this->source->getTemporaryPath() . '/' . $path))
+        if (!file_exists($this->source . '/' . $path))
         {
             throw new \Exception('Missing Markdown file');
         }
@@ -107,7 +107,7 @@ class FeatureContext extends BehatContext
      */
     public function iShouldNotHaveTheMarkdownFileInTheDestinationFolder()
     {
-        if (file_exists($this->destination->getTemporaryPath() . '/' . $this->markdownFile))
+        if (file_exists($this->destination . '/' . $this->markdownFile))
         {
             throw new \Exception('The Markdown file was copied');
         }
@@ -118,7 +118,7 @@ class FeatureContext extends BehatContext
      */
     public function itHasALayoutFolder()
     {
-        if (!file_exists($this->source->getTemporaryPath() . '/_layout'))
+        if (!file_exists($this->source . '/_layout'))
         {
             throw new \Exception('Missing Layout folder');
         }
@@ -129,7 +129,7 @@ class FeatureContext extends BehatContext
      */
     public function iShouldNotHaveTheLayoutFolderInTheDestinationFolder()
     {
-        if (file_exists($this->destination->getTemporaryPath() . '/_layout'))
+        if (file_exists($this->destination . '/_layout'))
         {
             throw new \Exception('The Layout file was copied');
         }
@@ -159,7 +159,7 @@ class FeatureContext extends BehatContext
         $path = $this->source . '/' . $folder;
         if (file_exists($path) && is_dir($path))
         {
-            $this->source->deleteFolder($folder);
+            $this->source->delete($folder);
         }
     }
 
@@ -198,14 +198,44 @@ class FeatureContext extends BehatContext
      */
     public function iGenerateMySiteInASubFolderOfTheSource($target)
     {
-        $this->destination = $this->source->getTemporaryPath() . '/' . $target;
-        exec(__DIR__ . '/../../bin/gumdrop -s ' . $this->source->getTemporaryPath() . ' -t ' . $this->destination, $output, $return_var);
+        $this->destination = $this->source . '/' . $target;
+        exec(__DIR__ . '/../../bin/gumdrop -s ' . $this->source . ' -t ' . $this->destination, $output, $return_var);
         if ($return_var != 0)
         {
             print_r(scandir(__DIR__ . '/../../'));
             print_r(scandir(__DIR__ . '/../../bin'));
             print_r($output);
             throw new \Exception('Something went wrong during site generation');
+        }
+    }
+
+    /**
+     * @Given /^I install the dependencies of my standalone test site with Composer$/
+     */
+    public function iInstallTheDependenciesOfMyStandaloneTestSiteWithComposer()
+    {
+        exec('cd ' . $this->source . ' && composer install', $output, $return_var);
+        exec('ls -la ' . $this->source, $output, $return_var);
+        if ($return_var != 0)
+        {
+            print_r($output);
+            throw new \Exception('Something went wrong');
+        }
+    }
+
+    /**
+     * @When /^I generate my site with the installed dependency$/
+     */
+    public function iGenerateMySiteWithTheInstalledDependency()
+    {
+        $this->markdownFile = $this->source . '/testFile2.md';
+        $this->destination = $this->source . '/_site';
+        exec('cd ' . $this->source . ' && chmod +x _vendor/simonjodet/gumdrop/bin/gumdrop _vendor/simonjodet/gumdrop/gumdrop.php && _vendor/simonjodet/gumdrop/bin/gumdrop -s . -t _site', $output, $return_var);
+        exec('ls -la ' . $this->source, $output, $return_var);
+        if ($return_var != 0)
+        {
+            print_r($output);
+            throw new \Exception('Something went wrong');
         }
     }
 }

@@ -1,0 +1,6 @@
+default:
+    filters:
+      tags: "~@travis"
+travis:
+    filters:
+      tags: ""

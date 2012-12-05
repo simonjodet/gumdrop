@@ -1,0 +1,8 @@
+{
+    "config": {
+        "vendor-dir": "_vendor"
+    },
+    "require":{
+        "simonjodet/gumdrop":"dev-develop"
+    }
+}
