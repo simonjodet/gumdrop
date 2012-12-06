@@ -1,10 +1,8 @@
-# Gumdrop
+# Gumdrop [![Build Status](https://secure.travis-ci.org/simonjodet/gumdrop.png?branch=master)](http://travis-ci.org/simonjodet/gumdrop)
 
 Gumdrop is a static website generator converting Markdown files and using the Twig templating engine.
 
 Please check the [documentation](http://simonjodet.github.com/gumdrop/) (rendered with Gumdrop of course) for more information.
-
-[![Build Status](https://secure.travis-ci.org/simonjodet/gumdrop.png)](http://travis-ci.org/simonjodet/gumdrop)
 
 ## License
 
