@@ -2,7 +2,7 @@
     "name":"simonjodet/gumdrop",
     "description":"Gumdrop is a static website generator converting Markdown files and using the Twig templating engine.",
     "keywords":["markdown", "generator", "twig"],
-    "version":"1.1.0",
+    "version":"1.1.2",
     "type":"library",
     "authors":[
         {
@@ -27,7 +27,7 @@
         }
     },
     "scripts":{
-        "post-update-cmd":"chmod +x bin/gumdrop gumdrop.php",
-        "post-install-cmd":"chmod +x bin/gumdrop gumdrop.php"
+        "post-update-cmd":"echo \"Setting file permissions\" && chmod +x bin/gumdrop bin/autoreload.php gumdrop.php",
+        "post-install-cmd":"echo \"Setting file permissions\" && chmod +x bin/gumdrop bin/autoreload.php gumdrop.php"
     }
 }
