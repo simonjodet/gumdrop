@@ -2,7 +2,7 @@
     "name":"simonjodet/gumdrop",
     "description":"Gumdrop is a static website generator converting Markdown files and using the Twig templating engine.",
     "keywords":["markdown", "generator", "twig"],
-    "version":"1.0.2",
+    "version":"1.1.0",
     "type":"library",
     "authors":[
         {
