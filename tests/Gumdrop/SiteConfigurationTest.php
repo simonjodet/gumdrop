@@ -9,7 +9,7 @@ class SiteConfiguration extends \Gumdrop\Tests\TestCase
     public function testSiteConfigurationThrowsExceptionOnMissingConfigurationFile()
     {
         $FSTestHelper = new \FSTestHelper\FSTestHelper();
-        $FSTestHelper->createTree(array(
+        $FSTestHelper->create(array(
             'folders' => array(),
             'files' => array(
                 array(
@@ -19,15 +19,15 @@ class SiteConfiguration extends \Gumdrop\Tests\TestCase
             )
         ));
         $this->setExpectedException(
-            'Gumdrop\Exception', 'Could not find the configuration file at ' . $FSTestHelper->getTemporaryPath() . '/conf.json'
+            'Gumdrop\Exception', 'Could not find the configuration file at ' . $FSTestHelper . '/conf.json'
         );
 
-        new \Gumdrop\SiteConfiguration($FSTestHelper->getTemporaryPath());
+        new \Gumdrop\SiteConfiguration($FSTestHelper);
     }
     public function testSiteConfigurationThrowsExceptionOnInvalidConfiguration()
     {
         $FSTestHelper = new \FSTestHelper\FSTestHelper();
-        $FSTestHelper->createTree(array(
+        $FSTestHelper->create(array(
             'folders' => array(),
             'files' => array(
                 array(
@@ -41,9 +41,9 @@ class SiteConfiguration extends \Gumdrop\Tests\TestCase
             )
         ));
         $this->setExpectedException(
-            'Gumdrop\Exception', 'Invalid configuration in ' . $FSTestHelper->getTemporaryPath() . '/conf.json'
+            'Gumdrop\Exception', 'Invalid configuration in ' . $FSTestHelper . '/conf.json'
         );
 
-        new \Gumdrop\SiteConfiguration($FSTestHelper->getTemporaryPath());
+        new \Gumdrop\SiteConfiguration($FSTestHelper);
     }
 }

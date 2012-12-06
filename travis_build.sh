@@ -1,3 +1,3 @@
 #!/bin/sh
 phpunit
-vendor/bin/behat
+vendor/bin/behat --profile travis

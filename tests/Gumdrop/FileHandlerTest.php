@@ -11,7 +11,7 @@ class FileHandler extends \Gumdrop\Tests\TestCase
     public function testListMarkdownFilesListsFilesRecursively()
     {
         $FSTestHelper = new \FSTestHelper\FSTestHelper();
-        $FSTestHelper->createTree(array(
+        $FSTestHelper->create(array(
             'folders' => array(),
             'files' => array(
                 array(
@@ -32,12 +32,12 @@ class FileHandler extends \Gumdrop\Tests\TestCase
         $app = $this->getApp();
         $app->setSiteConfiguration(array());
 
-        $app->setSourceLocation($FSTestHelper->getTemporaryPath() . '/');
+        $app->setSourceLocation($FSTestHelper . '/');
         $FileHandler = new \Gumdrop\FileHandler($app);
         $list = $FileHandler->listMarkdownFiles();
         $expected = array(
-            realpath($FSTestHelper->getTemporaryPath() . '/file2.markdown'),
-            realpath($FSTestHelper->getTemporaryPath() . '/folder/file1.md')
+            realpath($FSTestHelper . '/file2.markdown'),
+            realpath($FSTestHelper . '/folder/file1.md')
         );
 
         $this->assertEquals($expected, $list);
@@ -46,7 +46,7 @@ class FileHandler extends \Gumdrop\Tests\TestCase
     public function testListMarkdownFilesIgnoresFilesAndFoldersWithUnderscorePrefix()
     {
         $FSTestHelper = new \FSTestHelper\FSTestHelper();
-        $FSTestHelper->createTree(array(
+        $FSTestHelper->create(array(
             'folders' => array(),
             'files' => array(
                 array(
@@ -73,13 +73,13 @@ class FileHandler extends \Gumdrop\Tests\TestCase
         ));
 
         $app = $this->getApp();
-        $app->setSourceLocation($FSTestHelper->getTemporaryPath() . '/');
+        $app->setSourceLocation($FSTestHelper . '/');
         $FileHandler = new \Gumdrop\FileHandler($app);
         $list = $FileHandler->listMarkdownFiles();
 
 
         $expected = array(
-            realpath($FSTestHelper->getTemporaryPath() . '/folder/file1.md')
+            realpath($FSTestHelper . '/folder/file1.md')
         );
 
         $this->assertEquals($list, $expected);
@@ -88,7 +88,7 @@ class FileHandler extends \Gumdrop\Tests\TestCase
     public function testListMarkdownFilesIgnoresBlackListedFiles()
     {
         $FSTestHelper = new \FSTestHelper\FSTestHelper();
-        $FSTestHelper->createTree(array(
+        $FSTestHelper->create(array(
             'folders' => array(),
             'files' => array(
                 array(
@@ -110,13 +110,13 @@ class FileHandler extends \Gumdrop\Tests\TestCase
         $app->setSiteConfiguration(array(
             'blacklist' => array('file2.markdown')
         ));
-        $app->setSourceLocation($FSTestHelper->getTemporaryPath() . '/');
+        $app->setSourceLocation($FSTestHelper . '/');
         $FileHandler = new \Gumdrop\FileHandler($app);
         $list = $FileHandler->listMarkdownFiles();
 
 
         $expected = array(
-            realpath($FSTestHelper->getTemporaryPath() . '/folder/file1.md')
+            realpath($FSTestHelper . '/folder/file1.md')
         );
 
         $this->assertEquals($list, $expected);
@@ -125,7 +125,7 @@ class FileHandler extends \Gumdrop\Tests\TestCase
     public function testGetMarkdownFilesReturnsFilesContent()
     {
         $FSTestHelper = new \FSTestHelper\FSTestHelper();
-        $FSTestHelper->createTree(array(
+        $FSTestHelper->create(array(
             'folders' => array(),
             'files' => array(
                 array(
@@ -140,12 +140,12 @@ class FileHandler extends \Gumdrop\Tests\TestCase
         ));
 
         $app = $this->getApp();
-        $app->setSourceLocation($FSTestHelper->getTemporaryPath() . '/');
+        $app->setSourceLocation($FSTestHelper . '/');
 
         $FileHandler = new \Gumdrop\FileHandler($app);
         $Pages = $FileHandler->getMarkdownFiles(array(
-            realpath($FSTestHelper->getTemporaryPath() . '/folder/file1.md'),
-            realpath($FSTestHelper->getTemporaryPath() . '/file2.markdown')
+            realpath($FSTestHelper . '/folder/file1.md'),
+            realpath($FSTestHelper . '/file2.markdown')
         ));
 
         $expected = new \Gumdrop\PageCollection();
@@ -164,7 +164,7 @@ class FileHandler extends \Gumdrop\Tests\TestCase
     public function testFindPageTwigFileReturnsTrueIfThisTwigFileExists()
     {
         $FSTestHelper = new \FSTestHelper\FSTestHelper();
-        $FSTestHelper->createTree(array(
+        $FSTestHelper->create(array(
             'folders' => array(),
             'files' => array(
                 array(
@@ -174,7 +174,7 @@ class FileHandler extends \Gumdrop\Tests\TestCase
             )
         ));
 
-        $location = $FSTestHelper->getTemporaryPath();
+        $location = $FSTestHelper;
 
         $app = $this->getApp();
         $app->setSourceLocation($location);
@@ -186,7 +186,7 @@ class FileHandler extends \Gumdrop\Tests\TestCase
     public function testFindPageTwigFileReturnsFalseIfThisTwigFileDoesNotExist()
     {
         $FSTestHelper = new \FSTestHelper\FSTestHelper();
-        $FSTestHelper->createTree(array(
+        $FSTestHelper->create(array(
             'folders' => array(),
             'files' => array(
                 array(
@@ -196,7 +196,7 @@ class FileHandler extends \Gumdrop\Tests\TestCase
             )
         ));
 
-        $location = $FSTestHelper->getTemporaryPath();
+        $location = $FSTestHelper;
 
         $app = $this->getApp();
         $app->setSourceLocation($location);
@@ -208,7 +208,7 @@ class FileHandler extends \Gumdrop\Tests\TestCase
     public function testListStaticFilesReturnsStaticFiles()
     {
         $FSTestHelper = $this->createTestFSForStaticAndHtmlFiles();
-        $location = $FSTestHelper->getTemporaryPath();
+        $location = $FSTestHelper;
 
         $app = $this->getApp();
         $app->setSourceLocation($location);
@@ -227,7 +227,7 @@ class FileHandler extends \Gumdrop\Tests\TestCase
     public function testListStaticFilesReturnsDoesNotReturnMarkdownFiles()
     {
         $FSTestHelper = $this->createTestFSForStaticAndHtmlFiles();
-        $location = $FSTestHelper->getTemporaryPath();
+        $location = $FSTestHelper;
 
         $app = $this->getApp();
         $app->setSourceLocation($location);
@@ -241,7 +241,7 @@ class FileHandler extends \Gumdrop\Tests\TestCase
     public function testListStaticFilesReturnsDoesNotReturnHTMLFiles()
     {
         $FSTestHelper = $this->createTestFSForStaticAndHtmlFiles();
-        $location = $FSTestHelper->getTemporaryPath();
+        $location = $FSTestHelper;
 
         $app = $this->getApp();
         $app->setSourceLocation($location);
@@ -255,7 +255,7 @@ class FileHandler extends \Gumdrop\Tests\TestCase
     public function testListStaticFilesIgnoresFilesAndFoldersWithUnderscorePrefix()
     {
         $FSTestHelper = new \FSTestHelper\FSTestHelper();
-        $FSTestHelper->createTree(array(
+        $FSTestHelper->create(array(
             'folders' => array(),
             'files' => array(
                 array(
@@ -282,7 +282,7 @@ class FileHandler extends \Gumdrop\Tests\TestCase
         ));
 
         $app = $this->getApp();
-        $app->setSourceLocation($FSTestHelper->getTemporaryPath() . '/');
+        $app->setSourceLocation($FSTestHelper . '/');
         $FileHandler = new \Gumdrop\FileHandler($app);
         $list = $FileHandler->listStaticFiles();
 
@@ -295,14 +295,53 @@ class FileHandler extends \Gumdrop\Tests\TestCase
         $this->assertEquals($expected, $list);
     }
 
+    public function testListStaticFilesIgnoresBlackListedFiles()
+    {
+        $FSTestHelper = new \FSTestHelper\FSTestHelper();
+        $FSTestHelper->create(array(
+            'folders' => array(),
+            'files' => array(
+                array(
+                    'path' => 'folder/file1.md',
+                    'content' => ''
+                ),
+                array(
+                    'path' => 'file2.txt',
+                    'content' => ''
+                ),
+                array(
+                    'path' => 'file3.txt',
+                    'content' => ''
+                )
+            )
+        ));
+
+        $app = $this->getApp();
+        $app->setSiteConfiguration(array(
+            'blacklist' => array('file3.txt')
+        ));
+        $app->setSourceLocation($FSTestHelper . '/');
+        $FileHandler = new \Gumdrop\FileHandler($app);
+        $list = $FileHandler->listStaticFiles();
+
+
+        $expected = array(
+            'file2.txt'
+        );
+
+        $this->assertEquals($expected, $list);
+    }
+
+
+
     public function testCopyStaticFilesCopiesAllTheFilesAtTheCorrectPlace()
     {
         $FSTestHelperForDestination = new \FSTestHelper\FSTestHelper();
-        $destination = $FSTestHelperForDestination->getTemporaryPath();
+        $destination = $FSTestHelperForDestination;
         $destination = realpath($destination);
 
         $FSTestHelper = $this->createTestFSForStaticAndHtmlFiles();
-        $location = $FSTestHelper->getTemporaryPath();
+        $location = $FSTestHelper;
 
         $app = $this->getApp();
         $app->setSourceLocation($location);
@@ -325,11 +364,11 @@ class FileHandler extends \Gumdrop\Tests\TestCase
     public function testCopyStaticFilesCreatesFoldersWithTheSamePermissionsAsSource()
     {
         $FSTestHelperForDestination = new \FSTestHelper\FSTestHelper();
-        $destination = $FSTestHelperForDestination->getTemporaryPath();
+        $destination = $FSTestHelperForDestination;
         $destination = realpath($destination);
 
         $FSTestHelper = $this->createTestFSForStaticAndHtmlFiles();
-        $location = $FSTestHelper->getTemporaryPath();
+        $location = $FSTestHelper;
         chmod($location . '/folder', 0755);
 
 
@@ -349,7 +388,7 @@ class FileHandler extends \Gumdrop\Tests\TestCase
     public function testListTwigFilesReturnsTwigFiles()
     {
         $FSTestHelper = $this->createTestFSForStaticAndHtmlFiles();
-        $location = $FSTestHelper->getTemporaryPath();
+        $location = $FSTestHelper;
 
         $app = $this->getApp();
         $app->setSourceLocation($location);
@@ -364,7 +403,7 @@ class FileHandler extends \Gumdrop\Tests\TestCase
     public function testListTwigFilesIgnoresFilesAndFoldersWithUnderscorePrefix()
     {
         $FSTestHelper = new \FSTestHelper\FSTestHelper();
-        $FSTestHelper->createTree(array(
+        $FSTestHelper->create(array(
             'folders' => array(),
             'files' => array(
                 array(
@@ -391,7 +430,40 @@ class FileHandler extends \Gumdrop\Tests\TestCase
         ));
 
         $app = $this->getApp();
-        $app->setSourceLocation($FSTestHelper->getTemporaryPath() . '/');
+        $app->setSourceLocation($FSTestHelper . '/');
+        $FileHandler = new \Gumdrop\FileHandler($app);
+        $list = $FileHandler->listTwigFiles();
+
+
+        $expected = array(
+            'folder/file1.twig'
+        );
+
+        $this->assertEquals($expected, $list);
+    }
+
+    public function testListTwigFilesIgnoresBlackListedFiles()
+    {
+        $FSTestHelper = new \FSTestHelper\FSTestHelper();
+        $FSTestHelper->create(array(
+            'folders' => array(),
+            'files' => array(
+                array(
+                    'path' => 'folder/file1.twig',
+                    'content' => ''
+                ),
+                array(
+                    'path' => 'file2.twig',
+                    'content' => ''
+                )
+            )
+        ));
+
+        $app = $this->getApp();
+        $app->setSiteConfiguration(array(
+            'blacklist' => array('file2.twig')
+        ));
+        $app->setSourceLocation($FSTestHelper . '/');
         $FileHandler = new \Gumdrop\FileHandler($app);
         $list = $FileHandler->listTwigFiles();
 
@@ -406,7 +478,7 @@ class FileHandler extends \Gumdrop\Tests\TestCase
     public function testClearDestinationLocationRemovesAllContent()
     {
         $FSTestHelper = new \FSTestHelper\FSTestHelper();
-        $FSTestHelper->createTree(array(
+        $FSTestHelper->create(array(
             'folders' => array(),
             'files' => array(
                 array(
@@ -424,7 +496,7 @@ class FileHandler extends \Gumdrop\Tests\TestCase
             )
         ));
 
-        $location = $FSTestHelper->getTemporaryPath();
+        $location = $FSTestHelper;
 
         $app = $this->getApp();
         $app->setDestinationLocation($location);
@@ -437,7 +509,7 @@ class FileHandler extends \Gumdrop\Tests\TestCase
     public function testGetSourceFolderHashUpdatesTheReturnedHashWhenFileIsModified()
     {
         $FSTestHelper = new \FSTestHelper\FSTestHelper();
-        $FSTestHelper->createTree(array(
+        $FSTestHelper->create(array(
             'folders' => array(),
             'files' => array(
                 array(
@@ -455,13 +527,13 @@ class FileHandler extends \Gumdrop\Tests\TestCase
             )
         ));
         $app = $this->getApp();
-        $app->setSourceLocation($FSTestHelper->getTemporaryPath());
+        $app->setSourceLocation($FSTestHelper);
 
         $FileHandler = new \Gumdrop\FileHandler($app);
         $initialHash = $FileHandler->getSourceFolderHash();
 
         //Testing file edit
-        file_put_contents($FSTestHelper->getTemporaryPath() . '/file1', 'something else');
+        file_put_contents($FSTestHelper . '/file1', 'something else');
         $updatedHash = $FileHandler->getSourceFolderHash();
         $this->assertNotEquals(
             $initialHash,
@@ -471,7 +543,7 @@ class FileHandler extends \Gumdrop\Tests\TestCase
         // Testing file deletion
         $initialHash = $updatedHash;
 
-        unlink($FSTestHelper->getTemporaryPath() . '/file1');
+        unlink($FSTestHelper . '/file1');
         $updatedHash = $FileHandler->getSourceFolderHash();
 
         $this->assertNotEquals(
@@ -482,7 +554,7 @@ class FileHandler extends \Gumdrop\Tests\TestCase
         // Testing file creation
         $initialHash = $updatedHash;
 
-        touch($FSTestHelper->getTemporaryPath() . '/file1');
+        touch($FSTestHelper . '/file1');
         $updatedHash = $FileHandler->getSourceFolderHash();
 
         $this->assertNotEquals(
@@ -493,7 +565,7 @@ class FileHandler extends \Gumdrop\Tests\TestCase
         // Testing file rename
         $initialHash = $updatedHash;
 
-        rename($FSTestHelper->getTemporaryPath() . '/file3', $FSTestHelper->getTemporaryPath() . '/file4');
+        rename($FSTestHelper . '/file3', $FSTestHelper . '/file4');
         $updatedHash = $FileHandler->getSourceFolderHash();
 
         $this->assertNotEquals(

@@ -28,15 +28,32 @@ class Engine
     }
 
     /**
-     * Runs the PageCollection through all the steps of the process
+     * Handles the site configuration
      */
-    public function run()
+    public function configure()
     {
         $this->app->setSiteConfiguration(new \Gumdrop\SiteConfiguration($this->app->getSourceLocation()));
         if ($this->app->getSiteConfiguration()->offsetExists('timezone'))
         {
             date_default_timezone_set($this->app->getSiteConfiguration()->offsetGet('timezone'));
         }
+        if ($this->app->getSiteConfiguration()->offsetExists('destination'))
+        {
+            $this->app->setDestinationLocation($this->app->getSiteConfiguration()->offsetGet('destination'));
+        }
+        elseif ($this->app->getDestinationLocation() == '')
+        {
+            $this->app->setDestinationLocation($this->app->getSourceLocation() . '/_site');
+        }
+    }
+
+    /**
+     * Runs the PageCollection through all the steps of the process
+     */
+    public function run()
+    {
+        $this->configure();
+
         $PageCollection = $this->app->getFileHandler()->listMarkdownFiles();
         $PageCollection = $this->app->getFileHandler()->getMarkdownFiles($PageCollection);
         $LayoutTwigEnvironment = $this->app->getTwigEnvironments()->getLayoutEnvironment();

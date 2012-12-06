@@ -22,7 +22,7 @@ class Engine extends \Gumdrop\Tests\TestCase
     protected function setUp()
     {
         $this->FSTestHelper = new \FSTestHelper\FSTestHelper();
-        $this->FSTestHelper->createTree(array(
+        $this->FSTestHelper->create(array(
             'folders' => array(),
             'files' => array(
                 array(
@@ -193,7 +193,7 @@ class Engine extends \Gumdrop\Tests\TestCase
 
         $app->setFileHandler($FileHandlerMock);
 
-        $app->setSourceLocation($this->FSTestHelper->getTemporaryPath() . '/');
+        $app->setSourceLocation($this->FSTestHelper . '/');
 
         $Engine = new \Gumdrop\Engine($app);
         $Engine->run();
@@ -256,9 +256,145 @@ class Engine extends \Gumdrop\Tests\TestCase
             ->once();
 
         $app->setTwigEnvironments($TwigEnvironmentsMock);
-        $app->setSourceLocation($this->FSTestHelper->getTemporaryPath() . '/');
+        $app->setSourceLocation($this->FSTestHelper . '/');
 
         $Engine = new \Gumdrop\Engine($app);
         $Engine->run();
+    }
+
+    public function testConfigureHandlesTheConfigurationCorrectly()
+    {
+        $app = \Mockery::mock('\Gumdrop\Application');
+        $app
+            ->shouldReceive('setSiteConfiguration')
+            ->once()
+            ->with(\Mockery::type('\Gumdrop\SiteConfiguration'));
+        $app
+            ->shouldReceive('getSourceLocation')
+            ->atLeast()->once()
+            ->andReturn($this->createTestFSForStaticAndHtmlFiles());
+
+        $app
+            ->shouldReceive('getSiteConfiguration')
+            ->andReturn(\Mockery::mock(array('offsetExists' => false)));
+
+        $app->shouldReceive('getDestinationLocation', 'setDestinationLocation')->byDefault();
+
+
+        $Engine = new \Gumdrop\Engine($app);
+        $Engine->configure();
+    }
+
+    public function testConfigureSetsTheConfiguredTimeZone()
+    {
+        $SiteConfigurationMock = $this->getSiteConfigurationMock();
+
+        $app = \Mockery::mock('\Gumdrop\Application[getSiteConfiguration]');
+        $app
+            ->shouldReceive('getSiteConfiguration')
+            ->andReturn($SiteConfigurationMock);
+
+        $test_path = $this->createTestFSForStaticAndHtmlFiles();
+        $app->setSourceLocation($test_path);
+
+        $Engine = new \Gumdrop\Engine($app);
+        $Engine->configure();
+
+        $this->assertEquals('UTC', date_default_timezone_get());
+    }
+
+    public function testConfigurePrioritizeConfiguredDestinationOverCliParameter()
+    {
+        $SiteConfigurationMock = $this->getSiteConfigurationMock();
+
+        $app = \Mockery::mock('\Gumdrop\Application[getSiteConfiguration,setDestinationLocation]');
+        $app
+            ->shouldReceive('getSiteConfiguration')
+            ->andReturn($SiteConfigurationMock);
+
+        $app
+            ->shouldReceive('setDestinationLocation')
+            ->once()
+            ->with('destination_path');
+
+        $test_path = $this->createTestFSForStaticAndHtmlFiles();
+        $app->setSourceLocation($test_path);
+
+        $Engine = new \Gumdrop\Engine($app);
+        $Engine->configure();
+    }
+
+    public function testConfigureSetsDestinationToSiteSubfolderByDefault()
+    {
+        $SiteConfigurationMock = \Mockery::mock();
+        $SiteConfigurationMock
+            ->shouldReceive('offsetExists')
+            ->once()
+            ->with('timezone')
+            ->andReturn(true);
+        $SiteConfigurationMock
+            ->shouldReceive('offsetGet')
+            ->once()
+            ->with('timezone')
+            ->andReturn('UTC');
+        $SiteConfigurationMock
+            ->shouldReceive('offsetExists')
+            ->once()
+            ->with('destination')
+            ->andReturn(false);
+        $SiteConfigurationMock
+            ->shouldReceive('offsetGet')
+            ->with('destination')
+            ->never();
+
+
+        $app = \Mockery::mock('\Gumdrop\Application[getSiteConfiguration,getDestinationLocation,setDestinationLocation]');
+        $app
+            ->shouldReceive('getSiteConfiguration')
+            ->andReturn($SiteConfigurationMock);
+        $app
+            ->shouldReceive('getDestinationLocation')
+            ->once()
+            ->andReturn('');
+
+        $test_path = $this->createTestFSForStaticAndHtmlFiles();
+        $app->setSourceLocation($test_path);
+
+        $app
+            ->shouldReceive('setDestinationLocation')
+            ->once()
+            ->with($test_path . '/_site');
+
+        $Engine = new \Gumdrop\Engine($app);
+        $Engine->configure();
+    }
+
+    private function getSiteConfigurationMock()
+    {
+        $SiteConfigurationMock = \Mockery::mock();
+        $SiteConfigurationMock
+            ->shouldReceive('offsetExists')
+            ->once()
+            ->with('timezone')
+            ->andReturn(true);
+        $SiteConfigurationMock
+            ->shouldReceive('offsetGet')
+            ->once()
+            ->with('timezone')
+            ->andReturn('UTC');
+
+        $SiteConfigurationMock
+            ->shouldReceive('offsetExists')
+            ->once()
+            ->with('destination')
+            ->andReturn(true);
+
+        $SiteConfigurationMock
+            ->shouldReceive('offsetGet')
+            ->once()
+            ->with('destination')
+            ->andReturn('destination_path');
+
+        return $SiteConfigurationMock;
     }
 }
