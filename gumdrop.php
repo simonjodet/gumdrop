@@ -9,8 +9,7 @@ if ($source == '/' || $source == realpath(__DIR__) . '/' || $source === false)
 }
 if ($destination == '/' || $destination == realpath(__DIR__) . '/' || $destination === false)
 {
-    echo 'Given destination path is not valid!' . PHP_EOL;
-    exit(2);
+    $destination = '';
 }
 if (file_exists(__DIR__ . '/vendor/autoload.php'))
 {
