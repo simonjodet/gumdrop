@@ -56,7 +56,7 @@ class FileHandler
                     else
                     {
                         $filter_callback_result = $filter_callback($item);
-                        if ($filter_callback_result !== false)
+                        if ($filter_callback_result !== false && !$this->isBlacklisted($item))
                         {
                             $files[] = $filter_callback_result;
                         }
@@ -68,6 +68,22 @@ class FileHandler
         return $files;
     }
 
+    private function isBlacklisted($file)
+    {
+        $conf = $this->app->getSiteConfiguration();
+        $blacklist = array();
+        if (isset($conf['blacklist']) && is_array($conf['blacklist']))
+        {
+            $blacklist = $conf['blacklist'];
+        }
+        $relative_path = ltrim(str_replace(realpath($this->app->getSourceLocation()), '', $file), DIRECTORY_SEPARATOR);
+        if (in_array($relative_path, $blacklist))
+        {
+            return true;
+        }
+        return false;
+    }
+
     /**
      * Builds a list of Markdown files recursively
      *
@@ -75,20 +91,8 @@ class FileHandler
      */
     public function listMarkdownFiles()
     {
-        $app = $this->app;
-        $filter_callback = function($file) use($app)
+        $filter_callback = function($file)
         {
-            $conf = $app->getSiteConfiguration();
-            $blacklist = array();
-            if (isset($conf['blacklist']) && is_array($conf['blacklist']))
-            {
-                $blacklist = $conf['blacklist'];
-            }
-            $relative_path = ltrim(str_replace(realpath($app->getSourceLocation()), '', $file), DIRECTORY_SEPARATOR);
-            if (in_array($relative_path, $blacklist))
-            {
-                return false;
-            }
             $file_info = pathinfo($file);
             if (isset($file_info['extension']) && ($file_info['extension'] == 'md' || $file_info['extension'] == 'markdown'))
             {

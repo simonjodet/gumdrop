@@ -295,6 +295,45 @@ class FileHandler extends \Gumdrop\Tests\TestCase
         $this->assertEquals($expected, $list);
     }
 
+    public function testListStaticFilesIgnoresBlackListedFiles()
+    {
+        $FSTestHelper = new \FSTestHelper\FSTestHelper();
+        $FSTestHelper->create(array(
+            'folders' => array(),
+            'files' => array(
+                array(
+                    'path' => 'folder/file1.md',
+                    'content' => ''
+                ),
+                array(
+                    'path' => 'file2.txt',
+                    'content' => ''
+                ),
+                array(
+                    'path' => 'file3.txt',
+                    'content' => ''
+                )
+            )
+        ));
+
+        $app = $this->getApp();
+        $app->setSiteConfiguration(array(
+            'blacklist' => array('file3.txt')
+        ));
+        $app->setSourceLocation($FSTestHelper . '/');
+        $FileHandler = new \Gumdrop\FileHandler($app);
+        $list = $FileHandler->listStaticFiles();
+
+
+        $expected = array(
+            'file2.txt'
+        );
+
+        $this->assertEquals($expected, $list);
+    }
+
+
+
     public function testCopyStaticFilesCopiesAllTheFilesAtTheCorrectPlace()
     {
         $FSTestHelperForDestination = new \FSTestHelper\FSTestHelper();
@@ -391,6 +430,39 @@ class FileHandler extends \Gumdrop\Tests\TestCase
         ));
 
         $app = $this->getApp();
+        $app->setSourceLocation($FSTestHelper . '/');
+        $FileHandler = new \Gumdrop\FileHandler($app);
+        $list = $FileHandler->listTwigFiles();
+
+
+        $expected = array(
+            'folder/file1.twig'
+        );
+
+        $this->assertEquals($expected, $list);
+    }
+
+    public function testListTwigFilesIgnoresBlackListedFiles()
+    {
+        $FSTestHelper = new \FSTestHelper\FSTestHelper();
+        $FSTestHelper->create(array(
+            'folders' => array(),
+            'files' => array(
+                array(
+                    'path' => 'folder/file1.twig',
+                    'content' => ''
+                ),
+                array(
+                    'path' => 'file2.twig',
+                    'content' => ''
+                )
+            )
+        ));
+
+        $app = $this->getApp();
+        $app->setSiteConfiguration(array(
+            'blacklist' => array('file2.twig')
+        ));
         $app->setSourceLocation($FSTestHelper . '/');
         $FileHandler = new \Gumdrop\FileHandler($app);
         $list = $FileHandler->listTwigFiles();
