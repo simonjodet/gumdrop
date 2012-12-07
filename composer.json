@@ -17,7 +17,7 @@
         "simonjodet/Twig":"1.9.2"
     },
     "require-dev":{
-        "mockery/mockery":"0.7.2",
+        "mockery/mockery":"dev-master",
         "behat/behat":"2.4.*@stable",
         "simonjodet/fstesthelper":"2.*"
     },

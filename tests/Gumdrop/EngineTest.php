@@ -262,7 +262,36 @@ class Engine extends \Gumdrop\Tests\TestCase
         $Engine->run();
     }
 
-    public function testConfigureHandlesTheConfigurationCorrectly()
+    public function test_run_calls_steps_in_the_correct_order()
+    {
+        $app = new \Gumdrop\Application();
+
+        /**
+         * @var $Engine \Gumdrop\Engine
+         */
+        $Engine = \Mockery::mock('\Gumdrop\Engine[loadConfigurationFile,setConfiguredTimezone,setConfiguredDestination,setDefaultDestination]', array($app));
+
+        $Engine
+            ->shouldReceive('loadConfigurationFile')
+            ->once()
+            ->ordered();
+        $Engine
+            ->shouldReceive('setConfiguredTimezone')
+            ->once()
+            ->ordered();
+        $Engine
+            ->shouldReceive('setConfiguredDestination')
+            ->once()
+            ->ordered();
+        $Engine
+            ->shouldReceive('setDefaultDestination')
+            ->once()
+            ->ordered();
+
+        $Engine->new_run();
+    }
+
+    public function test_loadConfigurationFile_adds_the_loaded_conf_to_the_application()
     {
         $app = \Mockery::mock('\Gumdrop\Application');
         $app
@@ -271,23 +300,26 @@ class Engine extends \Gumdrop\Tests\TestCase
             ->with(\Mockery::type('\Gumdrop\SiteConfiguration'));
         $app
             ->shouldReceive('getSourceLocation')
-            ->atLeast()->once()
+            ->once()
             ->andReturn($this->createTestFSForStaticAndHtmlFiles());
 
-        $app
-            ->shouldReceive('getSiteConfiguration')
-            ->andReturn(\Mockery::mock(array('offsetExists' => false)));
-
-        $app->shouldReceive('getDestinationLocation', 'setDestinationLocation')->byDefault();
-
-
         $Engine = new \Gumdrop\Engine($app);
-        $Engine->configure();
+        $Engine->loadConfigurationFile();
     }
 
-    public function testConfigureSetsTheConfiguredTimeZone()
+    public function test_setConfiguredTimezone_sets_the_timezone_according_to_the_conf()
     {
-        $SiteConfigurationMock = $this->getSiteConfigurationMock();
+        $SiteConfigurationMock = \Mockery::mock();
+        $SiteConfigurationMock
+            ->shouldReceive('offsetExists')
+            ->once()
+            ->with('timezone')
+            ->andReturn(true);
+        $SiteConfigurationMock
+            ->shouldReceive('offsetGet')
+            ->once()
+            ->with('timezone')
+            ->andReturn('UTC');
 
         $app = \Mockery::mock('\Gumdrop\Application[getSiteConfiguration]');
         $app
@@ -298,14 +330,24 @@ class Engine extends \Gumdrop\Tests\TestCase
         $app->setSourceLocation($test_path);
 
         $Engine = new \Gumdrop\Engine($app);
-        $Engine->configure();
+        $Engine->setConfiguredTimezone();
 
         $this->assertEquals('UTC', date_default_timezone_get());
     }
 
-    public function testConfigurePrioritizeConfiguredDestinationOverCliParameter()
+    public function test_setConfiguredDestination_sets_the_destination_according_to_the_conf()
     {
-        $SiteConfigurationMock = $this->getSiteConfigurationMock();
+        $SiteConfigurationMock = \Mockery::mock();
+        $SiteConfigurationMock
+            ->shouldReceive('offsetExists')
+            ->once()
+            ->with('destination')
+            ->andReturn(true);
+        $SiteConfigurationMock
+            ->shouldReceive('offsetGet')
+            ->once()
+            ->with('destination')
+            ->andReturn('configured_destination_path');
 
         $app = \Mockery::mock('\Gumdrop\Application[getSiteConfiguration,setDestinationLocation]');
         $app
@@ -315,86 +357,38 @@ class Engine extends \Gumdrop\Tests\TestCase
         $app
             ->shouldReceive('setDestinationLocation')
             ->once()
-            ->with('destination_path');
+            ->with('configured_destination_path');
 
         $test_path = $this->createTestFSForStaticAndHtmlFiles();
         $app->setSourceLocation($test_path);
 
         $Engine = new \Gumdrop\Engine($app);
-        $Engine->configure();
+        $Engine->setConfiguredDestination();
     }
 
-    public function testConfigureSetsDestinationToSiteSubfolderByDefault()
+    public function test_setDefaultDestination_sets_the_destination_correctly_if_empty()
     {
-        $SiteConfigurationMock = \Mockery::mock();
-        $SiteConfigurationMock
-            ->shouldReceive('offsetExists')
-            ->once()
-            ->with('timezone')
-            ->andReturn(true);
-        $SiteConfigurationMock
-            ->shouldReceive('offsetGet')
-            ->once()
-            ->with('timezone')
-            ->andReturn('UTC');
-        $SiteConfigurationMock
-            ->shouldReceive('offsetExists')
-            ->once()
-            ->with('destination')
-            ->andReturn(false);
-        $SiteConfigurationMock
-            ->shouldReceive('offsetGet')
-            ->with('destination')
-            ->never();
+        $app = \Mockery::mock('\Gumdrop\Application[getDestinationLocation,getSourceLocation,setDestinationLocation]');
 
-
-        $app = \Mockery::mock('\Gumdrop\Application[getSiteConfiguration,getDestinationLocation,setDestinationLocation]');
-        $app
-            ->shouldReceive('getSiteConfiguration')
-            ->andReturn($SiteConfigurationMock);
         $app
             ->shouldReceive('getDestinationLocation')
             ->once()
             ->andReturn('');
 
         $test_path = $this->createTestFSForStaticAndHtmlFiles();
-        $app->setSourceLocation($test_path);
 
+        $app
+            ->shouldReceive('getSourceLocation')
+            ->once()
+            ->andReturn($test_path);
         $app
             ->shouldReceive('setDestinationLocation')
             ->once()
             ->with($test_path . '/_site');
 
+        $app->setSourceLocation($test_path);
+
         $Engine = new \Gumdrop\Engine($app);
-        $Engine->configure();
-    }
-
-    private function getSiteConfigurationMock()
-    {
-        $SiteConfigurationMock = \Mockery::mock();
-        $SiteConfigurationMock
-            ->shouldReceive('offsetExists')
-            ->once()
-            ->with('timezone')
-            ->andReturn(true);
-        $SiteConfigurationMock
-            ->shouldReceive('offsetGet')
-            ->once()
-            ->with('timezone')
-            ->andReturn('UTC');
-
-        $SiteConfigurationMock
-            ->shouldReceive('offsetExists')
-            ->once()
-            ->with('destination')
-            ->andReturn(true);
-
-        $SiteConfigurationMock
-            ->shouldReceive('offsetGet')
-            ->once()
-            ->with('destination')
-            ->andReturn('destination_path');
-
-        return $SiteConfigurationMock;
+        $Engine->setDefaultDestination();
     }
 }

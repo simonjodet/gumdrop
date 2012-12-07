@@ -28,23 +28,55 @@ class Engine
     }
 
     /**
-     * Handles the site configuration
+     * Loads the configuration file
      */
-    public function configure()
+    public function loadConfigurationFile()
     {
         $this->app->setSiteConfiguration(new \Gumdrop\SiteConfiguration($this->app->getSourceLocation()));
+    }
+
+    /**
+     * Sets the configured timezone
+     */
+    public function setConfiguredTimezone()
+    {
         if ($this->app->getSiteConfiguration()->offsetExists('timezone'))
         {
             date_default_timezone_set($this->app->getSiteConfiguration()->offsetGet('timezone'));
         }
+    }
+
+    /**
+     * Sets the configured destination over any existing one
+     */
+    public function setConfiguredDestination()
+    {
         if ($this->app->getSiteConfiguration()->offsetExists('destination'))
         {
             $this->app->setDestinationLocation($this->app->getSiteConfiguration()->offsetGet('destination'));
         }
-        elseif ($this->app->getDestinationLocation() == '')
+    }
+
+    /**
+     * Sets a default destination if it's still empty
+     */
+    public function setDefaultDestination()
+    {
+        if ($this->app->getDestinationLocation() == '')
         {
             $this->app->setDestinationLocation($this->app->getSourceLocation() . '/_site');
         }
+    }
+
+    /**
+     * Runs the different steps of the site generation
+     */
+    public function new_run()
+    {
+        $this->loadConfigurationFile();
+        $this->setConfiguredTimezone();
+        $this->setConfiguredDestination();
+        $this->setDefaultDestination();
     }
 
     /**
@@ -52,7 +84,7 @@ class Engine
      */
     public function run()
     {
-        $this->configure();
+        $this->new_run();
 
         $PageCollection = $this->app->getFileHandler()->listMarkdownFiles();
         $PageCollection = $this->app->getFileHandler()->getMarkdownFiles($PageCollection);
