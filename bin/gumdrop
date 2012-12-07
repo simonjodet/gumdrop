@@ -24,8 +24,20 @@ while getopts ":s:t:rw" opt; do
       ;;
   esac
 done
-GUMDROP=$(cd $(dirname "$0"); pwd)"/../gumdrop.php"
-AUTORELOAD=$(cd $(dirname "$0"); pwd)"/autoreload.php"
+
+SOURCE="${BASH_SOURCE[0]}"
+DIR="$( dirname "$SOURCE" )"
+while [ -h "$SOURCE" ]
+do
+    SOURCE="$(readlink "$SOURCE")"
+    [[ $SOURCE != /* ]] && SOURCE="$DIR/$SOURCE"
+    DIR="$( cd -P "$( dirname "$SOURCE"  )" && pwd )"
+done
+DIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
+
+
+GUMDROP=$DIR"/../gumdrop.php"
+AUTORELOAD=$DIR"/autoreload.php"
 if [ $RELOAD != FALSE ] ; then
     if [ $START_WEBSERVER != FALSE ] ; then
         $AUTORELOAD $SOURCE_FOLDER $TARGET_FOLDER &
