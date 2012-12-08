@@ -12,32 +12,36 @@ namespace Gumdrop;
 class Engine
 {
     /**
-     * Dependency injector
      * @var \Gumdrop\Application
      */
     private $app;
 
     /**
-     * Constructor
-     *
-     * @param \Gumdrop\Application $app
+     * @var \Gumdrop\PageCollection
      */
+    public $PageCollection;
+
+    /**
+     * @var \Twig_Environment
+     */
+    public $LayoutTwigEnvironment;
+
+    /**
+     * @var \Twig_Environment
+     */
+    public $PageTwigEnvironment;
+
+
     public function __construct(\Gumdrop\Application $app)
     {
         $this->app = $app;
     }
 
-    /**
-     * Loads the configuration file
-     */
     public function loadConfigurationFile()
     {
         $this->app->setSiteConfiguration(new \Gumdrop\SiteConfiguration($this->app->getSourceLocation()));
     }
 
-    /**
-     * Sets the configured timezone
-     */
     public function setConfiguredTimezone()
     {
         if ($this->app->getSiteConfiguration()->offsetExists('timezone'))
@@ -46,9 +50,6 @@ class Engine
         }
     }
 
-    /**
-     * Sets the configured destination over any existing one
-     */
     public function setConfiguredDestination()
     {
         if ($this->app->getSiteConfiguration()->offsetExists('destination'))
@@ -57,10 +58,7 @@ class Engine
         }
     }
 
-    /**
-     * Sets a default destination if it's still empty
-     */
-    public function setDefaultDestination()
+    public function setDestinationFallback()
     {
         if ($this->app->getDestinationLocation() == '')
         {
@@ -68,56 +66,73 @@ class Engine
         }
     }
 
-    /**
-     * Runs the different steps of the site generation
-     */
-    public function new_run()
+    public function generatePageCollection()
+    {
+        $PageCollection = $this->app->getFileHandler()->listMarkdownFiles();
+        $this->PageCollection = $this->app->getFileHandler()->getMarkdownFiles($PageCollection);
+    }
+
+    public function generateTwigEnvironments()
+    {
+        $this->LayoutTwigEnvironment = $this->app->getTwigEnvironments()->getLayoutEnvironment();
+        $this->PageTwigEnvironment = $this->app->getTwigEnvironments()->getPageEnvironment();
+    }
+
+    public function convertPagesToHtml()
+    {
+        foreach ($this->PageCollection as $key => $Page)
+        {
+            $this->PageCollection[$key]->setConfiguration(new \Gumdrop\PageConfiguration());
+            $this->PageCollection[$key]->convertMarkdownToHtml();
+        }
+        $this->app->setPageCollection($this->PageCollection);
+    }
+
+    public function renderPagesTwigEnvironments()
+    {
+        foreach ($this->PageCollection as $key => $Page)
+        {
+            $this->PageCollection[$key]->setLayoutTwigEnvironment($this->LayoutTwigEnvironment);
+            $this->PageCollection[$key]->setPageTwigEnvironment($this->PageTwigEnvironment);
+            $this->PageCollection[$key]->renderPageTwigEnvironment();
+            $this->PageCollection[$key]->renderLayoutTwigEnvironment();
+        }
+    }
+
+    public function writeHtmlFiles()
+    {
+        $this->app->getFileHandler()->clearDestinationLocation();
+
+        foreach ($this->PageCollection as $key => $Page)
+        {
+            $this->PageCollection[$key]->writeHtmFiles($this->app->getDestinationLocation());
+        }
+
+        $this->app->setPageCollection($this->PageCollection);
+    }
+
+    public function copyStaticFiles()
+    {
+        $this->app->getFileHandler()->copyStaticFiles();
+    }
+
+    public function renderTwigFiles()
+    {
+        $this->app->getTwigFileHandler()->renderTwigFiles($this->app->getFileHandler()->listTwigFiles());
+    }
+
+    public function run()
     {
         $this->loadConfigurationFile();
         $this->setConfiguredTimezone();
         $this->setConfiguredDestination();
-        $this->setDefaultDestination();
-    }
-
-    /**
-     * Runs the PageCollection through all the steps of the process
-     */
-    public function run()
-    {
-        $this->new_run();
-
-        $PageCollection = $this->app->getFileHandler()->listMarkdownFiles();
-        $PageCollection = $this->app->getFileHandler()->getMarkdownFiles($PageCollection);
-        $LayoutTwigEnvironment = $this->app->getTwigEnvironments()->getLayoutEnvironment();
-        $PageTwigEnvironment = $this->app->getTwigEnvironments()->getPageEnvironment();
-        foreach ($PageCollection as $key => $Page)
-        {
-            $PageCollection[$key]->setConfiguration(new \Gumdrop\PageConfiguration());
-            $PageCollection[$key]->convertMarkdownToHtml();
-        }
-
-        $this->app->setPageCollection($PageCollection);
-
-        foreach ($PageCollection as $key => $Page)
-        {
-            if (!is_null($LayoutTwigEnvironment))
-            {
-                $PageCollection[$key]->setLayoutTwigEnvironment($LayoutTwigEnvironment);
-            }
-            $PageCollection[$key]->setPageTwigEnvironment($PageTwigEnvironment);
-            $PageCollection[$key]->renderPageTwigEnvironment();
-            $PageCollection[$key]->renderLayoutTwigEnvironment();
-        }
-
-        $this->app->getFileHandler()->clearDestinationLocation();
-
-        foreach ($PageCollection as $key => $Page)
-        {
-            $PageCollection[$key]->writeHtmFiles($this->app->getDestinationLocation());
-        }
-
-        $this->app->setPageCollection($PageCollection);
-        $this->app->getFileHandler()->copyStaticFiles();
-        $this->app->getTwigFileHandler()->renderTwigFiles($this->app->getFileHandler()->listTwigFiles());
+        $this->setDestinationFallback();
+        $this->generatePageCollection();
+        $this->generateTwigEnvironments();
+        $this->convertPagesToHtml();
+        $this->renderPagesTwigEnvironments();
+        $this->writeHtmlFiles();
+        $this->copyStaticFiles();
+        $this->renderTwigFiles();
     }
 }

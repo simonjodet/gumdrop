@@ -154,7 +154,7 @@ class Page
      *
      * @param \Twig_Environment $layoutTwigEnvironment
      */
-    public function setLayoutTwigEnvironment(\Twig_Environment $layoutTwigEnvironment)
+    public function setLayoutTwigEnvironment(\Twig_Environment $layoutTwigEnvironment = null)
     {
         $this->layoutTwigEnvironment = $layoutTwigEnvironment;
     }
