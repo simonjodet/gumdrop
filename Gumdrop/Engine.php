@@ -1,13 +1,13 @@
 <?php
 /**
- * Engine - Class handling Markdown files including conversion to HTML
+ * Engine - Class handling the sequence of steps to render a site
  * @package Gumdrop
  */
 namespace Gumdrop;
 
 
 /**
- * Class handling Markdown files including conversion to HTML
+ * Class handling the sequence of steps to render a site
  */
 class Engine
 {
@@ -31,6 +31,21 @@ class Engine
      */
     public $PageTwigEnvironment;
 
+
+    public function run()
+    {
+        $this->loadConfigurationFile();
+        $this->setConfiguredTimezone();
+        $this->setConfiguredDestination();
+        $this->setDestinationFallback();
+        $this->generatePageCollection();
+        $this->generateTwigEnvironments();
+        $this->convertPagesToHtml();
+        $this->renderPagesTwigEnvironments();
+        $this->writeHtmlFiles();
+        $this->copyStaticFiles();
+        $this->renderTwigFiles();
+    }
 
     public function __construct(\Gumdrop\Application $app)
     {
@@ -121,18 +136,4 @@ class Engine
         $this->app->getTwigFileHandler()->renderTwigFiles($this->app->getFileHandler()->listTwigFiles());
     }
 
-    public function run()
-    {
-        $this->loadConfigurationFile();
-        $this->setConfiguredTimezone();
-        $this->setConfiguredDestination();
-        $this->setDestinationFallback();
-        $this->generatePageCollection();
-        $this->generateTwigEnvironments();
-        $this->convertPagesToHtml();
-        $this->renderPagesTwigEnvironments();
-        $this->writeHtmlFiles();
-        $this->copyStaticFiles();
-        $this->renderTwigFiles();
-    }
 }

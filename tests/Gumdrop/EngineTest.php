@@ -1,19 +1,65 @@
 <?php
 namespace Gumdrop\Tests;
 
-require_once __DIR__ . '/../TestCase.php';
-require_once __DIR__ . '/../../Gumdrop/Engine.php';
-require_once __DIR__ . '/../../Gumdrop/Configuration.php';
-require_once __DIR__ . '/../../Gumdrop/SiteConfiguration.php';
-require_once __DIR__ . '/../../Gumdrop/PageConfiguration.php';
-require_once __DIR__ . '/../../Gumdrop/PageCollection.php';
-require_once __DIR__ . '/../../Gumdrop/TwigEnvironments.php';
-require_once __DIR__ . '/../../vendor/simonjodet/twig/lib/Twig/Autoloader.php';
-require_once __DIR__ . '/../../vendor/simonjodet/markdown/src/dflydev/markdown/IMarkdownParser.php';
-require_once __DIR__ . '/../../vendor/simonjodet/markdown/src/dflydev/markdown/MarkdownParser.php';
-
 class Engine extends \Gumdrop\Tests\TestCase
 {
+    public function test_run_calls_steps_in_the_correct_order()
+    {
+        $app = new \Gumdrop\Application();
+
+        /**
+         * @var $Engine \Gumdrop\Engine
+         */
+        $Engine = \Mockery::mock('\Gumdrop\Engine[loadConfigurationFile,setConfiguredTimezone,setConfiguredDestination,setDestinationFallback,generatePageCollection,generateTwigEnvironments,convertPagesToHtml,renderPagesTwigEnvironments,writeHtmlFiles,copyStaticFiles,renderTwigFiles]', array($app));
+
+        $Engine
+            ->shouldReceive('loadConfigurationFile')
+            ->once()
+            ->ordered();
+        $Engine
+            ->shouldReceive('setConfiguredTimezone')
+            ->once()
+            ->ordered();
+        $Engine
+            ->shouldReceive('setConfiguredDestination')
+            ->once()
+            ->ordered();
+        $Engine
+            ->shouldReceive('setDestinationFallback')
+            ->once()
+            ->ordered();
+        $Engine
+            ->shouldReceive('generatePageCollection')
+            ->once()
+            ->ordered();
+        $Engine
+            ->shouldReceive('generateTwigEnvironments')
+            ->once()
+            ->ordered();
+        $Engine
+            ->shouldReceive('convertPagesToHtml')
+            ->once()
+            ->ordered();
+        $Engine
+            ->shouldReceive('renderPagesTwigEnvironments')
+            ->once()
+            ->ordered();
+        $Engine
+            ->shouldReceive('writeHtmlFiles')
+            ->once()
+            ->ordered();
+        $Engine
+            ->shouldReceive('copyStaticFiles')
+            ->once()
+            ->ordered();
+        $Engine
+            ->shouldReceive('renderTwigFiles')
+            ->once()
+            ->ordered();
+
+        $Engine->run();
+    }
+
     public function test_loadConfigurationFile_adds_the_loaded_conf_to_the_application()
     {
         $app = \Mockery::mock('\Gumdrop\Application');
@@ -334,62 +380,4 @@ class Engine extends \Gumdrop\Tests\TestCase
         $Engine = new \Gumdrop\Engine($app);
         $Engine->renderTwigFiles();
     }
-
-    public function test_run_calls_steps_in_the_correct_order()
-    {
-        $app = new \Gumdrop\Application();
-
-        /**
-         * @var $Engine \Gumdrop\Engine
-         */
-        $Engine = \Mockery::mock('\Gumdrop\Engine[loadConfigurationFile,setConfiguredTimezone,setConfiguredDestination,setDestinationFallback,generatePageCollection,generateTwigEnvironments,convertPagesToHtml,renderPagesTwigEnvironments,writeHtmlFiles,copyStaticFiles,renderTwigFiles]', array($app));
-
-        $Engine
-            ->shouldReceive('loadConfigurationFile')
-            ->once()
-            ->ordered();
-        $Engine
-            ->shouldReceive('setConfiguredTimezone')
-            ->once()
-            ->ordered();
-        $Engine
-            ->shouldReceive('setConfiguredDestination')
-            ->once()
-            ->ordered();
-        $Engine
-            ->shouldReceive('setDestinationFallback')
-            ->once()
-            ->ordered();
-        $Engine
-            ->shouldReceive('generatePageCollection')
-            ->once()
-            ->ordered();
-        $Engine
-            ->shouldReceive('generateTwigEnvironments')
-            ->once()
-            ->ordered();
-        $Engine
-            ->shouldReceive('convertPagesToHtml')
-            ->once()
-            ->ordered();
-        $Engine
-            ->shouldReceive('renderPagesTwigEnvironments')
-            ->once()
-            ->ordered();
-        $Engine
-            ->shouldReceive('writeHtmlFiles')
-            ->once()
-            ->ordered();
-        $Engine
-            ->shouldReceive('copyStaticFiles')
-            ->once()
-            ->ordered();
-        $Engine
-            ->shouldReceive('renderTwigFiles')
-            ->once()
-            ->ordered();
-
-        $Engine->run();
-    }
-
 }
