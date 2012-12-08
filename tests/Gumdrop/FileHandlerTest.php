@@ -143,18 +143,18 @@ class FileHandler extends \Gumdrop\Tests\TestCase
         $app->setSourceLocation($FSTestHelper . '/');
 
         $FileHandler = new \Gumdrop\FileHandler($app);
-        $Pages = $FileHandler->getMarkdownFiles(array(
+        $Pages = $FileHandler->buildPageCollection(array(
             realpath($FSTestHelper . '/folder/file1.md'),
             realpath($FSTestHelper . '/file2.markdown')
         ));
 
         $expected = new \Gumdrop\PageCollection();
         $Page1 = new \Gumdrop\Page($app);
-        $Page1->setLocation('folder/file1.md');
+        $Page1->setRelativeLocation('folder/file1.md');
         $Page1->setMarkdownContent('md content 1');
         $expected->offsetSet(null, $Page1);
         $Page2 = new \Gumdrop\Page($app);
-        $Page2->setLocation('file2.markdown');
+        $Page2->setRelativeLocation('file2.markdown');
         $Page2->setMarkdownContent('md content 2');
         $expected->offsetSet(null, $Page2);
 
@@ -180,7 +180,7 @@ class FileHandler extends \Gumdrop\Tests\TestCase
         $app->setSourceLocation($location);
 
         $FileHandler = new \Gumdrop\FileHandler($app);
-        $this->assertTrue($FileHandler->findPageTwigFile());
+        $this->assertTrue($FileHandler->pageTwigFileExists());
     }
 
     public function testFindPageTwigFileReturnsFalseIfThisTwigFileDoesNotExist()
@@ -202,7 +202,7 @@ class FileHandler extends \Gumdrop\Tests\TestCase
         $app->setSourceLocation($location);
 
         $FileHandler = new \Gumdrop\FileHandler($app);
-        $this->assertFalse($FileHandler->findPageTwigFile());
+        $this->assertFalse($FileHandler->pageTwigFileExists());
     }
 
     public function testListStaticFilesReturnsStaticFiles()
@@ -348,7 +348,7 @@ class FileHandler extends \Gumdrop\Tests\TestCase
         $app->setDestinationLocation($destination);
 
         $FileHandler = new \Gumdrop\FileHandler($app);
-        $FileHandler->copyStaticFiles();
+        $FileHandler->writeStaticFiles();
 
         try
         {
@@ -377,7 +377,7 @@ class FileHandler extends \Gumdrop\Tests\TestCase
         $app->setDestinationLocation($destination);
 
         $FileHandler = new \Gumdrop\FileHandler($app);
-        $FileHandler->copyStaticFiles();
+        $FileHandler->writeStaticFiles();
 
         $stats = stat($destination . '/folder');
         $mode = decoct($stats['mode']);

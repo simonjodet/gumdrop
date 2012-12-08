@@ -43,7 +43,7 @@ class Engine
         $this->convertPagesToHtml();
         $this->renderPagesTwigEnvironments();
         $this->writeHtmlFiles();
-        $this->copyStaticFiles();
+        $this->writeStaticFiles();
         $this->renderTwigFiles();
     }
 
@@ -84,7 +84,7 @@ class Engine
     public function generatePageCollection()
     {
         $PageCollection = $this->app->getFileHandler()->listMarkdownFiles();
-        $this->PageCollection = $this->app->getFileHandler()->getMarkdownFiles($PageCollection);
+        $this->PageCollection = $this->app->getFileHandler()->buildPageCollection($PageCollection);
     }
 
     public function generateTwigEnvironments()
@@ -120,15 +120,15 @@ class Engine
 
         foreach ($this->PageCollection as $key => $Page)
         {
-            $this->PageCollection[$key]->writeHtmFiles($this->app->getDestinationLocation());
+            $this->PageCollection[$key]->writeHtmlFile($this->app->getDestinationLocation());
         }
 
         $this->app->setPageCollection($this->PageCollection);
     }
 
-    public function copyStaticFiles()
+    public function writeStaticFiles()
     {
-        $this->app->getFileHandler()->copyStaticFiles();
+        $this->app->getFileHandler()->writeStaticFiles();
     }
 
     public function renderTwigFiles()

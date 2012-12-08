@@ -10,7 +10,7 @@ class Engine extends \Gumdrop\Tests\TestCase
         /**
          * @var $Engine \Gumdrop\Engine
          */
-        $Engine = \Mockery::mock('\Gumdrop\Engine[loadConfigurationFile,setConfiguredTimezone,setConfiguredDestination,setDestinationFallback,generatePageCollection,generateTwigEnvironments,convertPagesToHtml,renderPagesTwigEnvironments,writeHtmlFiles,copyStaticFiles,renderTwigFiles]', array($app));
+        $Engine = \Mockery::mock('\Gumdrop\Engine[loadConfigurationFile,setConfiguredTimezone,setConfiguredDestination,setDestinationFallback,generatePageCollection,generateTwigEnvironments,convertPagesToHtml,renderPagesTwigEnvironments,writeHtmlFiles,writeStaticFiles,renderTwigFiles]', array($app));
 
         $Engine
             ->shouldReceive('loadConfigurationFile')
@@ -49,7 +49,7 @@ class Engine extends \Gumdrop\Tests\TestCase
             ->once()
             ->ordered();
         $Engine
-            ->shouldReceive('copyStaticFiles')
+            ->shouldReceive('writeStaticFiles')
             ->once()
             ->ordered();
         $Engine
@@ -173,7 +173,7 @@ class Engine extends \Gumdrop\Tests\TestCase
             ->andReturn($PageCollectionMock);
 
         $FileHandlerMock
-            ->shouldReceive('getMarkdownFiles')
+            ->shouldReceive('buildPageCollection')
             ->once()
             ->ordered()
             ->with($PageCollectionMock)
@@ -328,12 +328,12 @@ class Engine extends \Gumdrop\Tests\TestCase
         $Page2 = \Mockery::mock('\Gumdrop\Page');
 
         $Page1
-            ->shouldReceive('writeHtmFiles')
+            ->shouldReceive('writeHtmlFile')
             ->with('destination_path')
             ->ordered()
             ->once();
         $Page2
-            ->shouldReceive('writeHtmFiles')
+            ->shouldReceive('writeHtmlFile')
             ->with('destination_path')
             ->ordered()
             ->once();
@@ -357,12 +357,12 @@ class Engine extends \Gumdrop\Tests\TestCase
     {
         $app = \Mockery::mock('\Gumdrop\Application');
         $app
-            ->shouldReceive('getFileHandler->copyStaticFiles')
+            ->shouldReceive('getFileHandler->writeStaticFiles')
             ->once()
             ->ordered();
 
         $Engine = new \Gumdrop\Engine($app);
-        $Engine->copyStaticFiles();
+        $Engine->writeStaticFiles();
     }
 
     public function test_renderTwigFiles_renders_the_twig_templates()

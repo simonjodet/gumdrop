@@ -16,7 +16,7 @@ class TwigFileHandler extends \Gumdrop\Tests\TestCase
 
         $PageCollectionMock = \Mockery::mock('\Gumdrop\PageCollection');
         $PageCollectionMock
-            ->shouldReceive('exportForTwig')
+            ->shouldReceive('exportForTwigRendering')
             ->andReturn(array('some array'));
 
         $app = $this->getApp();

@@ -51,7 +51,7 @@ class PageCollection extends \Gumdrop\Tests\TestCase
 
         $Page1 = \Mockery::mock('\Gumdrop\Page');
         $Page1
-            ->shouldReceive('exportForTwig')
+            ->shouldReceive('exportForTwigRendering')
             ->once()
             ->globally()
             ->andReturn(array('1'));
@@ -59,7 +59,7 @@ class PageCollection extends \Gumdrop\Tests\TestCase
 
         $Page2 = \Mockery::mock('\Gumdrop\Page');
         $Page2
-            ->shouldReceive('exportForTwig')
+            ->shouldReceive('exportForTwigRendering')
             ->once()
             ->globally()
             ->andReturn(array('2'));
@@ -71,17 +71,8 @@ class PageCollection extends \Gumdrop\Tests\TestCase
                 array('1'),
                 array('2')
             ),
-            $PageCollection->exportForTwig()
+            $PageCollection->exportForTwigRendering()
         );
-    }
-
-    public function testAddBehavesAsExpected()
-    {
-        $PageCollection = new \Gumdrop\PageCollection();
-        $Page = new \Gumdrop\Page($this->getApp());
-        $PageCollection->add($Page);
-
-        $this->assertEquals($Page, $PageCollection->offsetGet(0));
     }
 
     public function testOffsetSetAndOffsetGetWorksAsExpected()
@@ -114,7 +105,7 @@ class PageCollection extends \Gumdrop\Tests\TestCase
         $PageCollection = new \Gumdrop\PageCollection();
         $Page = new \Gumdrop\Page($this->getApp());
         $PageCollection->offsetSet(0, $Page);
-        $Page->setLocation('location');
+        $Page->setRelativeLocation('relativeLocation');
         $PageCollection->offsetSet(null, $Page);
 
         $this->assertEquals($Page, $PageCollection->offsetGet(1));
@@ -212,13 +203,13 @@ class PageCollection extends \Gumdrop\Tests\TestCase
     {
         $PageCollection = new \Gumdrop\PageCollection();
         $Page1 = new \Gumdrop\Page($this->getApp());
-        $Page1->setLocation('page1');
+        $Page1->setRelativeLocation('page1');
         $PageCollection->offsetSet(null, $Page1);
         $Page2 = new \Gumdrop\Page($this->getApp());
-        $Page2->setLocation('page2');
+        $Page2->setRelativeLocation('page2');
         $PageCollection->offsetSet(null, $Page2);
         $Page3 = new \Gumdrop\Page($this->getApp());
-        $Page3->setLocation('page3');
+        $Page3->setRelativeLocation('page3');
         $PageCollection->offsetSet(null, $Page3);
 
         return array(

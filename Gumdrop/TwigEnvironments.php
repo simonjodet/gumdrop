@@ -6,31 +6,15 @@
 
 namespace Gumdrop;
 
-/**
- * TwigEnvironments Environment provider
- */
 class TwigEnvironments
 {
-    /**
-     * Dependency injector
-     * @var \Gumdrop\Application
-     */
     private $app;
 
-    /**
-     * Constructor
-     *
-     * @param \Gumdrop\Application $app Dependency injector
-     */
     public function __construct(\Gumdrop\Application $app)
     {
         $this->app = $app;
     }
 
-    /**
-     * Get Twig layout environment
-     * @return \Twig_Environment Twig layout environment
-     */
     public function getLayoutEnvironment()
     {
         try
@@ -49,10 +33,6 @@ class TwigEnvironments
         }
     }
 
-    /**
-     * Get the Twig page environment
-     * @return \Twig_Environment Twig page environment
-     */
     public function getPageEnvironment()
     {
         return new \Twig_Environment(
@@ -64,10 +44,6 @@ class TwigEnvironments
         );
     }
 
-    /**
-     * Get Twig site environment
-     * @return \Twig_Environment Twig site environment
-     */
     public function getSiteEnvironment()
     {
         return new \Twig_Environment(
