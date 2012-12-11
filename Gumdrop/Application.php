@@ -12,6 +12,9 @@ class Application
 
     private $FileHandler;
 
+    /**
+     * @var \Gumdrop\Engine
+     */
     private $Engine;
 
     private $TwigEnvironments;

@@ -8,10 +8,10 @@ ACKBAR=FALSE
 while getopts ":s:t:rw" opt; do
   case $opt in
     s)
-      SOURCE_FOLDER=`cd "$OPTARG"; pwd`
+      SOURCE_FOLDER=$OPTARG
       ;;
     t)
-      TARGET_FOLDER=`cd "$OPTARG"; pwd`
+      TARGET_FOLDER=$OPTARG
       ;;
     r)
       RELOAD=TRUE
@@ -36,8 +36,8 @@ done
 DIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
 
 
-GUMDROP=$DIR"/../gumdrop.php"
-AUTORELOAD=$DIR"/autoreload.php"
+GUMDROP=$DIR"/../gumdrop.php generate"
+AUTORELOAD=$DIR"/../gumdrop.php reload"
 if [ $RELOAD != FALSE ] ; then
     if [ $START_WEBSERVER != FALSE ] ; then
         $AUTORELOAD $SOURCE_FOLDER $TARGET_FOLDER &
