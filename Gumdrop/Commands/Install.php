@@ -24,6 +24,6 @@ class Install extends Command
     {
         echo 'Setting file permissions' . PHP_EOL;
         $root_folder = __DIR__ . '/../../';
-        exec('chmod +x ' . $root_folder . 'bin/gumdrop ' . $root_folder . 'bin/autoreload.php ' . $root_folder . 'gumdrop.php');
+        exec('chmod +x ' . $root_folder . 'bin/gumdrop ' . $root_folder . 'gumdrop.php');
     }
 }
