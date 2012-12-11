@@ -44,7 +44,7 @@ else
     try
     {
         $Application->getEngine()->run();
-        echo 'Gumdrop converted your MarkDown files to ' . $destination . PHP_EOL;
+        echo 'Gumdrop converted your MarkDown files to ' . $Application->getDestinationLocation() . PHP_EOL;
     }
     catch (\Exception $e)
     {
