@@ -38,6 +38,7 @@ class Engine
         $this->setConfiguredTimezone();
         $this->setConfiguredDestination();
         $this->setDestinationFallback();
+        $this->setSourceFallback();
         $this->generatePageCollection();
         $this->generateTwigEnvironments();
         $this->convertPagesToHtml();
@@ -78,6 +79,16 @@ class Engine
         if ($this->app->getDestinationLocation() == '')
         {
             $this->app->setDestinationLocation($this->app->getSourceLocation() . '/_site');
+        }
+    }
+
+    public function setSourceFallback()
+    {
+        if ($this->app->getSourceLocation() == '')
+        {
+            //default to the project folder depending on gumdrop
+            //example: project/_vendor/simonjodet/gumdrop/Gumdrop/
+            $this->app->setSourceLocation(realpath(__DIR__) . '/../../../../');
         }
     }
 

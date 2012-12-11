@@ -10,7 +10,7 @@ class Engine extends \Gumdrop\Tests\TestCase
         /**
          * @var $Engine \Gumdrop\Engine
          */
-        $Engine = \Mockery::mock('\Gumdrop\Engine[loadConfigurationFile,setConfiguredTimezone,setConfiguredDestination,setDestinationFallback,generatePageCollection,generateTwigEnvironments,convertPagesToHtml,renderPagesTwigEnvironments,writeHtmlFiles,writeStaticFiles,renderTwigFiles]', array($app));
+        $Engine = \Mockery::mock('\Gumdrop\Engine[loadConfigurationFile,setConfiguredTimezone,setConfiguredDestination,setDestinationFallback,setSourceFallback,generatePageCollection,generateTwigEnvironments,convertPagesToHtml,renderPagesTwigEnvironments,writeHtmlFiles,writeStaticFiles,renderTwigFiles]', array($app));
 
         $Engine
             ->shouldReceive('loadConfigurationFile')
@@ -26,6 +26,10 @@ class Engine extends \Gumdrop\Tests\TestCase
             ->ordered();
         $Engine
             ->shouldReceive('setDestinationFallback')
+            ->once()
+            ->ordered();
+        $Engine
+            ->shouldReceive('setSourceFallback')
             ->once()
             ->ordered();
         $Engine
@@ -135,7 +139,7 @@ class Engine extends \Gumdrop\Tests\TestCase
         $Engine->setConfiguredDestination();
     }
 
-    public function test_setDefaultDestination_sets_the_destination_correctly_if_empty()
+    public function test_setDestinationFallback_sets_the_destination_correctly_if_empty()
     {
         $app = \Mockery::mock('\Gumdrop\Application[getDestinationLocation,getSourceLocation,setDestinationLocation]');
 
@@ -159,6 +163,24 @@ class Engine extends \Gumdrop\Tests\TestCase
 
         $Engine = new \Gumdrop\Engine($app);
         $Engine->setDestinationFallback();
+    }
+
+    public function test_setSourceFallback_sets_the_source_correctly_if_empty()
+    {
+        $app = \Mockery::mock('\Gumdrop\Application[getSourceLocation,setSourceLocation]');
+
+        $app
+            ->shouldReceive('getSourceLocation')
+            ->once()
+            ->andReturn('');
+
+        $app
+            ->shouldReceive('setSourceLocation')
+            ->once()
+            ->with(realpath(__DIR__ . '/../../Gumdrop').'/../../../../');
+
+        $Engine = new \Gumdrop\Engine($app);
+        $Engine->setSourceFallback();
     }
 
     public function test_generatePageCollection_loads_the_markdown_pages_collection()

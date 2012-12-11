@@ -2,15 +2,13 @@
 <?php
 $source = realpath($_SERVER['argv'][1]) . '/';
 $destination = realpath($_SERVER['argv'][2]) . '/';
-if ($source == '/' || $source == realpath('.') . '/' || $source === false)
+if ($source == '/' || $source == realpath(__DIR__) . '/' || $source === false)
 {
-    echo 'Given source path is not valid!' . PHP_EOL;
-    exit(1);
+    $destination = '';
 }
-if ($destination == '/' || $destination == realpath('.') . '/' || $destination === false)
+if ($destination == '/' || $destination == realpath(__DIR__) . '/' || $destination === false)
 {
-    echo 'Given destination path is not valid!' . PHP_EOL;
-    exit(2);
+    $destination = '';
 }
 
 renderSite($source, $destination);
