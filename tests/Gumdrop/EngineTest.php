@@ -10,8 +10,12 @@ class Engine extends \Gumdrop\Tests\TestCase
         /**
          * @var $Engine \Gumdrop\Engine
          */
-        $Engine = \Mockery::mock('\Gumdrop\Engine[loadConfigurationFile,setConfiguredTimezone,setConfiguredDestination,setDestinationFallback,setSourceFallback,generatePageCollection,generateTwigEnvironments,convertPagesToHtml,renderPagesTwigEnvironments,writeHtmlFiles,writeStaticFiles,renderTwigFiles]', array($app));
+        $Engine = \Mockery::mock('\Gumdrop\Engine[setSourceFallback,loadConfigurationFile,setConfiguredTimezone,setConfiguredDestination,setDestinationFallback,generatePageCollection,generateTwigEnvironments,convertPagesToHtml,renderPagesTwigEnvironments,writeHtmlFiles,writeStaticFiles,renderTwigFiles]', array($app));
 
+        $Engine
+            ->shouldReceive('setSourceFallback')
+            ->once()
+            ->ordered();
         $Engine
             ->shouldReceive('loadConfigurationFile')
             ->once()
@@ -26,10 +30,6 @@ class Engine extends \Gumdrop\Tests\TestCase
             ->ordered();
         $Engine
             ->shouldReceive('setDestinationFallback')
-            ->once()
-            ->ordered();
-        $Engine
-            ->shouldReceive('setSourceFallback')
             ->once()
             ->ordered();
         $Engine
