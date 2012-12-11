@@ -13,8 +13,9 @@
     "license":"MIT",
     "require":{
         "php":">=5.3.3",
-        "simonjodet/markdown":"1.0.2",
-        "simonjodet/Twig":"1.9.2"
+        "simonjodet/markdown":"1.0.*",
+        "simonjodet/Twig":"1.11.*",
+        "symfony/console":"2.1.*"
     },
     "require-dev":{
         "mockery/mockery":"dev-master",
