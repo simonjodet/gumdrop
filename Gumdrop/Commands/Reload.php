@@ -25,6 +25,13 @@ class Reload extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $source = $input->getArgument('source');
+        if(empty($source))
+        {
+            $Application = new \Gumdrop\Application();
+            $Application->setEngine(new \Gumdrop\Engine($Application));
+            $Application->getEngine()->setSourceFallback();
+            $source = $Application->getSourceLocation();
+        }
         $destination = $input->getArgument('destination');
 
         $this->renderSite($source, $destination, $output);
