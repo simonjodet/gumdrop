@@ -118,7 +118,7 @@ class FileHandler
         {
             $source = realpath($this->app->getSourceLocation() . DIRECTORY_SEPARATOR . $file);
             $source_pathinfo = pathinfo($source);
-            $destination = realpath($this->app->getDestinationLocation()) . DIRECTORY_SEPARATOR . $file;
+            $destination = $this->app->getDestinationLocation() . DIRECTORY_SEPARATOR . $file;
             $destination_pathinfo = pathinfo($destination);
             if (!is_dir($destination_pathinfo['dirname']))
             {
