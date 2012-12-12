@@ -56,7 +56,7 @@ class FileHandler
         {
             $blacklist = $conf['blacklist'];
         }
-        $relative_path = ltrim(str_replace(realpath($this->app->getSourceLocation()), '', $file), DIRECTORY_SEPARATOR);
+        $relative_path = ltrim(str_replace($this->app->getSourceLocation(), '', $file), DIRECTORY_SEPARATOR);
         if (in_array($relative_path, $blacklist))
         {
             return true;
