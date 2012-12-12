@@ -28,7 +28,7 @@
         }
     },
     "scripts":{
-        "post-update-cmd":"echo \"Setting file permissions\" && chmod +x bin/gumdrop bin/autoreload.php gumdrop.php",
-        "post-install-cmd":"echo \"Setting file permissions\" && chmod +x bin/gumdrop bin/autoreload.php gumdrop.php"
+        "post-update-cmd":"php gumdrop.php install",
+        "post-install-cmd":"php gumdrop.php install"
     }
 }
