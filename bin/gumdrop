@@ -49,6 +49,9 @@ else
     $GUMDROP $SOURCE_FOLDER $TARGET_FOLDER
 fi
 if [ $START_WEBSERVER != FALSE ] ; then
+    if [ -z "$TARGET_FOLDER" ]; then
+        TARGET_FOLDER=$DIR"/../../../../_site/"
+    fi
     php -S localhost:8000 -t $TARGET_FOLDER
     if [ $ACKBAR != FALSE ]; then
         trap '' 2

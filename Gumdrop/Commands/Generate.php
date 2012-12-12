@@ -41,7 +41,7 @@ class Generate extends Command
         try
         {
             $Application->getEngine()->run();
-            $output->writeln('<fg=green>Gumdrop converted your MarkDown files to ' . $Application->getDestinationLocation() . '</fg=green>');
+            $output->writeln('<fg=green>Gumdrop converted your MarkDown files to ' . realpath($Application->getDestinationLocation()) . '</fg=green>');
         }
         catch (\Exception $e)
         {
