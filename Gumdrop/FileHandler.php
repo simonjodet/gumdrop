@@ -5,35 +5,15 @@
  */
 namespace Gumdrop;
 
-/**
- * Gumdrop-specific file system operations
- */
 class FileHandler
 {
-    /**
-     * Dependency injector
-     * @var \Gumdrop\Application
-     */
     private $app;
 
-    /**
-     * Constructor
-     *
-     * @param \Gumdrop\Application $app
-     */
     public function __construct(\Gumdrop\Application $app)
     {
         $this->app = $app;
     }
 
-    /**
-     * General purpose recursive listing method with filtering support
-     *
-     * @param callable $filter_callback Filtering function
-     * @param string $location Used for recursion only
-     *
-     * @return array
-     */
     private function listFiles($filter_callback, $location = '')
     {
         if ($location == '')
@@ -84,11 +64,6 @@ class FileHandler
         return false;
     }
 
-    /**
-     * Builds a list of Markdown files recursively
-     *
-     * @return array
-     */
     public function listMarkdownFiles()
     {
         $filter_callback = function($file)
@@ -103,41 +78,24 @@ class FileHandler
         return $this->listFiles($filter_callback);
     }
 
-    /**
-     * Builds a PageCollection out of a list of Markdown files
-     *
-     * @param $files
-     *
-     * @return \Gumdrop\PageCollection
-     */
-    public function getMarkdownFiles($files)
+    public function buildPageCollection($files)
     {
         $PageCollection = new \Gumdrop\PageCollection();
         foreach ($files as $file)
         {
             $Page = new \Gumdrop\Page($this->app);
-            $Page->setLocation(ltrim(str_replace(realpath($this->app->getSourceLocation()), '', $file), DIRECTORY_SEPARATOR));
+            $Page->setRelativeLocation(ltrim(str_replace(realpath($this->app->getSourceLocation()), '', $file), DIRECTORY_SEPARATOR));
             $Page->setMarkdownContent(file_get_contents($file));
             $PageCollection->offsetSet(null, $Page);
         }
         return $PageCollection;
     }
 
-    /**
-     * Checks if the page.twig file exists at the given location
-     *
-     * @return bool
-     */
-    public function findPageTwigFile()
+    public function pageTwigFileExists()
     {
         return file_exists($this->app->getSourceLocation() . '/_layout/page.twig');
     }
 
-    /**
-     * Returns the recursive list of static files that need to be copied to the destination
-     *
-     * @return array
-     */
     public function listStaticFiles()
     {
         $app = $this->app;
@@ -154,16 +112,13 @@ class FileHandler
         return $this->listFiles($filter_callback);
     }
 
-    /**
-     * Copies static files to the destination folder
-     */
-    public function copyStaticFiles()
+    public function writeStaticFiles()
     {
         foreach ($this->listStaticFiles() as $file)
         {
             $source = realpath($this->app->getSourceLocation() . DIRECTORY_SEPARATOR . $file);
             $source_pathinfo = pathinfo($source);
-            $destination = realpath($this->app->getDestinationLocation()) . DIRECTORY_SEPARATOR . $file;
+            $destination = $this->app->getDestinationLocation() . DIRECTORY_SEPARATOR . $file;
             $destination_pathinfo = pathinfo($destination);
             if (!is_dir($destination_pathinfo['dirname']))
             {
@@ -175,11 +130,6 @@ class FileHandler
         }
     }
 
-    /**
-     * Returns the list of Twig files
-     *
-     * @return array The list of Twig files
-     */
     public function listTwigFiles()
     {
         $app = $this->app;
@@ -196,11 +146,6 @@ class FileHandler
         return $this->listFiles($filter_callback);
     }
 
-    /**
-     * Clears the destination location
-     *
-     * @param string $path Used for recursion, should not be set when using this method
-     */
     public function clearDestinationLocation($path = '')
     {
         if ($path == '')
@@ -225,13 +170,6 @@ class FileHandler
         }
     }
 
-    /**
-     * Computes a hash of the given folder content to detect changes
-     *
-     * @param string $location Used only for recursion
-     *
-     * @return array|int|string
-     */
     public function getSourceFolderHash($location = '')
     {
         if ($location == '')

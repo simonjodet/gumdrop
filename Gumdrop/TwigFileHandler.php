@@ -7,35 +7,20 @@
 
 namespace Gumdrop;
 
-/**
- * Twig files handler
- */
 class TwigFileHandler
 {
-    /**
-     * Dependency injector
-     * @var \Gumdrop\Application
-     */
     private $app;
 
-    /**
-     * Constructor
-     *
-     * @param \Gumdrop\Application $app
-     */
     public function __construct(\Gumdrop\Application $app)
     {
         $this->app = $app;
     }
 
-    /**
-     * Renders Twig files and write them to the destination folder
-     */
     public function renderTwigFiles()
     {
         $twigFiles = $this->app->getFileHandler()->listTwigFiles();
         $SiteTwigEnvironment = $this->app->getTwigEnvironments()->getSiteEnvironment();
-        $PageCollection = $this->app->getPageCollection()->exportForTwig();
+        $PageCollection = $this->app->getPageCollection()->exportForTwigRendering();
         foreach ($twigFiles as $twigFile)
         {
             $destination = $this->app->getDestinationLocation();
@@ -55,7 +40,5 @@ class TwigFileHandler
             );
             file_put_contents($destination_file, $TwigPage);
         }
-
-
     }
 }

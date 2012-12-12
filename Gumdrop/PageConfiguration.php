@@ -6,20 +6,9 @@
  */
 namespace Gumdrop;
 
-/**
- * Page configuration container
- */
 class PageConfiguration extends \Gumdrop\Configuration
 {
-    /**
-     * Extracts configuration header from Markdown content
-     *
-     * @param string $content
-     *
-     * @return string Markdown content stripped of the configuration header
-     * @throws \Gumdrop\Exception
-     */
-    public function extractHeader($content)
+    public function extractPageHeader($content)
     {
         $count = preg_match('#^\*\*\*\n(.*)\n\*\*\*\n(.*)$#sUD', $content, $matches);
         if ($count == 1)

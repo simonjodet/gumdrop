@@ -16,7 +16,7 @@ class Page extends \Gumdrop\Tests\TestCase
 
         $PageConfigurationMock = \Mockery::mock('\Gumdrop\PageConfiguration');
         $PageConfigurationMock
-            ->shouldReceive('extractHeader')
+            ->shouldReceive('extractPageHeader')
             ->with('Markdown content')
             ->once()
             ->andReturn('Configuration-stripped Markdown content');
@@ -71,7 +71,7 @@ class Page extends \Gumdrop\Tests\TestCase
 
         $FileHandler = \Mockery::mock('\Gumdrop\FileHandler');
         $FileHandler
-            ->shouldReceive('findPageTwigFile')
+            ->shouldReceive('pageTwigFileExists')
             ->andReturn(true);
 
         $app->setFileHandler($FileHandler);
@@ -102,7 +102,7 @@ class Page extends \Gumdrop\Tests\TestCase
         $app = new \Gumdrop\Application();
         $FileHandler = \Mockery::mock('\Gumdrop\FileHandler');
         $FileHandler
-            ->shouldReceive('findPageTwigFile')
+            ->shouldReceive('pageTwigFileExists')
             ->andReturn(false);
 
         $app->setFileHandler($FileHandler);
@@ -182,13 +182,13 @@ class Page extends \Gumdrop\Tests\TestCase
 
         $PageCollection = \Mockery::mock('\Gumdrop\PageCollection');
         $PageCollection
-            ->shouldReceive('exportForTwig')
-            ->andReturn(array('exportForTwig'));
+            ->shouldReceive('exportForTwigRendering')
+            ->andReturn(array('exportForTwigRendering'));
 
         $Page = new \Gumdrop\Page($app);
         $Page->setConfiguration($PageConfiguration);
         $Page->setHtmlContent('initial html content');
-        $Page->setLocation('my_folder/my_file.md');
+        $Page->setRelativeLocation('my_folder/my_file.md');
         $Page->setMarkdownContent('markdown content');
 
 
@@ -202,11 +202,11 @@ class Page extends \Gumdrop\Tests\TestCase
                 'page' => array(
                     'layout' => 'my_layout',
                     'title' => 'my_title',
-                    'location' => 'my_folder/my_file.htm',
+                    'relativeLocation' => 'my_folder/my_file.htm',
                     'html' => 'initial html content',
                     'markdown' => 'markdown content'
                 ),
-                'pages' => array('exportForTwig')
+                'pages' => array('exportForTwigRendering')
             ));
 
         $Page->setPageTwigEnvironment($PageTwigEnvironment);
@@ -227,18 +227,18 @@ class Page extends \Gumdrop\Tests\TestCase
         $Page = new \Gumdrop\Page($app);
         $Page->setConfiguration($PageConfiguration);
         $Page->setHtmlContent('html content');
-        $Page->setLocation('my_folder/my_file.markdown');
+        $Page->setRelativeLocation('my_folder/my_file.markdown');
         $Page->setMarkdownContent('markdown content');
 
         $this->assertEquals(
             array(
                 'layout' => 'my_layout',
                 'title' => 'my_title',
-                'location' => 'my_folder/my_file.htm',
+                'relativeLocation' => 'my_folder/my_file.htm',
                 'html' => 'html content',
                 'markdown' => 'markdown content'
             ),
-            $Page->exportForTwig()
+            $Page->exportForTwigRendering()
         );
     }
 
@@ -247,7 +247,7 @@ class Page extends \Gumdrop\Tests\TestCase
         $app = new \Gumdrop\Application();
 
         $Page = new \Gumdrop\Page($app);
-        $Page->setLocation('folder/file_1_path.md');
+        $Page->setRelativeLocation('folder/file_1_path.md');
         $Page->setPageContent('twig content 1');
 
         $FSTestHelper = new \FSTestHelper\FSTestHelper();
@@ -270,7 +270,7 @@ class Page extends \Gumdrop\Tests\TestCase
         ));
         $destination = $FSTestHelper;
 
-        $Page->writeHtmFiles($destination);
+        $Page->writeHtmlFile($destination);
 
         $this->assertStringEqualsFile($destination . '/folder/file_1_path.htm', 'twig content 1');
     }
@@ -280,7 +280,7 @@ class Page extends \Gumdrop\Tests\TestCase
         $app = new \Gumdrop\Application();
 
         $Page = new \Gumdrop\Page($app);
-        $Page->setLocation('folder/file_1_path.md');
+        $Page->setRelativeLocation('folder/file_1_path.md');
         $Page->setPageContent('twig content 1');
         $Page->setConfiguration(new \Gumdrop\PageConfiguration(array('target_name' => 'file.ext')));
 
@@ -305,7 +305,7 @@ class Page extends \Gumdrop\Tests\TestCase
         $destinationFSTestHelper = new \FSTestHelper\FSTestHelper();
         $destination = $destinationFSTestHelper;
 
-        $Page->writeHtmFiles($destination);
+        $Page->writeHtmlFile($destination);
 
         $this->assertStringEqualsFile($destination . '/folder/file.ext', 'twig content 1');
     }

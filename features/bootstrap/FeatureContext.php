@@ -230,7 +230,7 @@ class FeatureContext extends BehatContext
     {
         $this->markdownFile = $this->source . '/testFile2.md';
         $this->destination = $this->source . '/_site';
-        exec('cd ' . $this->source . ' && chmod +x _vendor/simonjodet/gumdrop/bin/gumdrop _vendor/simonjodet/gumdrop/gumdrop.php && _vendor/simonjodet/gumdrop/bin/gumdrop -s . -t _site', $output, $return_var);
+        exec('cd ' . $this->source . ' && _vendor/simonjodet/gumdrop/bin/gumdrop', $output, $return_var);
         exec('ls -la ' . $this->source, $output, $return_var);
         if ($return_var != 0)
         {

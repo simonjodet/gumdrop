@@ -1,268 +1,70 @@
 <?php
 namespace Gumdrop\Tests;
 
-require_once __DIR__ . '/../TestCase.php';
-require_once __DIR__ . '/../../Gumdrop/Engine.php';
-require_once __DIR__ . '/../../Gumdrop/Configuration.php';
-require_once __DIR__ . '/../../Gumdrop/SiteConfiguration.php';
-require_once __DIR__ . '/../../Gumdrop/PageConfiguration.php';
-require_once __DIR__ . '/../../Gumdrop/PageCollection.php';
-require_once __DIR__ . '/../../Gumdrop/TwigEnvironments.php';
-require_once __DIR__ . '/../../vendor/simonjodet/twig/lib/Twig/Autoloader.php';
-require_once __DIR__ . '/../../vendor/simonjodet/markdown/src/dflydev/markdown/IMarkdownParser.php';
-require_once __DIR__ . '/../../vendor/simonjodet/markdown/src/dflydev/markdown/MarkdownParser.php';
-
 class Engine extends \Gumdrop\Tests\TestCase
 {
-    /**
-     * @var \FSTestHelper\FSTestHelper
-     */
-    private $FSTestHelper;
-
-    protected function setUp()
+    public function test_run_calls_steps_in_the_correct_order()
     {
-        $this->FSTestHelper = new \FSTestHelper\FSTestHelper();
-        $this->FSTestHelper->create(array(
-            'folders' => array(),
-            'files' => array(
-                array(
-                    'path' => 'conf.json',
-                    'content' => '{"timezone":"Europe/Paris"}'
-                )
-            )
-        ));
-    }
+        $app = new \Gumdrop\Application();
 
-    public function testRunBehavesAsExpected()
-    {
-        \Twig_Autoloader::register();
-        $LayoutTwigEnvironmentMock = \Mockery::mock('\Twig_Environment');
-        $PageTwigEnvironmentMock = \Mockery::mock('\Twig_Environment');
+        /**
+         * @var $Engine \Gumdrop\Engine
+         */
+        $Engine = \Mockery::mock('\Gumdrop\Engine[setSourceFallback,loadConfigurationFile,setConfiguredTimezone,setConfiguredDestination,setDestinationFallback,generatePageCollection,generateTwigEnvironments,convertPagesToHtml,renderPagesTwigEnvironments,writeHtmlFiles,writeStaticFiles,renderTwigFiles]', array($app));
 
-        $FileHandlerMock = \Mockery::mock('\Gumdrop\FileHandler');
-
-        $Page1 = \Mockery::mock('\Gumdrop\Page');
-        $Page2 = \Mockery::mock('\Gumdrop\Page');
-
-        $Page1
-            ->shouldReceive('setConfiguration')
-            ->with(\Mockery::type('\Gumdrop\PageConfiguration'))
-            ->globally()
-            ->ordered()
-            ->once();
-        $Page1
-            ->shouldReceive('convertMarkdownToHtml')
-            ->globally()
-            ->ordered()
-            ->once();
-        $Page2
-            ->shouldReceive('setConfiguration')
-            ->with(\Mockery::type('\Gumdrop\PageConfiguration'))
-            ->globally()
-            ->ordered()
-            ->once();
-        $Page2
-            ->shouldReceive('convertMarkdownToHtml')
-            ->globally()
-            ->ordered()
-            ->once();
-        $Page1
-            ->shouldReceive('setLayoutTwigEnvironment')
-            ->with($LayoutTwigEnvironmentMock)
-            ->globally()
-            ->ordered()
-            ->once();
-        $Page1
-            ->shouldReceive('setPageTwigEnvironment')
-            ->with($PageTwigEnvironmentMock)
-            ->globally()
-            ->ordered()
-            ->once();
-        $Page1
-            ->shouldReceive('renderPageTwigEnvironment')
-            ->globally()
-            ->ordered()
-            ->once();
-        $Page1
-            ->shouldReceive('renderLayoutTwigEnvironment')
-            ->globally()
-            ->ordered()
-            ->once();
-        $Page2
-            ->shouldReceive('setLayoutTwigEnvironment')
-            ->with($LayoutTwigEnvironmentMock)
-            ->globally()
-            ->ordered()
-            ->once();
-        $Page2
-            ->shouldReceive('setPageTwigEnvironment')
-            ->with($PageTwigEnvironmentMock)
-            ->globally()
-            ->ordered()
-            ->once();
-        $Page2
-            ->shouldReceive('renderPageTwigEnvironment')
-            ->globally()
-            ->ordered()
-            ->once();
-        $Page2
-            ->shouldReceive('renderLayoutTwigEnvironment')
-            ->globally()
-            ->ordered()
-            ->once();
-        $PageCollection = new \Gumdrop\PageCollection(array(
-            $Page1,
-            $Page2
-        ));
-
-        $FileHandlerMock
-            ->shouldReceive('listMarkdownFiles')
+        $Engine
+            ->shouldReceive('setSourceFallback')
             ->once()
-            ->ordered()
-            ->globally()
-            ->andReturn($PageCollection);
-        $FileHandlerMock
-            ->shouldReceive('getMarkdownFiles')
+            ->ordered();
+        $Engine
+            ->shouldReceive('loadConfigurationFile')
             ->once()
-            ->ordered()
-            ->globally()
-            ->with($PageCollection)
-            ->andReturn($PageCollection);
-
-        $FileHandlerMock
-            ->shouldReceive('clearDestinationLocation')
+            ->ordered();
+        $Engine
+            ->shouldReceive('setConfiguredTimezone')
             ->once()
-            ->ordered()
-            ->globally();
-
-
-        $Page1
-            ->shouldReceive('writeHtmFiles')
-            ->with('destination')
-            ->globally()
-            ->ordered()
-            ->once();
-        $Page2
-            ->shouldReceive('writeHtmFiles')
-            ->globally()
-            ->ordered()
-            ->with('destination')
-            ->once();
-
-
-        $FileHandlerMock
-            ->shouldReceive('copyStaticFiles')
-            ->ordered()
-            ->globally()
-            ->once();
-
-        $twigFiles = array(
-            'index.twig',
-            'folder/index.twig'
-        );
-        $FileHandlerMock
-            ->shouldReceive('listTwigFiles')
+            ->ordered();
+        $Engine
+            ->shouldReceive('setConfiguredDestination')
             ->once()
-            ->globally()
-            ->andReturn($twigFiles);
-
-        $app = $this->getApp();
-        $app->setFileHandler($FileHandlerMock);
-
-        $TwigFileHandler = \Mockery::mock('\Gumdrop\TwigFileHandler');
-        $TwigFileHandler
+            ->ordered();
+        $Engine
+            ->shouldReceive('setDestinationFallback')
+            ->once()
+            ->ordered();
+        $Engine
+            ->shouldReceive('generatePageCollection')
+            ->once()
+            ->ordered();
+        $Engine
+            ->shouldReceive('generateTwigEnvironments')
+            ->once()
+            ->ordered();
+        $Engine
+            ->shouldReceive('convertPagesToHtml')
+            ->once()
+            ->ordered();
+        $Engine
+            ->shouldReceive('renderPagesTwigEnvironments')
+            ->once()
+            ->ordered();
+        $Engine
+            ->shouldReceive('writeHtmlFiles')
+            ->once()
+            ->ordered();
+        $Engine
+            ->shouldReceive('writeStaticFiles')
+            ->once()
+            ->ordered();
+        $Engine
             ->shouldReceive('renderTwigFiles')
             ->once()
-            ->globally()
-            ->with($twigFiles);
-        $app->setTwigFileHandler($TwigFileHandler);
+            ->ordered();
 
-        $app->setDestinationLocation('destination');
-
-        $TwigEnvironmentsMock = \Mockery::mock('\Gumdrop\TwigEnvironments');
-        $TwigEnvironmentsMock
-            ->shouldReceive('getLayoutEnvironment')
-            ->andReturn($LayoutTwigEnvironmentMock)
-            ->once();
-
-        $TwigEnvironmentsMock
-            ->shouldReceive('getPageEnvironment')
-            ->andReturn($PageTwigEnvironmentMock)
-            ->once();
-        $app->setTwigEnvironments($TwigEnvironmentsMock);
-
-        $app->setFileHandler($FileHandlerMock);
-
-        $app->setSourceLocation($this->FSTestHelper . '/');
-
-        $Engine = new \Gumdrop\Engine($app);
-        $Engine->run();
-        $this->assertEquals($PageCollection, $app->getPageCollection());
-
-        $this->assertInstanceOf('\Gumdrop\SiteConfiguration', $app->getSiteConfiguration());
-        $this->assertEquals('Europe/Paris', date_default_timezone_get());
-    }
-
-    public function testRunDoesNotSetLayoutEnvironmentIfItIsNull()
-    {
-        $LayoutTwigEnvironmentMock = null;
-        $PageTwigEnvironmentMock = \Mockery::mock('\Twig_Environment');
-
-        $Page1 = \Mockery::mock('\Gumdrop\Page');
-        $Page1
-            ->shouldReceive(
-            'setConfiguration',
-            'convertMarkdownToHtml',
-            'setPageTwigEnvironment',
-            'renderPageTwigEnvironment',
-            'renderLayoutTwigEnvironment',
-            'writeHtmFiles'
-        )
-            ->byDefault();
-        $PageCollection = new \Gumdrop\PageCollection(array($Page1));
-
-        $app = $this->getApp();
-        $app->setDestinationLocation('destination');
-
-        $FileHandlerMock = \Mockery::mock('\Gumdrop\FileHandler');
-        $FileHandlerMock
-            ->shouldReceive('listMarkdownFiles', 'copyStaticFiles', 'clearDestinationLocation')
-            ->byDefault();
-
-        $FileHandlerMock
-            ->shouldReceive('getMarkdownFiles')
-            ->andReturn($PageCollection);
-        $FileHandlerMock
-            ->shouldReceive('listTwigFiles')
-            ->once()
-            ->andReturn(array());
-
-        $app->setFileHandler($FileHandlerMock);
-
-        $TwigFileHandler = \Mockery::mock('\Gumdrop\TwigFileHandler');
-        $TwigFileHandler
-            ->shouldReceive('renderTwigFiles');
-        $app->setTwigFileHandler($TwigFileHandler);
-
-        $TwigEnvironmentsMock = \Mockery::mock('\Gumdrop\TwigEnvironments');
-        $TwigEnvironmentsMock
-            ->shouldReceive('getLayoutEnvironment')
-            ->andReturn($LayoutTwigEnvironmentMock)
-            ->once();
-
-        $TwigEnvironmentsMock
-            ->shouldReceive('getPageEnvironment')
-            ->andReturn($PageTwigEnvironmentMock)
-            ->once();
-
-        $app->setTwigEnvironments($TwigEnvironmentsMock);
-        $app->setSourceLocation($this->FSTestHelper . '/');
-
-        $Engine = new \Gumdrop\Engine($app);
         $Engine->run();
     }
 
-    public function testConfigureHandlesTheConfigurationCorrectly()
+    public function test_loadConfigurationFile_adds_the_loaded_conf_to_the_application()
     {
         $app = \Mockery::mock('\Gumdrop\Application');
         $app
@@ -271,23 +73,26 @@ class Engine extends \Gumdrop\Tests\TestCase
             ->with(\Mockery::type('\Gumdrop\SiteConfiguration'));
         $app
             ->shouldReceive('getSourceLocation')
-            ->atLeast()->once()
+            ->once()
             ->andReturn($this->createTestFSForStaticAndHtmlFiles());
 
-        $app
-            ->shouldReceive('getSiteConfiguration')
-            ->andReturn(\Mockery::mock(array('offsetExists' => false)));
-
-        $app->shouldReceive('getDestinationLocation', 'setDestinationLocation')->byDefault();
-
-
         $Engine = new \Gumdrop\Engine($app);
-        $Engine->configure();
+        $Engine->loadConfigurationFile();
     }
 
-    public function testConfigureSetsTheConfiguredTimeZone()
+    public function test_setConfiguredTimezone_sets_the_timezone_according_to_the_conf()
     {
-        $SiteConfigurationMock = $this->getSiteConfigurationMock();
+        $SiteConfigurationMock = \Mockery::mock();
+        $SiteConfigurationMock
+            ->shouldReceive('offsetExists')
+            ->once()
+            ->with('timezone')
+            ->andReturn(true);
+        $SiteConfigurationMock
+            ->shouldReceive('offsetGet')
+            ->once()
+            ->with('timezone')
+            ->andReturn('UTC');
 
         $app = \Mockery::mock('\Gumdrop\Application[getSiteConfiguration]');
         $app
@@ -298,14 +103,24 @@ class Engine extends \Gumdrop\Tests\TestCase
         $app->setSourceLocation($test_path);
 
         $Engine = new \Gumdrop\Engine($app);
-        $Engine->configure();
+        $Engine->setConfiguredTimezone();
 
         $this->assertEquals('UTC', date_default_timezone_get());
     }
 
-    public function testConfigurePrioritizeConfiguredDestinationOverCliParameter()
+    public function test_setConfiguredDestination_sets_the_destination_according_to_the_conf()
     {
-        $SiteConfigurationMock = $this->getSiteConfigurationMock();
+        $SiteConfigurationMock = \Mockery::mock();
+        $SiteConfigurationMock
+            ->shouldReceive('offsetExists')
+            ->once()
+            ->with('destination')
+            ->andReturn(true);
+        $SiteConfigurationMock
+            ->shouldReceive('offsetGet')
+            ->once()
+            ->with('destination')
+            ->andReturn('configured_destination_path');
 
         $app = \Mockery::mock('\Gumdrop\Application[getSiteConfiguration,setDestinationLocation]');
         $app
@@ -315,86 +130,276 @@ class Engine extends \Gumdrop\Tests\TestCase
         $app
             ->shouldReceive('setDestinationLocation')
             ->once()
-            ->with('destination_path');
+            ->with('configured_destination_path');
 
         $test_path = $this->createTestFSForStaticAndHtmlFiles();
         $app->setSourceLocation($test_path);
 
         $Engine = new \Gumdrop\Engine($app);
-        $Engine->configure();
+        $Engine->setConfiguredDestination();
     }
 
-    public function testConfigureSetsDestinationToSiteSubfolderByDefault()
+    public function test_setDestinationFallback_sets_the_destination_correctly_if_empty()
     {
-        $SiteConfigurationMock = \Mockery::mock();
-        $SiteConfigurationMock
-            ->shouldReceive('offsetExists')
-            ->once()
-            ->with('timezone')
-            ->andReturn(true);
-        $SiteConfigurationMock
-            ->shouldReceive('offsetGet')
-            ->once()
-            ->with('timezone')
-            ->andReturn('UTC');
-        $SiteConfigurationMock
-            ->shouldReceive('offsetExists')
-            ->once()
-            ->with('destination')
-            ->andReturn(false);
-        $SiteConfigurationMock
-            ->shouldReceive('offsetGet')
-            ->with('destination')
-            ->never();
+        $app = \Mockery::mock('\Gumdrop\Application[getDestinationLocation,getSourceLocation,setDestinationLocation]');
 
-
-        $app = \Mockery::mock('\Gumdrop\Application[getSiteConfiguration,getDestinationLocation,setDestinationLocation]');
-        $app
-            ->shouldReceive('getSiteConfiguration')
-            ->andReturn($SiteConfigurationMock);
         $app
             ->shouldReceive('getDestinationLocation')
             ->once()
             ->andReturn('');
 
         $test_path = $this->createTestFSForStaticAndHtmlFiles();
-        $app->setSourceLocation($test_path);
 
+        $app
+            ->shouldReceive('getSourceLocation')
+            ->once()
+            ->andReturn($test_path);
         $app
             ->shouldReceive('setDestinationLocation')
             ->once()
             ->with($test_path . '/_site');
 
+        $app->setSourceLocation($test_path);
+
         $Engine = new \Gumdrop\Engine($app);
-        $Engine->configure();
+        $Engine->setDestinationFallback();
     }
 
-    private function getSiteConfigurationMock()
+    public function test_setSourceFallback_sets_the_source_correctly_if_empty()
     {
-        $SiteConfigurationMock = \Mockery::mock();
-        $SiteConfigurationMock
-            ->shouldReceive('offsetExists')
-            ->once()
-            ->with('timezone')
-            ->andReturn(true);
-        $SiteConfigurationMock
-            ->shouldReceive('offsetGet')
-            ->once()
-            ->with('timezone')
-            ->andReturn('UTC');
+        $app = \Mockery::mock('\Gumdrop\Application[getSourceLocation,setSourceLocation]');
 
-        $SiteConfigurationMock
-            ->shouldReceive('offsetExists')
+        $app
+            ->shouldReceive('getSourceLocation')
             ->once()
-            ->with('destination')
-            ->andReturn(true);
+            ->andReturn('');
 
-        $SiteConfigurationMock
-            ->shouldReceive('offsetGet')
+        $app
+            ->shouldReceive('setSourceLocation')
             ->once()
-            ->with('destination')
+            ->with(realpath(__DIR__ . '/../../Gumdrop').'/../../../../');
+
+        $Engine = new \Gumdrop\Engine($app);
+        $Engine->setSourceFallback();
+    }
+
+    public function test_generatePageCollection_loads_the_markdown_pages_collection()
+    {
+        $PageCollectionMock = \Mockery::mock('\Gumdrop\PageCollection');
+
+        $FileHandlerMock = \Mockery::mock('\Gumdrop\FileHandler');
+        $FileHandlerMock
+            ->shouldReceive('listMarkdownFiles')
+            ->once()
+            ->ordered()
+            ->andReturn($PageCollectionMock);
+
+        $FileHandlerMock
+            ->shouldReceive('buildPageCollection')
+            ->once()
+            ->ordered()
+            ->with($PageCollectionMock)
+            ->andReturn($PageCollectionMock);
+
+
+        $app = \Mockery::mock('\Gumdrop\Application');
+
+        $app
+            ->shouldReceive('getFileHandler')
+            ->andReturn($FileHandlerMock);
+
+        $Engine = new \Gumdrop\Engine($app);
+        $Engine->generatePageCollection();
+        $this->assertEquals($PageCollectionMock, $Engine->PageCollection);
+    }
+
+    public function test_generateTwigEnvironments_generates_all_twig_envs()
+    {
+        $TwigEnvironmentsMock = \Mockery::mock('\Gumdrop\TwigEnvironments');
+
+        $TwigEnvironmentsMock
+            ->shouldReceive('getLayoutEnvironment')
+            ->once()
+            ->ordered();
+
+        $TwigEnvironmentsMock
+            ->shouldReceive('getPageEnvironment')
+            ->once()
+            ->ordered();
+
+
+        $app = \Mockery::mock('\Gumdrop\Application');
+
+        $app
+            ->shouldReceive('getTwigEnvironments')
+            ->andReturn($TwigEnvironmentsMock);
+
+        $Engine = new \Gumdrop\Engine($app);
+        $Engine->generateTwigEnvironments();
+    }
+
+    public function test_convertPagesToHtml_loops_on_PageCollection_to_convert_to_html_and_store_it()
+    {
+        $Page1 = \Mockery::mock('\Gumdrop\Page');
+        $Page2 = \Mockery::mock('\Gumdrop\Page');
+
+        $Page1
+            ->shouldReceive('setConfiguration')
+            ->with(\Mockery::type('\Gumdrop\PageConfiguration'))
+            ->ordered()
+            ->once();
+        $Page1
+            ->shouldReceive('convertMarkdownToHtml')
+            ->ordered()
+            ->once();
+        $Page2
+            ->shouldReceive('setConfiguration')
+            ->with(\Mockery::type('\Gumdrop\PageConfiguration'))
+            ->ordered()
+            ->once();
+        $Page2
+            ->shouldReceive('convertMarkdownToHtml')
+            ->ordered()
+            ->once();
+
+        $PageCollection = new \Gumdrop\PageCollection(array(
+            $Page1,
+            $Page2
+        ));
+
+        $app = new \Gumdrop\Application();
+        $Engine = new \Gumdrop\Engine($app);
+        $Engine->PageCollection = $PageCollection;
+        $Engine->convertPagesToHtml();
+
+        $this->assertEquals($PageCollection, $app->getPageCollection());
+    }
+
+    public function test_renderTwigEnvironments_sets_and_render_pages_twig_envs()
+    {
+        $LayoutTwigEnvironmentMock = \Mockery::mock('\Twig_Environment');
+        $PageTwigEnvironmentMock = \Mockery::mock('\Twig_Environment');
+
+        $Page1 = \Mockery::mock('\Gumdrop\Page');
+        $Page2 = \Mockery::mock('\Gumdrop\Page');
+
+        $Page1
+            ->shouldReceive('setLayoutTwigEnvironment')
+            ->with($LayoutTwigEnvironmentMock)
+            ->ordered()
+            ->once();
+        $Page1
+            ->shouldReceive('setPageTwigEnvironment')
+            ->with($PageTwigEnvironmentMock)
+            ->ordered()
+            ->once();
+        $Page1
+            ->shouldReceive('renderPageTwigEnvironment')
+            ->ordered()
+            ->once();
+        $Page1
+            ->shouldReceive('renderLayoutTwigEnvironment')
+            ->ordered()
+            ->once();
+        $Page2
+            ->shouldReceive('setLayoutTwigEnvironment')
+            ->with($LayoutTwigEnvironmentMock)
+            ->ordered()
+            ->once();
+        $Page2
+            ->shouldReceive('setPageTwigEnvironment')
+            ->with($PageTwigEnvironmentMock)
+            ->ordered()
+            ->once();
+        $Page2
+            ->shouldReceive('renderPageTwigEnvironment')
+            ->ordered()
+            ->once();
+        $Page2
+            ->shouldReceive('renderLayoutTwigEnvironment')
+            ->ordered()
+            ->once();
+        $PageCollection = new \Gumdrop\PageCollection(array(
+            $Page1,
+            $Page2
+        ));
+
+        $app = new \Gumdrop\Application();
+        $Engine = new \Gumdrop\Engine($app);
+        $Engine->PageCollection = $PageCollection;
+        $Engine->LayoutTwigEnvironment = $LayoutTwigEnvironmentMock;
+        $Engine->PageTwigEnvironment = $PageTwigEnvironmentMock;
+        $Engine->renderPagesTwigEnvironments();
+    }
+
+    public function test_writeHtmlFiles_clears_existing_files_then_write_pages_and_updates_the_collection()
+    {
+        $app = \Mockery::mock('\Gumdrop\Application');
+        $app
+            ->shouldReceive('getFileHandler->clearDestinationLocation')
+            ->once()
+            ->ordered();
+
+        $app
+            ->shouldReceive('getDestinationLocation')
+            ->twice()
             ->andReturn('destination_path');
 
-        return $SiteConfigurationMock;
+
+        $Page1 = \Mockery::mock('\Gumdrop\Page');
+        $Page2 = \Mockery::mock('\Gumdrop\Page');
+
+        $Page1
+            ->shouldReceive('writeHtmlFile')
+            ->with('destination_path')
+            ->ordered()
+            ->once();
+        $Page2
+            ->shouldReceive('writeHtmlFile')
+            ->with('destination_path')
+            ->ordered()
+            ->once();
+
+        $PageCollection = new \Gumdrop\PageCollection(array(
+            $Page1,
+            $Page2
+        ));
+
+        $app
+            ->shouldReceive('setPageCollection')
+            ->once()
+            ->with($PageCollection);
+
+        $Engine = new \Gumdrop\Engine($app);
+        $Engine->PageCollection = $PageCollection;
+        $Engine->writeHtmlFiles();
+    }
+
+    public function test_copyStaticFiles_asks_fileHandler_to_copy_files()
+    {
+        $app = \Mockery::mock('\Gumdrop\Application');
+        $app
+            ->shouldReceive('getFileHandler->writeStaticFiles')
+            ->once()
+            ->ordered();
+
+        $Engine = new \Gumdrop\Engine($app);
+        $Engine->writeStaticFiles();
+    }
+
+    public function test_renderTwigFiles_renders_the_twig_templates()
+    {
+        $app = \Mockery::mock('\Gumdrop\Application');
+        $app
+            ->shouldReceive('getFileHandler->listTwigFiles')
+            ->once()
+            ->andReturn(array('twig_files'));
+        $app
+            ->shouldReceive('getTwigFileHandler->renderTwigFiles')
+            ->once()
+            ->with(array('twig_files'));
+
+        $Engine = new \Gumdrop\Engine($app);
+        $Engine->renderTwigFiles();
     }
 }

@@ -1,23 +1,13 @@
 <?php
 
 /**
- * Application-level configuration container
+ * Site configuration container
  * @package Gumdrop
  */
 namespace Gumdrop;
 
-/**
- * Application-level configuration container
- */
 class SiteConfiguration extends \Gumdrop\Configuration
 {
-    /**
-     * Constructor
-     *
-     * @param string $location
-     *
-     * @throws \Gumdrop\Exception
-     */
     public function __construct($location)
     {
         $location = $location . '/conf.json';

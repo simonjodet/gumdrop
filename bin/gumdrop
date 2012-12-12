@@ -1,17 +1,17 @@
 #!/bin/bash
 START_WEBSERVER=FALSE
-SOURCE_FOLDER=FALSE
-TARGET_FOLDER=FALSE
+SOURCE_FOLDER=""
+TARGET_FOLDER=""
 RELOAD=FALSE
 ACKBAR=FALSE
 
 while getopts ":s:t:rw" opt; do
   case $opt in
     s)
-      SOURCE_FOLDER=`cd "$OPTARG"; pwd`
+      SOURCE_FOLDER=$OPTARG
       ;;
     t)
-      TARGET_FOLDER=`cd "$OPTARG"; pwd`
+      TARGET_FOLDER=$OPTARG
       ;;
     r)
       RELOAD=TRUE
@@ -24,8 +24,20 @@ while getopts ":s:t:rw" opt; do
       ;;
   esac
 done
-GUMDROP=$(cd $(dirname "$0"); pwd)"/../gumdrop.php"
-AUTORELOAD=$(cd $(dirname "$0"); pwd)"/autoreload.php"
+
+SOURCE="${BASH_SOURCE[0]}"
+DIR="$( dirname "$SOURCE" )"
+while [ -h "$SOURCE" ]
+do
+    SOURCE="$(readlink "$SOURCE")"
+    [[ $SOURCE != /* ]] && SOURCE="$DIR/$SOURCE"
+    DIR="$( cd -P "$( dirname "$SOURCE"  )" && pwd )"
+done
+DIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
+
+
+GUMDROP=$DIR"/../gumdrop.php generate"
+AUTORELOAD=$DIR"/../gumdrop.php reload"
 if [ $RELOAD != FALSE ] ; then
     if [ $START_WEBSERVER != FALSE ] ; then
         $AUTORELOAD $SOURCE_FOLDER $TARGET_FOLDER &
