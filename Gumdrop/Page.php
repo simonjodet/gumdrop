@@ -171,7 +171,7 @@ class Page
         return array_merge(
             $this->getConfiguration()->extract(),
             array(
-                'relativeLocation' => str_replace($path_info['basename'], $path_info['filename'] . '.htm', $this->getRelativeLocation()),
+                'location' => str_replace($path_info['basename'], $path_info['filename'] . '.htm', $this->getRelativeLocation()),
                 'html' => $this->getHtmlContent(),
                 'markdown' => $this->getMarkdownContent()
             ));
