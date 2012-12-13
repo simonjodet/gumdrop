@@ -2,6 +2,7 @@
 /**
  * Quick start script for Gumdrop-based projects
  * More information including license at http://simonjodet.github.com/gumdrop/
+ * Usage: php -r "$(curl -s https://raw.github.com/simonjodet/gumdrop/master/installer.php|tail +2)"
  * @package Gumdrop
  */
 if (!defined('STDIN'))
@@ -95,7 +96,7 @@ You should now have a _site/index.htm file containing "<h1>My new website</h1>":
     $ cat _site/index.htm
     <h1>My new website</h1>
 
-You can now run Gumdrop with its built-in webserver and change watcher:
+You can now run Gumdrop with its built-in webserver (if you're using PHP 5.4+) and change watcher:
     $ _vendor/bin/gumdrop -rw
 
 Your site is available at http://localhost:8000/index.htm.
