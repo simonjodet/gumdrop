@@ -572,5 +572,17 @@ class FileHandler extends \Gumdrop\Tests\TestCase
             $initialHash,
             $updatedHash
         );
+
+        // Testing ignoring items starting with _
+        $initialHash = $updatedHash;
+
+        mkdir($FSTestHelper . '/_folder/');
+        touch($FSTestHelper . '/_folder/file5');
+        $updatedHash = $FileHandler->getSourceFolderHash();
+
+        $this->assertEquals(
+            $initialHash,
+            $updatedHash
+        );
     }
 }
