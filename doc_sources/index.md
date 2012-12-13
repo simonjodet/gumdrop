@@ -4,61 +4,82 @@
     "target_name":"index.html"
 }
 ***
+# Quick start
+<pre class="prettyprint lang-sh">
+php -r "$(curl -s https://raw.github.com/simonjodet/gumdrop/master/installer.php|tail -n +2)"
+</pre>
+# Requirements
+Gumdrop requires PHP 5.3 with CLI support. However PHP 5.4 is recommended in order to get the built-in web server option.
 
-# Download
-Download the [latest stable version](https://github.com/simonjodet/gumdrop/zipball/master).
-
-# Install
-Gumdrop requires PHP 5.3 with CLI support. However PHP 5.4 is recommended in order to get the built-in web server option.  
 If you're using Linux, your distribution most likely has a PHP CLI package for you to install.  
+
 If you're using Mac OS 10.7.x (Lion), PHP 5.3 is already installed. PHP 5.4 may require more work to get.  
-Gumdrop has not been tested on Windows.
+You should give [Homebrew](http://mxcl.github.com/homebrew/) a try.
 
-You'll then need the latest version of [Composer](http://getcomposer.org/).
+Gumdrop has not been tested on Windows and most probably doesn't work.
 
-Once Composer is installed, unzip the ZIP archive you've downloaded and run the following in a terminal:
+# Updates
+Once in a while, you should run the following command in your Gumdrop-based project:
 
-    cd /path/to/gumdrop
-    composer install
+<pre class="prettyprint lang-sh">
+php composer.phar update
+</pre>
 
-Composer will download Gumdrop's dependencies for you.
+You'll get the latest features. These updates should not break backward compatibility.
 
 # Usage
 
 Gumdrop is intended to build any kind of web site. I use it to build this help page but also my [blog](http://blog.jodet.com/).
 
-## Command
-You give Gumdrop the folder where your site's source files are, the target folder where to write the generated site and Gumdrop will do the rest.
+## Default setup
+By default, if you installed Gumdrop as a Composer dependency (that is the case if you ran the "Quick start" command), Gumdrop assumes the sources are in the project folder and will generate the site in its `_site` subfolder (`<project_folder>/_site`).  
 
-While I work on this documentation, I use this command line:
+You can render your site with following command:
 
-    bin/gumdrop -s doc_sources/ -t doc/ -r -w
-    
-* `bin/gumdrop` is the command line script to call,
+<pre class="prettyprint lang-sh">
+_vendor/bin/gumdrop
+</pre>
+
+Two command-line options are available: `r` and `w`:
+
+* `r` will make Gumdrop watch for any change in the source folder and render your site automatically it detects one. Hit `ctrl+C` to stop.
+* `w` will start a small built-in web server. You can check your rendered site at [http://localhost:8000](http://localhost:8000). Hit `ctrl+C` to stop.
+
+Both options can be combined:
+
+<pre class="prettyprint lang-sh">
+_vendor/bin/gumdrop -rw
+</pre>
+
+
+## Separated Gumdrop install
+If you installed Gumdrop manually, you can pass it the source folder and target folder paths with the following options:
+
 * `-s doc_sources/` tells Gumdrop where to find the source files,
 * `-t doc/` tells Gumdrop where to write the generated site,
-* `-r` tells Gumdrop to regenerate the site when there is a change in the source folder,
-* `-w` tells Gumdrop to launch the local web server (only available with PHP 5.4).
 
 ## Configuration
 The first thing Gumdrop is looking for in the source folder is a `conf.json` file. It will complain if it can't find it.  
-So make sure it exists and it contains valid [JSON](http://www.json.org/) syntax.
+So make sure it exists and it contains valid [JSON](http://www.json.org/) syntax. Again, if you used the "Quick start" command, you should already have one.
 
 The available configuration options are:
 
 * `timezone` Sets the time zone for all date operations in Gumdrop, including Twig date functions (more on Twig below). Refer to [this page](http://php.net/manual/en/timezones.php) for the supported timezones.
-* `blacklist` A JSON array of files Gumdrop should ignore when looking for Markdown files (more on Markdown files below).
+* `blacklist` A JSON array of files Gumdrop should ignore when looking for files. The default version contains a blacklist to ignore Composer files (used to handle Gumdrop's dependencies).
+* `destination` If you want to set a custom destination path but don't want to pass it with the command-line option every time, you can set it here.
 
-You're free to had other site-wide configuration entries in this file. They will be available in your Twig templates in the `{{ '{{' }} site {{ '}}' }}` variable.
+You're free to add other site-wide configuration entries in this file. They will be available in your Twig templates in the `{{ '{{' }} site {{ '}}' }}` variable.
 
 ### Example
-`conf.json`
+`conf.json`:
 
-    {
-      "timezone":"Europe/Paris",
-      "blacklist":["not_converterted_file.twig"],
-      "site_title":"Gumdrop-generated site"
-    }
+<pre class="prettyprint lang-js">
+{
+  "timezone":"Europe/Paris",
+  "blacklist":["not_converterted_file.twig"],
+  "site_title":"Gumdrop-generated site"
+}
+</pre>
 
 ## Pages
 At its root, Gumdrop is a Markdown converter. Gumdrop identifies any file with a `.md` or `.markdown` extension as one of your site's __page__.
@@ -78,17 +99,19 @@ Inside the header, the configuration is set in a JSON object. The header will be
 
 Here's an example from my blog:
 
-    ***
-    {
-        "title":"Mixing up TDD, PHPUnit, Namespaces and Jenkins",
-        "date":"2011-02-22",
-        "category":"development",
-        "layout":"post.twig",
-        "tags":["TDD", "PHPUnit", "namespace", "Jenkins", "PHP"]
-    }
-    ***
-    # Heading
-    Some Markdown content
+<pre class="prettyprint lang-js">
+***
+{
+    "title":"Mixing up TDD, PHPUnit, Namespaces and Jenkins",
+    "date":"2011-02-22",
+    "category":"development",
+    "layout":"post.twig",
+    "tags":["TDD", "PHPUnit", "namespace", "Jenkins", "PHP"]
+}
+***
+# Heading
+Some Markdown content
+</pre>
 
 Some configuration keys are used by Gumdrop:
 
@@ -162,21 +185,18 @@ My coding style is pretty obvious. Please try to respect it as much as possible.
 All code should be unit tested - *TDD FTW!*  
 There is an additional dependency for developers, [Mockery](https://github.com/padraic/mockery). You should run your composer commands with the ``--dev`` options:
 
-    composer install --dev
-    composer update --dev
+<pre class="prettyprint lang-sh">
+composer install --dev
+composer update --dev
+</pre>
     
-Unit tests are written for [PHPUnit 3.6](http://www.phpunit.de/manual/3.6/en/index.html) and the test coverage report is available [here](coverage/index.html):
+Unit tests are written for [PHPUnit 3.7](http://www.phpunit.de/manual/3.7/en/index.html):
 
-    cd /path/to/gumdrop/tests/
-    phpunit -c phpunit.xml
+<pre class="prettyprint lang-sh">
+cd /path/to/gumdrop/tests/
+phpunit -c phpunit.xml
+</pre>
     
-PHPDoc is available [here](phpdoc/index.html).
-
-    cd /path/to/gumdrop/tests/
-    phpdoc
-
-You should use [PHPDocumentor 2](http://www.phpdoc.org/).
-
 # License
 
 > Copyright &copy;2012 Simon Jodet
