@@ -10,6 +10,8 @@ php:
   - 5.4
 
 before_script:
+  - "mkdir -p ~/.composer"
+  - cp .travis.composer.config.json ~/.composer/config.json
   - composer install --dev
 
 script: ./travis_build.sh
