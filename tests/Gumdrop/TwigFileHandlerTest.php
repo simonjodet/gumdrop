@@ -26,19 +26,25 @@ class TwigFileHandler extends \Gumdrop\Tests\TestCase
         $SiteTwigMock
             ->shouldReceive('render')
             ->once()
-            ->with('index.htm.twig', array(
-            'site' => array('some_configuration'),
-            'pages' => array('some array')
-        ))
+            ->with(
+                'index.htm.twig',
+                array(
+                    'site' => array('some_configuration'),
+                    'pages' => array('some array')
+                )
+            )
             ->andReturn('index_twig_rendering');
 
         $SiteTwigMock
             ->shouldReceive('render')
             ->once()
-            ->with('folder/pages.rss.twig', array(
-            'site' => array('some_configuration'),
-            'pages' => array('some array')
-        ))
+            ->with(
+                'folder/pages.rss.twig',
+                array(
+                    'site' => array('some_configuration'),
+                    'pages' => array('some array')
+                )
+            )
             ->andReturn('folder_index_twig_rendering');
 
 

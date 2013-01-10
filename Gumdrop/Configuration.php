@@ -54,8 +54,7 @@ class Configuration implements \Iterator, \Countable, \ArrayAccess
 
     public function offsetGet($offset)
     {
-        if (!$this->offsetExists($offset))
-        {
+        if (!$this->offsetExists($offset)) {
             return null;
         }
         return $this->configuration[$offset];
@@ -63,8 +62,7 @@ class Configuration implements \Iterator, \Countable, \ArrayAccess
 
     public function offsetSet($offset, $value)
     {
-        if (is_null($offset))
-        {
+        if (is_null($offset)) {
             $offset = count($this->configuration);
         }
         $this->configuration[$offset] = $value;

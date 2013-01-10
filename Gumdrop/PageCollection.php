@@ -14,10 +14,8 @@ class PageCollection implements \Iterator, \Countable, \ArrayAccess
 
     public function __construct($Pages = array())
     {
-        if (count($Pages) > 0)
-        {
-            foreach ($Pages as $Page)
-            {
+        if (count($Pages) > 0) {
+            foreach ($Pages as $Page) {
                 $this->offsetSet(null, $Page);
             }
         }
@@ -26,8 +24,7 @@ class PageCollection implements \Iterator, \Countable, \ArrayAccess
     public function exportForTwigRendering()
     {
         $extract = array();
-        foreach ($this->Pages as $Page)
-        {
+        foreach ($this->Pages as $Page) {
             /**
              * @var $Page \Gumdrop\Page
              */
@@ -68,8 +65,7 @@ class PageCollection implements \Iterator, \Countable, \ArrayAccess
 
     public function offsetGet($offset)
     {
-        if (!$this->offsetExists($offset))
-        {
+        if (!$this->offsetExists($offset)) {
             return null;
         }
         return $this->Pages[$offset];
@@ -77,13 +73,11 @@ class PageCollection implements \Iterator, \Countable, \ArrayAccess
 
     public function offsetSet($offset, $Page)
     {
-        if (!$Page instanceof \Gumdrop\Page)
-        {
+        if (!$Page instanceof \Gumdrop\Page) {
             throw new Exception('Expecting an instance of \Gumdrop\Page');
         }
 
-        if (is_null($offset))
-        {
+        if (is_null($offset)) {
             $offset = count($this->Pages);
         }
 

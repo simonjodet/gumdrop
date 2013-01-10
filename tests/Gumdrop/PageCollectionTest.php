@@ -34,7 +34,8 @@ class PageCollection extends \Gumdrop\Tests\TestCase
     {
         $Collection = $this->createAThreePageCollection();
         $this->setExpectedException(
-            'Gumdrop\Exception', 'Expecting an instance of \Gumdrop\Page'
+            'Gumdrop\Exception',
+            'Expecting an instance of \Gumdrop\Page'
         );
         $Pages = array(
             'not a page',
@@ -93,7 +94,8 @@ class PageCollection extends \Gumdrop\Tests\TestCase
     public function testOffsetSetExpectsAPageObjectAsValue()
     {
         $this->setExpectedException(
-            'Gumdrop\Exception', 'Expecting an instance of \Gumdrop\Page'
+            'Gumdrop\Exception',
+            'Expecting an instance of \Gumdrop\Page'
         );
 
         $PageCollection = new \Gumdrop\PageCollection();

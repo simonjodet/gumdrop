@@ -84,9 +84,9 @@ class Page extends \Gumdrop\Tests\TestCase
         $LayoutTwigEnvironment
             ->shouldReceive('render')
             ->with(
-            'page.twig',
-            \Mockery::any()
-        )
+                'page.twig',
+                \Mockery::any()
+            )
             ->andReturn('twig content 1');
 
         $Page->setLayoutTwigEnvironment($LayoutTwigEnvironment);
@@ -133,9 +133,9 @@ class Page extends \Gumdrop\Tests\TestCase
         $LayoutTwigEnvironment
             ->shouldReceive('render')
             ->with(
-            'twig_layout.twig',
-            \Mockery::any()
-        )
+                'twig_layout.twig',
+                \Mockery::any()
+            )
             ->andReturn('twig content 1');
 
         $Page->setLayoutTwigEnvironment($LayoutTwigEnvironment);
@@ -159,9 +159,9 @@ class Page extends \Gumdrop\Tests\TestCase
         $PageTwigEnvironment
             ->shouldReceive('render')
             ->with(
-            'initial html content',
-            \Mockery::any()
-        )
+                'initial html content',
+                \Mockery::any()
+            )
             ->andReturn('new html content');
 
         $Page->setPageTwigEnvironment($PageTwigEnvironment);
@@ -196,18 +196,19 @@ class Page extends \Gumdrop\Tests\TestCase
         $PageTwigEnvironment
             ->shouldReceive('render')
             ->with(
-            \Mockery::any(),
-            array(
-                'content' => 'initial html content',
-                'page' => array(
-                    'layout' => 'my_layout',
-                    'title' => 'my_title',
-                    'location' => 'my_folder/my_file.htm',
-                    'html' => 'initial html content',
-                    'markdown' => 'markdown content'
-                ),
-                'pages' => array('exportForTwigRendering')
-            ));
+                \Mockery::any(),
+                array(
+                    'content' => 'initial html content',
+                    'page' => array(
+                        'layout' => 'my_layout',
+                        'title' => 'my_title',
+                        'location' => 'my_folder/my_file.htm',
+                        'html' => 'initial html content',
+                        'markdown' => 'markdown content'
+                    ),
+                    'pages' => array('exportForTwigRendering')
+                )
+            );
 
         $Page->setPageTwigEnvironment($PageTwigEnvironment);
         $app->setPageCollection($PageCollection);
@@ -251,23 +252,25 @@ class Page extends \Gumdrop\Tests\TestCase
         $Page->setPageContent('twig content 1');
 
         $FSTestHelper = new \FSTestHelper\FSTestHelper();
-        $FSTestHelper->create(array(
-            'folders' => array(),
-            'files' => array(
-                array(
-                    'path' => 'folder/file1.md',
-                    'content' => ''
-                ),
-                array(
-                    'path' => 'file2.markdown',
-                    'content' => ''
-                ),
-                array(
-                    'path' => 'file3.txt',
-                    'content' => ''
+        $FSTestHelper->create(
+            array(
+                'folders' => array(),
+                'files' => array(
+                    array(
+                        'path' => 'folder/file1.md',
+                        'content' => ''
+                    ),
+                    array(
+                        'path' => 'file2.markdown',
+                        'content' => ''
+                    ),
+                    array(
+                        'path' => 'file3.txt',
+                        'content' => ''
+                    )
                 )
             )
-        ));
+        );
         $destination = $FSTestHelper;
 
         $Page->writeHtmlFile($destination);
@@ -285,23 +288,25 @@ class Page extends \Gumdrop\Tests\TestCase
         $Page->setConfiguration(new \Gumdrop\PageConfiguration(array('target_name' => 'file.ext')));
 
         $FSTestHelper = new \FSTestHelper\FSTestHelper();
-        $FSTestHelper->create(array(
-            'folders' => array(),
-            'files' => array(
-                array(
-                    'path' => 'folder/file1.md',
-                    'content' => ''
-                ),
-                array(
-                    'path' => 'file2.markdown',
-                    'content' => ''
-                ),
-                array(
-                    'path' => 'file3.txt',
-                    'content' => ''
+        $FSTestHelper->create(
+            array(
+                'folders' => array(),
+                'files' => array(
+                    array(
+                        'path' => 'folder/file1.md',
+                        'content' => ''
+                    ),
+                    array(
+                        'path' => 'file2.markdown',
+                        'content' => ''
+                    ),
+                    array(
+                        'path' => 'file3.txt',
+                        'content' => ''
+                    )
                 )
             )
-        ));
+        );
         $destinationFSTestHelper = new \FSTestHelper\FSTestHelper();
         $destination = $destinationFSTestHelper;
 

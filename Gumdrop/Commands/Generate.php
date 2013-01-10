@@ -38,13 +38,14 @@ class Generate extends Command
         $Application->setTwigFileHandler(new \Gumdrop\TwigFileHandler($Application));
         $Application->setEngine(new \Gumdrop\Engine($Application));
 
-        try
-        {
+        try {
             $Application->getEngine()->run();
-            $output->writeln('<fg=green>Gumdrop converted your MarkDown files to ' . realpath($Application->getDestinationLocation()) . '</fg=green>');
-        }
-        catch (\Exception $e)
-        {
+            $output->writeln(
+                '<fg=green>Gumdrop converted your MarkDown files to ' . realpath(
+                    $Application->getDestinationLocation()
+                ) . '</fg=green>'
+            );
+        } catch (\Exception $e) {
             $output->writeln('<fg=red>Gumdrop could not generate your site for the following reason:</fg=red>');
             $output->writeln('<fg=black;bg=red>' . $e->getMessage() . '</fg=black;bg=red>');
         }

@@ -1,11 +1,11 @@
 <?php
 
 use Behat\Behat\Context\ClosuredContextInterface,
-Behat\Behat\Context\TranslatedContextInterface,
-Behat\Behat\Context\BehatContext,
-Behat\Behat\Exception\PendingException;
+    Behat\Behat\Context\TranslatedContextInterface,
+    Behat\Behat\Context\BehatContext,
+    Behat\Behat\Exception\PendingException;
 use Behat\Gherkin\Node\PyStringNode,
-Behat\Gherkin\Node\TableNode;
+    Behat\Gherkin\Node\TableNode;
 
 //
 // Require 3rd-party libraries here:
@@ -56,8 +56,7 @@ class FeatureContext extends BehatContext
      */
     public function itHasACssFileAt($path)
     {
-        if (!file_exists($this->source . '/' . $path))
-        {
+        if (!file_exists($this->source . '/' . $path)) {
             throw new \Exception('Missing CSS file');
         }
         $this->cssFile = $path;
@@ -70,8 +69,7 @@ class FeatureContext extends BehatContext
     {
         $this->destination = new \FSTestHelper\FSTestHelper();
         exec(__DIR__ . '/../../bin/gumdrop -s ' . $this->source . ' -t ' . $this->destination, $output, $return_var);
-        if ($return_var != 0)
-        {
+        if ($return_var != 0) {
             print_r(scandir(__DIR__ . '/../../'));
             print_r(scandir(__DIR__ . '/../../bin'));
             print_r($output);
@@ -84,8 +82,7 @@ class FeatureContext extends BehatContext
      */
     public function iShouldHaveTheCssFileInTheDestinationFolder()
     {
-        if (!file_exists($this->destination . '/' . $this->cssFile))
-        {
+        if (!file_exists($this->destination . '/' . $this->cssFile)) {
             throw new \Exception('The CSS file was not copied');
         }
     }
@@ -95,8 +92,7 @@ class FeatureContext extends BehatContext
      */
     public function itHasAMarkdownFileAt($path)
     {
-        if (!file_exists($this->source . '/' . $path))
-        {
+        if (!file_exists($this->source . '/' . $path)) {
             throw new \Exception('Missing Markdown file');
         }
         $this->markdownFile = $path;
@@ -107,8 +103,7 @@ class FeatureContext extends BehatContext
      */
     public function iShouldNotHaveTheMarkdownFileInTheDestinationFolder()
     {
-        if (file_exists($this->destination . '/' . $this->markdownFile))
-        {
+        if (file_exists($this->destination . '/' . $this->markdownFile)) {
             throw new \Exception('The Markdown file was copied');
         }
     }
@@ -118,8 +113,7 @@ class FeatureContext extends BehatContext
      */
     public function itHasALayoutFolder()
     {
-        if (!file_exists($this->source . '/_layout'))
-        {
+        if (!file_exists($this->source . '/_layout')) {
             throw new \Exception('Missing Layout folder');
         }
     }
@@ -129,8 +123,7 @@ class FeatureContext extends BehatContext
      */
     public function iShouldNotHaveTheLayoutFolderInTheDestinationFolder()
     {
-        if (file_exists($this->destination . '/_layout'))
-        {
+        if (file_exists($this->destination . '/_layout')) {
             throw new \Exception('The Layout file was copied');
         }
     }
@@ -143,8 +136,7 @@ class FeatureContext extends BehatContext
         $path_info = pathinfo($this->markdownFile);
         $result = file_get_contents($this->destination . '/' . $path_info['filename'] . '.htm');
         $expected = file_get_contents(__DIR__ . '/../expected_rendering/testFile2.htm');
-        if ($result != $expected)
-        {
+        if ($result != $expected) {
             echo 'Actual: |' . $result . '|' . PHP_EOL;
             echo 'Expected: |' . $expected . '|' . PHP_EOL;
             throw new \Exception('The ' . $this->markdownFile . ' file was not rendered correctly');
@@ -157,8 +149,7 @@ class FeatureContext extends BehatContext
     public function itDoesNotHaveAFolder($folder)
     {
         $path = $this->source . '/' . $folder;
-        if (file_exists($path) && is_dir($path))
-        {
+        if (file_exists($path) && is_dir($path)) {
             $this->source->delete($folder);
         }
     }
@@ -170,8 +161,7 @@ class FeatureContext extends BehatContext
     {
         $result = file_get_contents($this->destination . '/testFile2.htm');
         $expected = file_get_contents(__DIR__ . '/../' . $expected_result . '/testFile2.htm');
-        if ($result != $expected)
-        {
+        if ($result != $expected) {
             echo 'Actual: |' . $result . '|' . PHP_EOL;
             echo 'Expected: |' . $expected . '|' . PHP_EOL;
             throw new \Exception('The testFile2.md file was not rendered correctly');
@@ -185,8 +175,7 @@ class FeatureContext extends BehatContext
     {
         $result = file_get_contents($this->destination . '/testFile2.htm');
         $expected = file_get_contents(__DIR__ . '/../expected_rendering/testFile2withoutLayout.htm');
-        if ($result != $expected)
-        {
+        if ($result != $expected) {
             echo 'Actual: |' . $result . '|' . PHP_EOL;
             echo 'Expected: |' . $expected . '|' . PHP_EOL;
             throw new \Exception('The testFile2.md file was not rendered correctly');
@@ -200,8 +189,7 @@ class FeatureContext extends BehatContext
     {
         $this->destination = $this->source . '/' . $target;
         exec(__DIR__ . '/../../bin/gumdrop -s ' . $this->source . ' -t ' . $this->destination, $output, $return_var);
-        if ($return_var != 0)
-        {
+        if ($return_var != 0) {
             print_r(scandir(__DIR__ . '/../../'));
             print_r(scandir(__DIR__ . '/../../bin'));
             print_r($output);
@@ -216,8 +204,7 @@ class FeatureContext extends BehatContext
     {
         exec('cd ' . $this->source . ' && composer install', $output, $return_var);
         exec('ls -la ' . $this->source, $output, $return_var);
-        if ($return_var != 0)
-        {
+        if ($return_var != 0) {
             print_r($output);
             throw new \Exception('Something went wrong');
         }
@@ -232,8 +219,7 @@ class FeatureContext extends BehatContext
         $this->destination = $this->source . '/_site';
         exec('cd ' . $this->source . ' && _vendor/simonjodet/gumdrop/bin/gumdrop', $output, $return_var);
         exec('ls -la ' . $this->source, $output, $return_var);
-        if ($return_var != 0)
-        {
+        if ($return_var != 0) {
             print_r($output);
             throw new \Exception('Something went wrong');
         }

@@ -7,7 +7,10 @@ class Engine extends \Gumdrop\Tests\TestCase
     {
         $app = new \Gumdrop\Application();
 
-        $Engine = \Mockery::mock('\Gumdrop\Engine[setSourceFallback,loadConfigurationFile,setConfiguredTimezone,setConfiguredDestination,setDestinationFallback,generatePageCollection,generateTwigEnvironments,convertPagesToHtml,renderPagesTwigEnvironments,writeHtmlFiles,writeStaticFiles,renderTwigFiles]', array($app));
+        $Engine = \Mockery::mock(
+            '\Gumdrop\Engine[setSourceFallback,loadConfigurationFile,setConfiguredTimezone,setConfiguredDestination,setDestinationFallback,generatePageCollection,generateTwigEnvironments,convertPagesToHtml,renderPagesTwigEnvironments,writeHtmlFiles,writeStaticFiles,renderTwigFiles]',
+            array($app)
+        );
 
         $Engine
             ->shouldReceive('setSourceFallback')
@@ -174,7 +177,7 @@ class Engine extends \Gumdrop\Tests\TestCase
         $app
             ->shouldReceive('setSourceLocation')
             ->once()
-            ->with(realpath(__DIR__ . '/../../Gumdrop').'/../../../../');
+            ->with(realpath(__DIR__ . '/../../Gumdrop') . '/../../../../');
 
         $Engine = new \Gumdrop\Engine($app);
         $Engine->setSourceFallback();
