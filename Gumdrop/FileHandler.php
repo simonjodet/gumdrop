@@ -168,10 +168,12 @@ class FileHandler
         if (is_array($items) && count($items) > 0) {
             foreach ($items as $item) {
                 $relative_path = ltrim(str_replace(realpath($location), '', realpath($item)), DIRECTORY_SEPARATOR);
-                if (is_dir($item)) {
-                    $files = array_merge($files, $this->getSourceFolderHash($item));
-                } else {
-                    $files[] = $item;
+                if (strpos($relative_path, '_') !== 0 || $relative_path == '_layout') {
+                    if (is_dir($item)) {
+                        $files = array_merge($files, $this->getSourceFolderHash($item));
+                    } else {
+                        $files[] = $item;
+                    }
                 }
             }
         }
