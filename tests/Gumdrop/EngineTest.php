@@ -7,9 +7,6 @@ class Engine extends \Gumdrop\Tests\TestCase
     {
         $app = new \Gumdrop\Application();
 
-        /**
-         * @var $Engine \Gumdrop\Engine
-         */
         $Engine = \Mockery::mock('\Gumdrop\Engine[setSourceFallback,loadConfigurationFile,setConfiguredTimezone,setConfiguredDestination,setDestinationFallback,generatePageCollection,generateTwigEnvironments,convertPagesToHtml,renderPagesTwigEnvironments,writeHtmlFiles,writeStaticFiles,renderTwigFiles]', array($app));
 
         $Engine
