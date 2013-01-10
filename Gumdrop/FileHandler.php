@@ -183,16 +183,13 @@ class FileHandler
             foreach ($items as $item)
             {
                 $relative_path = ltrim(str_replace(realpath($location), '', realpath($item)), DIRECTORY_SEPARATOR);
-                if (strpos($relative_path, '_') !== 0)
+                if (is_dir($item))
                 {
-                    if (is_dir($item))
-                    {
-                        $files = array_merge($files, $this->getSourceFolderHash($item));
-                    }
-                    else
-                    {
-                        $files[] = $item;
-                    }
+                    $files = array_merge($files, $this->getSourceFolderHash($item));
+                }
+                else
+                {
+                    $files[] = $item;
                 }
             }
         }

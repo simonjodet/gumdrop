@@ -580,7 +580,7 @@ class FileHandler extends \Gumdrop\Tests\TestCase
         touch($FSTestHelper . '/_folder/file5');
         $updatedHash = $FileHandler->getSourceFolderHash();
 
-        $this->assertEquals(
+        $this->assertNotEquals(
             $initialHash,
             $updatedHash
         );
