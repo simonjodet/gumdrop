@@ -25,7 +25,8 @@ class PageConfiguration extends \Gumdrop\Tests\TestCase
     public function testExtractHeaderThrowsAnExceptionIfCouldNotReadConfiguration()
     {
         $this->setExpectedException(
-            'Gumdrop\Exception', 'Invalid configuration'
+            'Gumdrop\Exception',
+            'Invalid configuration'
         );
         $PageConfiguration = new \Gumdrop\PageConfiguration();
         $PageConfiguration->extractPageHeader($this->getInvalidPageContent());

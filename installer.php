@@ -5,21 +5,17 @@
  * Usage: php -r "$(curl -s https://raw.github.com/simonjodet/gumdrop/master/installer.php|tail +2)"
  * @package Gumdrop
  */
-if (!defined('STDIN'))
-{
+if (!defined('STDIN')) {
     define('STDIN', fopen('php://stdin', 'r'));
 }
 $project_name = '';
 echo 'Please enter the name of your new Gumdrop-based project:' . PHP_EOL;
-while (empty($project_name))
-{
+while (empty($project_name)) {
     $project_name = trim(fread(STDIN, 255));
-    if (empty($project_name))
-    {
+    if (empty($project_name)) {
         echo color_echo('You can\'t set an empty project name. Please retry:' . "\033[0m", 'red') . PHP_EOL;
     }
-    if (is_dir($project_name))
-    {
+    if (is_dir($project_name)) {
         echo color_echo('This folder already exist. Please choose another one.', 'red') . PHP_EOL;
         exit(1);
     }
@@ -29,8 +25,7 @@ mkdir($project_name);
 
 echo color_echo('-> ', 'green') . 'Downloading Composer' . PHP_EOL;
 exec('curl -s https://getcomposer.org/installer | php -- --install-dir=' . $project_name, $output, $return_value);
-if ($return_value != 0)
-{
+if ($return_value != 0) {
     echo color_echo('Something wrong happened!', 'red') . PHP_EOL . implode(PHP_EOL, $output) . PHP_EOL;
     exit(1);
 }

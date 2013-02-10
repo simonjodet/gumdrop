@@ -17,8 +17,7 @@ class TwigEnvironments
 
     public function getLayoutEnvironment()
     {
-        try
-        {
+        try {
             return new \Twig_Environment(
                 new \Twig_Loader_Filesystem($this->app->getSourceLocation() . '/_layout/'),
                 array(
@@ -26,9 +25,7 @@ class TwigEnvironments
                     'strict_variables' => false
                 )
             );
-        }
-        catch (\Twig_Error_Loader $e)
-        {
+        } catch (\Twig_Error_Loader $e) {
             return null;
         }
     }

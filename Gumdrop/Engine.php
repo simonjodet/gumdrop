@@ -55,8 +55,7 @@ class Engine
 
     public function setSourceFallback()
     {
-        if ($this->app->getSourceLocation() == '')
-        {
+        if ($this->app->getSourceLocation() == '') {
             //default to the project folder depending on gumdrop
             //example: project/_vendor/simonjodet/gumdrop/Gumdrop/
             $this->app->setSourceLocation(realpath(__DIR__) . '/../../../../');
@@ -70,24 +69,21 @@ class Engine
 
     public function setConfiguredTimezone()
     {
-        if ($this->app->getSiteConfiguration()->offsetExists('timezone'))
-        {
+        if ($this->app->getSiteConfiguration()->offsetExists('timezone')) {
             date_default_timezone_set($this->app->getSiteConfiguration()->offsetGet('timezone'));
         }
     }
 
     public function setConfiguredDestination()
     {
-        if ($this->app->getSiteConfiguration()->offsetExists('destination'))
-        {
+        if ($this->app->getSiteConfiguration()->offsetExists('destination')) {
             $this->app->setDestinationLocation($this->app->getSiteConfiguration()->offsetGet('destination'));
         }
     }
 
     public function setDestinationFallback()
     {
-        if ($this->app->getDestinationLocation() == '')
-        {
+        if ($this->app->getDestinationLocation() == '') {
             $this->app->setDestinationLocation($this->app->getSourceLocation() . '/_site');
         }
     }
@@ -106,8 +102,7 @@ class Engine
 
     public function convertPagesToHtml()
     {
-        foreach ($this->PageCollection as $key => $Page)
-        {
+        foreach ($this->PageCollection as $key => $Page) {
             $this->PageCollection[$key]->setConfiguration(new \Gumdrop\PageConfiguration());
             $this->PageCollection[$key]->convertMarkdownToHtml();
         }
@@ -116,8 +111,7 @@ class Engine
 
     public function renderPagesTwigEnvironments()
     {
-        foreach ($this->PageCollection as $key => $Page)
-        {
+        foreach ($this->PageCollection as $key => $Page) {
             $this->PageCollection[$key]->setLayoutTwigEnvironment($this->LayoutTwigEnvironment);
             $this->PageCollection[$key]->setPageTwigEnvironment($this->PageTwigEnvironment);
             $this->PageCollection[$key]->renderPageTwigEnvironment();
@@ -129,8 +123,7 @@ class Engine
     {
         $this->app->getFileHandler()->clearDestinationLocation();
 
-        foreach ($this->PageCollection as $key => $Page)
-        {
+        foreach ($this->PageCollection as $key => $Page) {
             $this->PageCollection[$key]->writeHtmlFile($this->app->getDestinationLocation());
         }
 

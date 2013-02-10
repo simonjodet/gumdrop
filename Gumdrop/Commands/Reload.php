@@ -25,8 +25,7 @@ class Reload extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $source = $input->getArgument('source');
-        if(empty($source))
-        {
+        if (empty($source)) {
             $Application = new \Gumdrop\Application();
             $Application->setEngine(new \Gumdrop\Engine($Application));
             $Application->getEngine()->setSourceFallback();
@@ -37,11 +36,9 @@ class Reload extends Command
         $this->renderSite($source, $destination, $output);
         $last_checksum = $this->sourceChecksum($source);
 
-        while (true)
-        {
+        while (true) {
             $checksum = $this->sourceChecksum($source);
-            if ($last_checksum != $checksum)
-            {
+            if ($last_checksum != $checksum) {
                 $this->renderSite($source, $destination, $output);
                 $last_checksum = $checksum;
             }
@@ -49,18 +46,9 @@ class Reload extends Command
         }
     }
 
-    private function renderSite($source, $destination, OutputInterface $output)
+    private function renderSite($source, $destination)
     {
-        $command = $this->getApplication()->find('generate');
-
-        $arguments = array(
-            'command' => 'generate',
-            'source' => $source,
-            'destination' => $destination
-        );
-
-        $input = new \Symfony\Component\Console\Input\ArrayInput($arguments);
-        $command->run($input, $output);
+        passthru(__DIR__ . '/../../gumdrop.php generate ' . $source . ' ' . $destination);
     }
 
     private function sourceChecksum($source)
@@ -74,29 +62,3 @@ class Reload extends Command
 
 
 }
-
-//renderSite($source, $destination);
-//$last_checksum = getChecksum($source);
-//
-//while (true)
-//{
-//    $checksum = getChecksum($source);
-//    if ($last_checksum != $checksum)
-//    {
-//        renderSite($source, $destination);
-//        $last_checksum = $checksum;
-//    }
-//    sleep(2);
-//}
-//exit(0);
-//
-//function renderSite($source, $destination)
-//{
-//    passthru(__DIR__ . '/../gumdrop.php generate ' . $source . ' ' . $destination);
-//}
-//
-//function getChecksum($source)
-//{
-//    exec(__DIR__ . '/../gumdrop.php checksum ' . $source, $output);
-//    return $output[0];
-//}

@@ -15,22 +15,25 @@ class TwigEnvironments extends \Gumdrop\Tests\TestCase
     public function testGetLayoutEnvironmentReturnsTheExpectedEnvironment()
     {
         $FSTestHelper = new \FSTestHelper\FSTestHelper();
-        $FSTestHelper->create(array(
-            'folders' => array(),
-            'files' => array(
-                array(
-                    'path' => 'testFile2.md',
-                    'content' => ''
-                ),
-                array(
-                    'path' => '_layout/default.twig',
-                    'content' => ''
-                ), array(
-                    'path' => '_layout/page.twig',
-                    'content' => ''
+        $FSTestHelper->create(
+            array(
+                'folders' => array(),
+                'files' => array(
+                    array(
+                        'path' => 'testFile2.md',
+                        'content' => ''
+                    ),
+                    array(
+                        'path' => '_layout/default.twig',
+                        'content' => ''
+                    ),
+                    array(
+                        'path' => '_layout/page.twig',
+                        'content' => ''
+                    )
                 )
             )
-        ));
+        );
 
         $app = $this->getApp();
         $app->setSourceLocation($FSTestHelper);
@@ -48,15 +51,17 @@ class TwigEnvironments extends \Gumdrop\Tests\TestCase
     public function testGetLayoutEnvironmentReturnsNullWhenLayoutFolderDoesNotExist()
     {
         $FSTestHelper = new \FSTestHelper\FSTestHelper();
-        $FSTestHelper->create(array(
-            'folders' => array(),
-            'files' => array(
-                array(
-                    'path' => 'testFile2.md',
-                    'content' => ''
+        $FSTestHelper->create(
+            array(
+                'folders' => array(),
+                'files' => array(
+                    array(
+                        'path' => 'testFile2.md',
+                        'content' => ''
+                    )
                 )
             )
-        ));
+        );
 
         $app = $this->getApp();
         $app->setSourceLocation($FSTestHelper);
@@ -80,22 +85,25 @@ class TwigEnvironments extends \Gumdrop\Tests\TestCase
     public function testGetSiteEnvironmentReturnsTheExpectedEnvironment()
     {
         $FSTestHelper = new \FSTestHelper\FSTestHelper();
-        $FSTestHelper->create(array(
-            'folders' => array(),
-            'files' => array(
-                array(
-                    'path' => 'testFile2.md',
-                    'content' => ''
-                ),
-                array(
-                    'path' => '_layout/default.twig',
-                    'content' => ''
-                ), array(
-                    'path' => '_layout/page.twig',
-                    'content' => ''
+        $FSTestHelper->create(
+            array(
+                'folders' => array(),
+                'files' => array(
+                    array(
+                        'path' => 'testFile2.md',
+                        'content' => ''
+                    ),
+                    array(
+                        'path' => '_layout/default.twig',
+                        'content' => ''
+                    ),
+                    array(
+                        'path' => '_layout/page.twig',
+                        'content' => ''
+                    )
                 )
             )
-        ));
+        );
 
         $app = $this->getApp();
         $app->setSourceLocation($FSTestHelper);
