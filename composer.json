@@ -13,7 +13,7 @@
   "license": "MIT",
   "require": {
     "php": ">=5.3.3",
-    "michelf/php-markdown": "1.3.*",
+    "michelf/php-markdown": "1.3.*@beta",
     "simonjodet/Twig": "1.11.*",
     "symfony/console": "2.1.*"
   },
@@ -22,12 +22,6 @@
     "behat/behat": "2.4.*@stable",
     "simonjodet/fstesthelper": "2.*"
   },
-  "repositories": [
-    {
-      "type": "vcs",
-      "url": "https://github.com/michelf/php-markdown"
-    }
-  ],
   "autoload": {
     "psr-0": {
       "Gumdrop": "."
