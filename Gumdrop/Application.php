@@ -8,8 +8,6 @@ namespace Gumdrop;
 
 class Application
 {
-    private $MarkdownParser;
-
     private $FileHandler;
 
     /**
@@ -29,16 +27,6 @@ class Application
 
     private $destinationLocation = '';
 
-
-    public function setMarkdownParser(\dflydev\markdown\MarkdownParser $MarkdownParser)
-    {
-        $this->MarkdownParser = $MarkdownParser;
-    }
-
-    public function getMarkdownParser()
-    {
-        return $this->MarkdownParser;
-    }
 
     public function setFileHandler($FileHandler)
     {

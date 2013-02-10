@@ -1,35 +1,35 @@
 {
-    "name": "simonjodet/gumdrop",
-    "description": "Gumdrop is a static website generator converting Markdown files and using the Twig templating engine.",
-    "keywords": ["markdown", "generator", "twig"],
-    "version": "1.3.3",
-    "type": "library",
-    "authors": [
-        {
-            "name": "Simon Jodet",
-            "email": "simon@jodet.com"
-        }
-    ],
-    "license": "MIT",
-    "require": {
-        "php": ">=5.3.3",
-        "simonjodet/markdown": "1.0.*",
-        "simonjodet/Twig": "1.11.*",
-        "symfony/console": "2.1.*"
-    },
-    "require-dev": {
-        "mockery/mockery": "dev-master",
-        "behat/behat": "2.4.*@stable",
-        "simonjodet/fstesthelper": "2.*"
-    },
-    "autoload": {
-        "psr-0": {
-            "Gumdrop": "."
-        }
-    },
-    "scripts": {
-        "post-update-cmd": "php gumdrop.php install",
-        "post-install-cmd": "php gumdrop.php install"
-    },
-    "bin": ["bin/gumdrop"]
+  "name": "simonjodet/gumdrop",
+  "description": "Gumdrop is a static website generator converting Markdown files and using the Twig templating engine.",
+  "keywords": ["markdown", "generator", "twig"],
+  "version": "1.3.3",
+  "type": "library",
+  "authors": [
+    {
+      "name": "Simon Jodet",
+      "email": "simon@jodet.com"
+    }
+  ],
+  "license": "MIT",
+  "require": {
+    "php": ">=5.3.3",
+    "michelf/php-markdown": "1.3.*@dev",
+    "simonjodet/Twig": "1.11.*",
+    "symfony/console": "2.1.*"
+  },
+  "require-dev": {
+    "mockery/mockery": "dev-master@dev",
+    "behat/behat": "2.4.*@stable",
+    "simonjodet/fstesthelper": "2.*"
+  },
+  "autoload": {
+    "psr-0": {
+      "Gumdrop": "."
+    }
+  },
+  "scripts": {
+    "post-update-cmd": "php gumdrop.php install",
+    "post-install-cmd": "php gumdrop.php install"
+  },
+  "bin": ["bin/gumdrop"]
 }

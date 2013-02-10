@@ -111,7 +111,7 @@ class Page
 
     public function convertMarkdownToHtml()
     {
-        $this->setHtmlContent($this->app->getMarkdownParser()->transformMarkdown($this->getMarkdownContent()));
+        $this->setHtmlContent(\Michelf\MarkdownExtra::defaultTransform($this->getMarkdownContent()));
     }
 
     public function renderLayoutTwigEnvironment()

@@ -32,7 +32,6 @@ class Generate extends Command
         $Application->setSourceLocation($source);
         $Application->setDestinationLocation($destination);
 
-        $Application->setMarkdownParser(new \dflydev\markdown\MarkdownParser());
         $Application->setTwigEnvironments(new \Gumdrop\TwigEnvironments($Application));
         $Application->setFileHandler(new \Gumdrop\FileHandler($Application));
         $Application->setTwigFileHandler(new \Gumdrop\TwigFileHandler($Application));

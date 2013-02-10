@@ -5,8 +5,6 @@ require_once __DIR__ . '/../TestCase.php';
 require_once __DIR__ . '/../../Gumdrop/Page.php';
 require_once __DIR__ . '/../../Gumdrop/PageConfiguration.php';
 require_once __DIR__ . '/../../vendor/simonjodet/twig/lib/Twig/Environment.php';
-require_once __DIR__ . '/../../vendor/simonjodet/markdown/src/dflydev/markdown/IMarkdownParser.php';
-require_once __DIR__ . '/../../vendor/simonjodet/markdown/src/dflydev/markdown/MarkdownParser.php';
 
 class Page extends \Gumdrop\Tests\TestCase
 {
@@ -26,25 +24,6 @@ class Page extends \Gumdrop\Tests\TestCase
         $Page->setConfiguration($PageConfigurationMock);
 
         $this->assertEquals('Configuration-stripped Markdown content', $Page->getMarkdownContent());
-    }
-
-    public function testConvertMarkdownToHtmlUsesTheMarkdownParser()
-    {
-        $app = new \Gumdrop\Application();
-        $MarkdownParserMock = \Mockery::mock('\dflydev\markdown\MarkdownParser');
-        $MarkdownParserMock
-            ->shouldReceive('transformMarkdown')
-            ->with('md content 1')
-            ->andReturn('html content 1');
-
-        $app->setMarkdownParser($MarkdownParserMock);
-
-        $Page = new \Gumdrop\Page($app);
-        $Page->setMarkdownContent('md content 1');
-
-        $Page->convertMarkdownToHtml();
-
-        $this->assertEquals($Page->getHtmlContent(), 'html content 1');
     }
 
     public function testRenderLayoutTwigEnvironmentDoesNothingIfEnvironmentIsNull()
