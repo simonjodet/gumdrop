@@ -6,3 +6,5 @@ vendor/
 
 /.idea/
 .DS_Store
+doc_sources/_vendor
+doc_sources/_site

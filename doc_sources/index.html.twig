@@ -1,0 +1,126 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Gumdrop - Static website generator using Markdown and Twig</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Le styles -->
+    <link href="assets/css/bootstrap.css" rel="stylesheet">
+    <style type="text/css">
+      body {
+        padding-top: 20px;
+        padding-bottom: 40px;
+      }
+
+      /* Custom container */
+      .container-narrow {
+        margin: 0 auto;
+        max-width: 800px;
+      }
+      .container-narrow > hr {
+        margin: 30px 0;
+      }
+
+      /* Main marketing message and sign up button */
+      .jumbotron {
+        margin: 20px 0 10px 0;
+        text-align: center;
+      }
+      .jumbotron h1 {
+        font-size: 72px;
+        line-height: 1;
+      }
+      .jumbotron .btn {
+        font-size: 21px;
+        padding: 14px 24px;
+      }
+
+      /* Supporting marketing content */
+      .marketing {
+        margin: 30px 0;
+      }
+      .marketing p + h4 {
+        margin-top: 28px;
+      }
+      .footer{
+        text-align: center;
+      }
+      pre.prettyprint{
+        font-size: 13px;
+        margin-bottom: 10px;
+      }
+    </style>
+    <link href="assets/css/bootstrap-responsive.css" rel="stylesheet">
+
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="assets/js/html5shiv.js"></script>
+    <![endif]-->
+
+    <link rel="shortcut icon" href="assets/ico/favicon.png">
+  </head>
+
+  <body>
+
+    <div class="container-narrow">
+
+      <div class="masthead">
+        <ul class="nav nav-pills pull-right">
+          <li class="active"><a href="/">Home</a></li>
+          <li><a href="documentation.htm">Documentation</a></li>
+          <li><a href="https://github.com/simonjodet/gumdrop" target="_blank">Sources</a></li>
+        </ul>
+        <h3 class="muted">Gumdrop</h3>
+      </div>
+
+      <div class="jumbotron">
+        <h1>Gumdrop</h1>
+        <div>Static website generator converting Markdown files and using the Twig templating engine.</div>
+      </div>
+
+      <div style="text-align:left;white-space:nowrap;"><span class="label">Quick start</span></div><pre class="prettyprint lang-sh" style="text-align:center;">php -r "$(curl -s https://raw.github.com/simonjodet/gumdrop/master/installer.php|tail -n +2)"</pre>
+
+      <div class="row-fluid marketing">
+        <div class="span6">
+          <h4>Content agnostic</h4>
+          <p>You can build whatever you want: a blog, a technical documentation, a portfolio, ...</p>
+
+          <h4>Built-in HTTP server</h4>
+          <p>Gumdrop comes with a built-in server so you don't need to install one.<br/></p>
+
+          <h4>Industry standards</h4>
+          <p>Gumdrop uses the latest features from PHP 5.4 and is based on <a href="http://getcomposer.org/" target="_blank">Composer</a>, the best dependency manager for PHP.</p>
+        </div>
+
+        <div class="span6">
+          <h4>Simple</h4>
+          <p>Gumdrop converts <a href="http://daringfireball.net/projects/markdown/syntax" target="_blank">Markdown</a> and handles <a href="http://twig.sensiolabs.org/" target="_blank">Twig</a> templates.</p>
+
+          <h4>Auto-reload</h4>
+          <p>Gumdrop can watch for changes in your source file and re-render your site automatically.</p>
+
+          <h4>Open-source</h4>
+          <p>Gumdrop is <a href="https://github.com/simonjodet/gumdrop" target="_blank">open-source</a>, free of charge, under <a href="https://github.com/simonjodet/gumdrop/blob/master/LICENSE" target="_blank">a MIT license</a>.</p>
+        </div>
+      </div>
+
+      <hr>
+
+      <div class="footer">
+        <p>Gumdrop &copy; Simon Jodet 2013</p>
+      </div>
+
+    </div> <!-- /container -->
+
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="assets/js/jquery.js"></script>
+    <script src="assets/js/bootstrap.js"></script>
+
+  </body>
+</html>

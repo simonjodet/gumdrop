@@ -1,4 +1,0 @@
-To generate:
-lessc style.less > ../style/bootstrap.css
-
-The only file changed from the vanilla bootstrap is variables.less

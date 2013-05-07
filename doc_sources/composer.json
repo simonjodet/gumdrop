@@ -1,0 +1,12 @@
+{
+    "config": {
+        "vendor-dir": "_vendor"
+    },
+    "require":{
+        "simonjodet/gumdrop":"1.*"
+    },
+    "scripts":{
+        "post-update-cmd":"php _vendor/simonjodet/gumdrop/gumdrop.php install",
+        "post-install-cmd":"php _vendor/simonjodet/gumdrop/gumdrop.php install"
+    }
+}
