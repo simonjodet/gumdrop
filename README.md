@@ -2,11 +2,11 @@
 
 Gumdrop is a static website generator converting Markdown files and using the Twig templating engine.
 
-Please check the [documentation](http://simonjodet.github.com/gumdrop/) (rendered with Gumdrop of course) for more information.
+Please check the [documentation](http://gumdropapp.com/documentation.htm) (rendered with Gumdrop of course) for more information.
 
 ## License
 
-> Copyright &copy;2012 Simon Jodet
+> Copyright &copy;2013 Simon Jodet
 >
 > Permission is hereby granted, free of charge, to any person obtaining a copy of
 > this software and associated documentation files (the "Software"), to deal in
