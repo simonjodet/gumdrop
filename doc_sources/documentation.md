@@ -1,6 +1,6 @@
 # Quick start
 <pre class="prettyprint lang-sh">
-php -r "$(curl -s https://raw.github.com/simonjodet/gumdrop/master/installer.php|tail -n +2)"
+php -r "$(curl -s http://gumdropapp.com/installer.php|tail -n +2)"
 </pre>
 # Requirements
 Gumdrop requires PHP 5.3 with CLI support. However PHP 5.4 is recommended in order to get the built-in web server option.
